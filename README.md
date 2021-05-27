@@ -1,8 +1,8 @@
-# PG3X - A Coq Formalisation of Finite Projective Spaces PG(3,q) with q=2,3. 
-
-
+# PG3X - Formalizing Finite Projective Spaces PG(3,q) with q=2,3 in Coq. 
+  - checking whether such spaces verify the axioms of projective space geometry. 
+  - spreads and packings (work in progress)
 # Authors
-
+Nicolas MAGAUD (magaud@unistra.fr)
 
 # Compilation instructions
   - coq 8.12.2 (using Ocaml 4.11.1 via Opam2)

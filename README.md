@@ -5,5 +5,5 @@
 
 
 # Compilation instructions
-- coq 8.11.1 (using Ocaml 4.10.0 via Opam2)
-- make
+- coq 8.12.2 (using Ocaml 4.11.1 via Opam2)
+- make -f CoqMakefile

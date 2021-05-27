@@ -1,0 +1,20 @@
+# coq_makefile -f _CoqProject -o CoqMakefile
+
+# generic
+
+-Q generic Generic
+generic/pg3x_spec.v
+generic/wlog.v
+generic/lemmas.v
+
+# ----------- pg(3,2) -----------
+# gcc -o try_pg32 try_pg32.c
+# ./try_pg32 pg32.txt pg32_inductive.v 15 35
+
+-Q pg32 PG32
+pg32/pg32_inductive.v
+pg32/pg32_proofs.v
+
+
+# ----------- pg(3,3) -----------
+

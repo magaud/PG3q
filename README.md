@@ -1,4 +1,4 @@
-# PG3X - Formalizing Finite Projective Spaces PG(3,q)
+# PG3q - Formalizing Finite Projective Spaces PG(3,q)
    
   - checking whether the smallest spaces PG(3,2) and PG(3,3) verify the axioms of projective space geometry. 
   - spreads and packings of PG(3,2) (work in progress)

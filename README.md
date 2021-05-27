@@ -1,6 +1,8 @@
-# PG3X - Formalizing Finite Projective Spaces PG(3,q) with q=2,3 in Coq. 
-  - checking whether such spaces verify the axioms of projective space geometry. 
-  - spreads and packings (work in progress)
+# PG3X - Formalizing Finite Projective Spaces PG(3,q)
+   
+  - checking whether the small spaces PG(3,2) and PG(3,3) verify the axioms of projective space geometry. 
+  - spreads and packings of PG(3,2) (work in progress)
+
 # Authors
 Nicolas MAGAUD (magaud@unistra.fr)
 

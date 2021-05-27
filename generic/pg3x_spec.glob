@@ -1,0 +1,347 @@
+DIGEST a3a2acd1b811c6307d1411acacb944a1
+FGeneric.pg3x_spec
+R15:23 Coq.ssr.ssreflect <> <> lib
+R25:30 Coq.ssr.ssrfun <> <> lib
+R32:38 Coq.ssr.ssrbool <> <> lib
+modtype 77:91 <> ProjectiveSpace
+ax 107:111 ProjectiveSpace Point
+ax 134:137 ProjectiveSpace Line
+ax 384:386 ProjectiveSpace eqP
+R395:398 Coq.Init.Logic <> ::type_scope:x_'->'_x not
+R404:407 Coq.Init.Logic <> ::type_scope:x_'->'_x not
+R408:411 Coq.Init.Datatypes <> bool ind
+R399:403 Generic.pg3x_spec ProjectiveSpace Point defax
+R390:394 Generic.pg3x_spec ProjectiveSpace Point defax
+ax 426:428 ProjectiveSpace eqL
+R436:439 Coq.Init.Logic <> ::type_scope:x_'->'_x not
+R444:447 Coq.Init.Logic <> ::type_scope:x_'->'_x not
+R448:451 Coq.Init.Datatypes <> bool ind
+R440:443 Generic.pg3x_spec ProjectiveSpace Line defax
+R432:435 Generic.pg3x_spec ProjectiveSpace Line defax
+ax 467:474 ProjectiveSpace incid_lp
+R483:486 Coq.Init.Logic <> ::type_scope:x_'->'_x not
+R491:494 Coq.Init.Logic <> ::type_scope:x_'->'_x not
+R495:498 Coq.Init.Datatypes <> bool ind
+R487:490 Generic.pg3x_spec ProjectiveSpace Line defax
+R478:482 Generic.pg3x_spec ProjectiveSpace Point defax
+ax 564:572 ProjectiveSpace a1_exists
+R589:593 Generic.pg3x_spec ProjectiveSpace Point defax
+binder 583:583 <> A:6
+binder 585:585 <> B:7
+R622:622 Coq.Init.Specif <> ::type_scope:'{'_x_':'_x_'|'_x_'}' not
+R624:626 Coq.Init.Specif <> ::type_scope:'{'_x_':'_x_'|'_x_'}' not
+R631:632 Coq.Init.Specif <> ::type_scope:'{'_x_':'_x_'|'_x_'}' not
+R661:661 Coq.Init.Specif <> ::type_scope:'{'_x_':'_x_'|'_x_'}' not
+R627:630 Generic.pg3x_spec ProjectiveSpace Line defax
+binder 623:623 <> l:8
+R645:648 Coq.Init.Datatypes <> ::bool_scope:x_'&&'_x not
+R633:640 Generic.pg3x_spec ProjectiveSpace incid_lp defax
+R644:644 Generic.pg3x_spec <> l:8 var
+R642:642 Generic.pg3x_spec <> A:6 var
+R649:656 Generic.pg3x_spec ProjectiveSpace incid_lp defax
+R660:660 Generic.pg3x_spec <> l:8 var
+R658:658 Generic.pg3x_spec <> B:7 var
+ax 673:682 ProjectiveSpace uniqueness
+R699:703 Generic.pg3x_spec ProjectiveSpace Point defax
+binder 694:694 <> A:10
+binder 696:696 <> B:11
+R712:715 Generic.pg3x_spec ProjectiveSpace Line defax
+binder 706:707 <> l1:12
+binder 709:710 <> l2:13
+R738:741 Coq.Init.Logic <> ::type_scope:x_'->'_x not
+R755:765 Coq.Init.Logic <> ::type_scope:x_'->'_x not
+R779:782 Coq.Init.Logic <> ::type_scope:x_'->'_x not
+R796:799 Coq.Init.Logic <> ::type_scope:x_'->'_x not
+R805:808 Coq.Init.Logic <> ::type_scope:x_'\/'_x not
+R801:803 Coq.Init.Logic <> ::type_scope:x_'='_x not
+R800:800 Generic.pg3x_spec <> A:10 var
+R804:804 Generic.pg3x_spec <> B:11 var
+R811:813 Coq.Init.Logic <> ::type_scope:x_'='_x not
+R809:810 Generic.pg3x_spec <> l1:12 var
+R814:815 Generic.pg3x_spec <> l2:13 var
+R783:790 Generic.pg3x_spec ProjectiveSpace incid_lp defax
+R794:795 Generic.pg3x_spec <> l2:13 var
+R792:792 Generic.pg3x_spec <> B:11 var
+R766:773 Generic.pg3x_spec ProjectiveSpace incid_lp defax
+R777:778 Generic.pg3x_spec <> l2:13 var
+R775:775 Generic.pg3x_spec <> A:10 var
+R742:749 Generic.pg3x_spec ProjectiveSpace incid_lp defax
+R753:754 Generic.pg3x_spec <> l1:12 var
+R751:751 Generic.pg3x_spec <> B:11 var
+R725:732 Generic.pg3x_spec ProjectiveSpace incid_lp defax
+R736:737 Generic.pg3x_spec <> l1:12 var
+R734:734 Generic.pg3x_spec <> A:10 var
+def 857:863 ProjectiveSpace dist_4p
+R875:879 Generic.pg3x_spec ProjectiveSpace Point defax
+binder 867:867 <> A:15
+binder 869:869 <> B:16
+binder 871:871 <> C:17
+binder 873:873 <> D:18
+R884:887 Coq.Init.Datatypes <> bool ind
+R1013:1017 Coq.Init.Datatypes <> ::bool_scope:x_'&&'_x not
+R1032:1032 Coq.Init.Datatypes <> ::bool_scope:x_'&&'_x not
+R993:997 Coq.Init.Datatypes <> ::bool_scope:x_'&&'_x not
+R1012:1012 Coq.Init.Datatypes <> ::bool_scope:x_'&&'_x not
+R952:977 Coq.Init.Datatypes <> ::bool_scope:x_'&&'_x not
+R992:992 Coq.Init.Datatypes <> ::bool_scope:x_'&&'_x not
+R932:936 Coq.Init.Datatypes <> ::bool_scope:x_'&&'_x not
+R951:951 Coq.Init.Datatypes <> ::bool_scope:x_'&&'_x not
+R896:896 Coq.Init.Datatypes <> ::bool_scope:x_'&&'_x not
+R911:916 Coq.Init.Datatypes <> ::bool_scope:x_'&&'_x not
+R931:931 Coq.Init.Datatypes <> ::bool_scope:x_'&&'_x not
+R897:900 Coq.Init.Datatypes <> negb def
+R903:905 Generic.pg3x_spec ProjectiveSpace eqP defax
+R909:909 Generic.pg3x_spec <> B:16 var
+R907:907 Generic.pg3x_spec <> A:15 var
+R917:920 Coq.Init.Datatypes <> negb def
+R923:925 Generic.pg3x_spec ProjectiveSpace eqP defax
+R929:929 Generic.pg3x_spec <> C:17 var
+R927:927 Generic.pg3x_spec <> A:15 var
+R937:940 Coq.Init.Datatypes <> negb def
+R943:945 Generic.pg3x_spec ProjectiveSpace eqP defax
+R949:949 Generic.pg3x_spec <> D:18 var
+R947:947 Generic.pg3x_spec <> A:15 var
+R978:981 Coq.Init.Datatypes <> negb def
+R984:986 Generic.pg3x_spec ProjectiveSpace eqP defax
+R990:990 Generic.pg3x_spec <> C:17 var
+R988:988 Generic.pg3x_spec <> B:16 var
+R998:1001 Coq.Init.Datatypes <> negb def
+R1004:1006 Generic.pg3x_spec ProjectiveSpace eqP defax
+R1010:1010 Generic.pg3x_spec <> D:18 var
+R1008:1008 Generic.pg3x_spec <> B:16 var
+R1018:1021 Coq.Init.Datatypes <> negb def
+R1024:1026 Generic.pg3x_spec ProjectiveSpace eqP defax
+R1030:1030 Generic.pg3x_spec <> D:18 var
+R1028:1028 Generic.pg3x_spec <> C:17 var
+ax 1044:1045 ProjectiveSpace a2
+R1064:1068 Generic.pg3x_spec ProjectiveSpace Point defax
+binder 1056:1056 <> A:19
+binder 1058:1058 <> B:20
+binder 1060:1060 <> C:21
+binder 1062:1062 <> D:22
+R1095:1098 Generic.pg3x_spec ProjectiveSpace Line defax
+binder 1078:1080 <> lAB:23
+binder 1082:1084 <> lCD:24
+binder 1086:1088 <> lAC:25
+binder 1090:1092 <> lBD:26
+R1119:1124 Coq.Init.Logic <> ::type_scope:x_'->'_x not
+R1157:1161 Coq.Init.Logic <> ::type_scope:x_'->'_x not
+R1194:1198 Coq.Init.Logic <> ::type_scope:x_'->'_x not
+R1231:1235 Coq.Init.Logic <> ::type_scope:x_'->'_x not
+R1268:1272 Coq.Init.Logic <> ::type_scope:x_'->'_x not
+R1273:1273 Coq.Init.Logic <> ::type_scope:x_'->'_x not
+R1322:1334 Coq.Init.Logic <> ::type_scope:x_'->'_x not
+R1335:1341 Coq.Init.Logic <> ::type_scope:'exists'_x_'..'_x_','_x not
+R1349:1350 Coq.Init.Logic <> ::type_scope:'exists'_x_'..'_x_','_x not
+R1344:1348 Generic.pg3x_spec ProjectiveSpace Point defax
+binder 1342:1342 <> J:27
+R1365:1368 Coq.Init.Datatypes <> ::bool_scope:x_'&&'_x not
+R1351:1358 Generic.pg3x_spec ProjectiveSpace incid_lp defax
+R1362:1364 Generic.pg3x_spec <> lAC:25 var
+R1360:1360 Generic.pg3x_spec <> J:27 var
+R1369:1376 Generic.pg3x_spec ProjectiveSpace incid_lp defax
+R1380:1382 Generic.pg3x_spec <> lBD:26 var
+R1378:1378 Generic.pg3x_spec <> J:27 var
+R1274:1280 Coq.Init.Logic <> ::type_scope:'exists'_x_'..'_x_','_x not
+R1288:1289 Coq.Init.Logic <> ::type_scope:'exists'_x_'..'_x_','_x not
+R1283:1287 Generic.pg3x_spec ProjectiveSpace Point defax
+binder 1281:1281 <> I:28
+R1304:1307 Coq.Init.Datatypes <> ::bool_scope:x_'&&'_x not
+R1290:1297 Generic.pg3x_spec ProjectiveSpace incid_lp defax
+R1301:1303 Generic.pg3x_spec <> lAB:23 var
+R1299:1299 Generic.pg3x_spec <> I:28 var
+R1308:1315 Generic.pg3x_spec ProjectiveSpace incid_lp defax
+R1319:1321 Generic.pg3x_spec <> lCD:24 var
+R1317:1317 Generic.pg3x_spec <> I:28 var
+R1250:1253 Coq.Init.Datatypes <> ::bool_scope:x_'&&'_x not
+R1236:1243 Generic.pg3x_spec ProjectiveSpace incid_lp defax
+R1247:1249 Generic.pg3x_spec <> lBD:26 var
+R1245:1245 Generic.pg3x_spec <> B:20 var
+R1254:1261 Generic.pg3x_spec ProjectiveSpace incid_lp defax
+R1265:1267 Generic.pg3x_spec <> lBD:26 var
+R1263:1263 Generic.pg3x_spec <> D:22 var
+R1213:1216 Coq.Init.Datatypes <> ::bool_scope:x_'&&'_x not
+R1199:1206 Generic.pg3x_spec ProjectiveSpace incid_lp defax
+R1210:1212 Generic.pg3x_spec <> lAC:25 var
+R1208:1208 Generic.pg3x_spec <> A:19 var
+R1217:1224 Generic.pg3x_spec ProjectiveSpace incid_lp defax
+R1228:1230 Generic.pg3x_spec <> lAC:25 var
+R1226:1226 Generic.pg3x_spec <> C:21 var
+R1176:1179 Coq.Init.Datatypes <> ::bool_scope:x_'&&'_x not
+R1162:1169 Generic.pg3x_spec ProjectiveSpace incid_lp defax
+R1173:1175 Generic.pg3x_spec <> lCD:24 var
+R1171:1171 Generic.pg3x_spec <> C:21 var
+R1180:1187 Generic.pg3x_spec ProjectiveSpace incid_lp defax
+R1191:1193 Generic.pg3x_spec <> lCD:24 var
+R1189:1189 Generic.pg3x_spec <> D:22 var
+R1139:1142 Coq.Init.Datatypes <> ::bool_scope:x_'&&'_x not
+R1125:1132 Generic.pg3x_spec ProjectiveSpace incid_lp defax
+R1136:1138 Generic.pg3x_spec <> lAB:23 var
+R1134:1134 Generic.pg3x_spec <> A:19 var
+R1143:1150 Generic.pg3x_spec ProjectiveSpace incid_lp defax
+R1154:1156 Generic.pg3x_spec <> lAB:23 var
+R1152:1152 Generic.pg3x_spec <> B:20 var
+R1104:1110 Generic.pg3x_spec ProjectiveSpace dist_4p def
+R1118:1118 Generic.pg3x_spec <> D:22 var
+R1116:1116 Generic.pg3x_spec <> C:21 var
+R1114:1114 Generic.pg3x_spec <> B:20 var
+R1112:1112 Generic.pg3x_spec <> A:19 var
+def 1440:1446 ProjectiveSpace dist_3p
+R1457:1461 Generic.pg3x_spec ProjectiveSpace Point defax
+binder 1450:1450 <> A:30
+binder 1452:1452 <> B:31
+binder 1454:1454 <> C:32
+R1466:1469 Coq.Init.Datatypes <> bool ind
+R1510:1514 Coq.Init.Datatypes <> ::bool_scope:x_'&&'_x not
+R1529:1529 Coq.Init.Datatypes <> ::bool_scope:x_'&&'_x not
+R1474:1474 Coq.Init.Datatypes <> ::bool_scope:x_'&&'_x not
+R1489:1494 Coq.Init.Datatypes <> ::bool_scope:x_'&&'_x not
+R1509:1509 Coq.Init.Datatypes <> ::bool_scope:x_'&&'_x not
+R1475:1478 Coq.Init.Datatypes <> negb def
+R1481:1483 Generic.pg3x_spec ProjectiveSpace eqP defax
+R1487:1487 Generic.pg3x_spec <> B:31 var
+R1485:1485 Generic.pg3x_spec <> A:30 var
+R1495:1498 Coq.Init.Datatypes <> negb def
+R1501:1503 Generic.pg3x_spec ProjectiveSpace eqP defax
+R1507:1507 Generic.pg3x_spec <> C:32 var
+R1505:1505 Generic.pg3x_spec <> A:30 var
+R1515:1518 Coq.Init.Datatypes <> negb def
+R1521:1523 Generic.pg3x_spec ProjectiveSpace eqP defax
+R1527:1527 Generic.pg3x_spec <> C:32 var
+R1525:1525 Generic.pg3x_spec <> B:31 var
+ax 1541:1544 ProjectiveSpace a3_1
+R1561:1564 Generic.pg3x_spec ProjectiveSpace Line defax
+binder 1559:1559 <> l:33
+R1566:1566 Coq.Init.Specif <> ::type_scope:'{'_x_':'_x_'&'_x_'}' not
+R1568:1568 Coq.Init.Specif <> ::type_scope:'{'_x_':'_x_'&'_x_'}' not
+R1574:1576 Coq.Init.Specif <> ::type_scope:'{'_x_':'_x_'&'_x_'}' not
+R1748:1748 Coq.Init.Specif <> ::type_scope:'{'_x_':'_x_'&'_x_'}' not
+R1569:1573 Generic.pg3x_spec ProjectiveSpace Point defax
+binder 1567:1567 <> A:34
+R1577:1577 Coq.Init.Specif <> ::type_scope:'{'_x_':'_x_'&'_x_'}' not
+R1579:1579 Coq.Init.Specif <> ::type_scope:'{'_x_':'_x_'&'_x_'}' not
+R1585:1587 Coq.Init.Specif <> ::type_scope:'{'_x_':'_x_'&'_x_'}' not
+R1747:1747 Coq.Init.Specif <> ::type_scope:'{'_x_':'_x_'&'_x_'}' not
+R1580:1584 Generic.pg3x_spec ProjectiveSpace Point defax
+binder 1578:1578 <> B:35
+R1588:1588 Coq.Init.Specif <> ::type_scope:'{'_x_':'_x_'|'_x_'}' not
+R1590:1590 Coq.Init.Specif <> ::type_scope:'{'_x_':'_x_'|'_x_'}' not
+R1596:1639 Coq.Init.Specif <> ::type_scope:'{'_x_':'_x_'|'_x_'}' not
+R1746:1746 Coq.Init.Specif <> ::type_scope:'{'_x_':'_x_'|'_x_'}' not
+R1591:1595 Generic.pg3x_spec ProjectiveSpace Point defax
+binder 1589:1589 <> C:36
+R1640:1640 Coq.Init.Datatypes <> ::bool_scope:x_'&&'_x not
+R1654:1700 Coq.Init.Datatypes <> ::bool_scope:x_'&&'_x not
+R1745:1745 Coq.Init.Datatypes <> ::bool_scope:x_'&&'_x not
+R1641:1647 Generic.pg3x_spec ProjectiveSpace dist_3p def
+R1653:1653 Generic.pg3x_spec <> C:36 var
+R1651:1651 Generic.pg3x_spec <> B:35 var
+R1649:1649 Generic.pg3x_spec <> A:34 var
+R1729:1732 Coq.Init.Datatypes <> ::bool_scope:x_'&&'_x not
+R1713:1716 Coq.Init.Datatypes <> ::bool_scope:x_'&&'_x not
+R1701:1708 Generic.pg3x_spec ProjectiveSpace incid_lp defax
+R1712:1712 Generic.pg3x_spec <> l:33 var
+R1710:1710 Generic.pg3x_spec <> A:34 var
+R1717:1724 Generic.pg3x_spec ProjectiveSpace incid_lp defax
+R1728:1728 Generic.pg3x_spec <> l:33 var
+R1726:1726 Generic.pg3x_spec <> B:35 var
+R1733:1740 Generic.pg3x_spec ProjectiveSpace incid_lp defax
+R1744:1744 Generic.pg3x_spec <> l:33 var
+R1742:1742 Generic.pg3x_spec <> C:36 var
+ax 1813:1816 ProjectiveSpace a3_2
+R1839:1845 Coq.Init.Logic <> ::type_scope:'exists'_x_'..'_x_','_x not
+R1853:1854 Coq.Init.Logic <> ::type_scope:'exists'_x_'..'_x_','_x not
+R1849:1852 Generic.pg3x_spec ProjectiveSpace Line defax
+binder 1846:1847 <> l1:38
+R1855:1861 Coq.Init.Logic <> ::type_scope:'exists'_x_'..'_x_','_x not
+R1869:1876 Coq.Init.Logic <> ::type_scope:'exists'_x_'..'_x_','_x not
+R1865:1868 Generic.pg3x_spec ProjectiveSpace Line defax
+binder 1862:1863 <> l2:39
+R1886:1890 Generic.pg3x_spec ProjectiveSpace Point defax
+binder 1884:1884 <> p:40
+R1893:1894 Coq.Init.Logic <> ::type_scope:'~'_x not
+R1925:1925 Coq.Init.Logic <> ::type_scope:'~'_x not
+R1908:1911 Coq.Init.Datatypes <> ::bool_scope:x_'&&'_x not
+R1895:1902 Generic.pg3x_spec ProjectiveSpace incid_lp defax
+R1906:1907 Generic.pg3x_spec <> l1:38 var
+R1904:1904 Generic.pg3x_spec <> p:40 var
+R1912:1919 Generic.pg3x_spec ProjectiveSpace incid_lp defax
+R1923:1924 Generic.pg3x_spec <> l2:39 var
+R1921:1921 Generic.pg3x_spec <> p:40 var
+def 1942:1953 ProjectiveSpace Intersect_In
+R1963:1966 Generic.pg3x_spec ProjectiveSpace Line defax
+binder 1956:1957 <> l1:42
+binder 1959:1960 <> l2:43
+R1972:1976 Generic.pg3x_spec ProjectiveSpace Point defax
+binder 1970:1970 <> P:44
+R1995:1998 Coq.Init.Datatypes <> ::bool_scope:x_'&&'_x not
+R1982:1989 Generic.pg3x_spec ProjectiveSpace incid_lp defax
+R1993:1994 Generic.pg3x_spec <> l1:42 var
+R1991:1991 Generic.pg3x_spec <> P:44 var
+R1999:2006 Generic.pg3x_spec ProjectiveSpace incid_lp defax
+R2010:2011 Generic.pg3x_spec <> l2:43 var
+R2008:2008 Generic.pg3x_spec <> P:44 var
+def 2028:2034 ProjectiveSpace dist_3l
+R2044:2047 Generic.pg3x_spec ProjectiveSpace Line defax
+binder 2037:2037 <> A:45
+binder 2039:2039 <> B:46
+binder 2041:2041 <> C:47
+R2052:2055 Coq.Init.Datatypes <> bool ind
+R2100:2104 Coq.Init.Datatypes <> ::bool_scope:x_'&&'_x not
+R2119:2119 Coq.Init.Datatypes <> ::bool_scope:x_'&&'_x not
+R2064:2064 Coq.Init.Datatypes <> ::bool_scope:x_'&&'_x not
+R2079:2084 Coq.Init.Datatypes <> ::bool_scope:x_'&&'_x not
+R2099:2099 Coq.Init.Datatypes <> ::bool_scope:x_'&&'_x not
+R2065:2068 Coq.Init.Datatypes <> negb def
+R2071:2073 Generic.pg3x_spec ProjectiveSpace eqL defax
+R2077:2077 Generic.pg3x_spec <> B:46 var
+R2075:2075 Generic.pg3x_spec <> A:45 var
+R2085:2088 Coq.Init.Datatypes <> negb def
+R2091:2093 Generic.pg3x_spec ProjectiveSpace eqL defax
+R2097:2097 Generic.pg3x_spec <> C:47 var
+R2095:2095 Generic.pg3x_spec <> A:45 var
+R2105:2108 Coq.Init.Datatypes <> negb def
+R2111:2113 Generic.pg3x_spec ProjectiveSpace eqL defax
+R2117:2117 Generic.pg3x_spec <> C:47 var
+R2115:2115 Generic.pg3x_spec <> B:46 var
+ax 2131:2134 ProjectiveSpace a3_3
+R2155:2158 Generic.pg3x_spec ProjectiveSpace Line defax
+binder 2146:2147 <> l1:48
+binder 2149:2150 <> l2:49
+binder 2152:2153 <> l3:50
+R2183:2192 Coq.Init.Logic <> ::type_scope:x_'->'_x not
+R2193:2199 Coq.Init.Logic <> ::type_scope:'exists'_x_'..'_x_','_x not
+R2208:2210 Coq.Init.Logic <> ::type_scope:'exists'_x_'..'_x_','_x not
+R2204:2207 Generic.pg3x_spec ProjectiveSpace Line defax
+binder 2200:2201 <> l4:51
+R2211:2217 Coq.Init.Logic <> ::type_scope:'exists'_x_'..'_x_','_x not
+R2226:2227 Coq.Init.Logic <> ::type_scope:'exists'_x_'..'_x_','_x not
+R2221:2225 Generic.pg3x_spec ProjectiveSpace Point defax
+binder 2218:2219 <> J1:52
+R2228:2234 Coq.Init.Logic <> ::type_scope:'exists'_x_'..'_x_','_x not
+R2243:2244 Coq.Init.Logic <> ::type_scope:'exists'_x_'..'_x_','_x not
+R2238:2242 Generic.pg3x_spec ProjectiveSpace Point defax
+binder 2235:2236 <> J2:53
+R2245:2251 Coq.Init.Logic <> ::type_scope:'exists'_x_'..'_x_','_x not
+R2260:2267 Coq.Init.Logic <> ::type_scope:'exists'_x_'..'_x_','_x not
+R2255:2259 Generic.pg3x_spec ProjectiveSpace Point defax
+binder 2252:2253 <> J3:54
+R2314:2317 Coq.Init.Datatypes <> ::bool_scope:x_'&&'_x not
+R2289:2292 Coq.Init.Datatypes <> ::bool_scope:x_'&&'_x not
+R2268:2279 Generic.pg3x_spec ProjectiveSpace Intersect_In def
+R2287:2288 Generic.pg3x_spec <> J1:52 var
+R2284:2285 Generic.pg3x_spec <> l4:51 var
+R2281:2282 Generic.pg3x_spec <> l1:48 var
+R2293:2304 Generic.pg3x_spec ProjectiveSpace Intersect_In def
+R2312:2313 Generic.pg3x_spec <> J2:53 var
+R2309:2310 Generic.pg3x_spec <> l4:51 var
+R2306:2307 Generic.pg3x_spec <> l2:49 var
+R2318:2329 Generic.pg3x_spec ProjectiveSpace Intersect_In def
+R2337:2338 Generic.pg3x_spec <> J3:54 var
+R2334:2335 Generic.pg3x_spec <> l4:51 var
+R2331:2332 Generic.pg3x_spec <> l3:50 var
+R2167:2173 Generic.pg3x_spec ProjectiveSpace dist_3l def
+R2181:2182 Generic.pg3x_spec <> l3:50 var
+R2178:2179 Generic.pg3x_spec <> l2:49 var
+R2175:2176 Generic.pg3x_spec <> l1:48 var
+R2346:2360 Generic.pg3x_spec ProjectiveSpace <> modtype

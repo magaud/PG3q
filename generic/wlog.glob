@@ -1,0 +1,245 @@
+DIGEST c13eca3448eea7da37cf26d09d8dad24
+FGeneric.wlog
+R15:20 Coq.Setoids.Setoid <> <> lib
+R22:28 Coq.ssr.ssrbool <> <> lib
+R30:38 Coq.ssr.ssreflect <> <> lib
+prf 78:87 <> ab_bool_lr
+binder 98:98 <> a:1
+binder 100:100 <> b:2
+R109:112 Coq.Init.Logic <> ::type_scope:x_'->'_x not
+R114:117 Coq.Init.Logic <> ::type_scope:x_'/\'_x not
+R113:113 Generic.wlog <> a:1 var
+R118:118 Generic.wlog <> b:2 var
+R104:107 Coq.Init.Datatypes <> ::bool_scope:x_'&&'_x not
+R103:103 Generic.wlog <> a:1 var
+R108:108 Generic.wlog <> b:2 var
+prf 212:218 <> ab_bool
+binder 229:229 <> a:3
+binder 231:231 <> b:4
+R240:244 Coq.Init.Logic <> ::type_scope:x_'<->'_x not
+R235:238 Coq.Init.Datatypes <> ::bool_scope:x_'&&'_x not
+R234:234 Generic.wlog <> a:3 var
+R239:239 Generic.wlog <> b:4 var
+R246:249 Coq.Init.Logic <> ::type_scope:x_'/\'_x not
+R245:245 Generic.wlog <> a:3 var
+R250:250 Generic.wlog <> b:4 var
+R289:298 Generic.wlog <> ab_bool_lr thm
+R289:298 Generic.wlog <> ab_bool_lr thm
+prf 400:408 <> wrapperAB
+binder 419:419 <> S:5
+R438:438 Generic.wlog <> S:5 var
+binder 434:434 <> A:6
+binder 436:436 <> B:7
+R451:452 Coq.Init.Logic <> ::type_scope:x_'->'_x not
+R454:455 Coq.Init.Logic <> ::type_scope:x_'->'_x not
+R456:459 Coq.Init.Datatypes <> bool ind
+R453:453 Generic.wlog <> S:5 var
+R450:450 Generic.wlog <> S:5 var
+binder 447:448 <> le:8
+R490:490 Generic.wlog <> S:5 var
+binder 486:486 <> x:9
+binder 488:488 <> y:10
+R499:502 Coq.Init.Datatypes <> ::bool_scope:x_'||'_x not
+R493:494 Generic.wlog <> le:8 var
+R498:498 Generic.wlog <> y:10 var
+R496:496 Generic.wlog <> x:9 var
+R503:504 Generic.wlog <> le:8 var
+R508:508 Generic.wlog <> x:9 var
+R506:506 Generic.wlog <> y:10 var
+binder 469:476 <> le_total:11
+R522:524 Coq.Init.Logic <> ::type_scope:x_'->'_x not
+R526:529 Coq.Init.Logic <> ::type_scope:x_'->'_x not
+R525:525 Generic.wlog <> S:5 var
+R521:521 Generic.wlog <> S:5 var
+binder 519:519 <> P:12
+R561:561 Generic.wlog <> S:5 var
+binder 557:557 <> x:13
+binder 559:559 <> y:14
+R570:573 Coq.Init.Logic <> ::type_scope:x_'->'_x not
+R574:574 Generic.wlog <> P:12 var
+R578:578 Generic.wlog <> y:14 var
+R576:576 Generic.wlog <> x:13 var
+R564:565 Generic.wlog <> le:8 var
+R569:569 Generic.wlog <> y:14 var
+R567:567 Generic.wlog <> x:13 var
+binder 543:547 <> Pwlog:15
+R606:606 Generic.wlog <> S:5 var
+binder 602:602 <> x:16
+binder 604:604 <> y:17
+R615:618 Coq.Init.Logic <> ::type_scope:x_'->'_x not
+R619:619 Generic.wlog <> P:12 var
+R623:623 Generic.wlog <> y:17 var
+R621:621 Generic.wlog <> x:16 var
+R610:610 Generic.wlog <> P:12 var
+R614:614 Generic.wlog <> x:16 var
+R612:612 Generic.wlog <> y:17 var
+binder 589:592 <> Psym:18
+R628:628 Generic.wlog <> P:12 var
+R632:632 Generic.wlog <> B:7 var
+R630:630 Generic.wlog <> A:6 var
+R704:721 Coq.Bool.Bool <> orb_true_elim thm
+R704:721 Coq.Bool.Bool <> orb_true_elim thm
+binder 1630:1630 <> x:19
+binder 1632:1632 <> y:20
+R1645:1648 Coq.Init.Logic <> ::type_scope:x_'->'_x not
+R1653:1653 Generic.wlog <> y:20 var
+R1651:1651 Generic.wlog <> x:19 var
+R1644:1644 Generic.wlog <> y:20 var
+R1642:1642 Generic.wlog <> x:19 var
+binder 1771:1771 <> x:21
+binder 1773:1773 <> y:22
+R1784:1787 Coq.Init.Logic <> ::type_scope:x_'->'_x not
+R1792:1792 Generic.wlog <> y:22 var
+R1790:1790 Generic.wlog <> x:21 var
+R1783:1783 Generic.wlog <> x:21 var
+R1781:1781 Generic.wlog <> y:22 var
+R1912:1920 Generic.wlog <> wrapperAB thm
+prf 1990:1996 <> wrapABC
+binder 2007:2007 <> S:23
+R2028:2028 Generic.wlog <> S:23 var
+binder 2022:2022 <> A:24
+binder 2024:2024 <> B:25
+binder 2026:2026 <> C:26
+R2048:2049 Coq.Init.Logic <> ::type_scope:x_'->'_x not
+R2051:2052 Coq.Init.Logic <> ::type_scope:x_'->'_x not
+R2053:2056 Coq.Init.Datatypes <> bool ind
+R2050:2050 Generic.wlog <> S:23 var
+R2047:2047 Generic.wlog <> S:23 var
+binder 2044:2045 <> le:27
+R2087:2087 Generic.wlog <> S:23 var
+binder 2083:2083 <> x:28
+binder 2085:2085 <> y:29
+R2096:2099 Coq.Init.Datatypes <> ::bool_scope:x_'||'_x not
+R2090:2091 Generic.wlog <> le:27 var
+R2095:2095 Generic.wlog <> y:29 var
+R2093:2093 Generic.wlog <> x:28 var
+R2100:2101 Generic.wlog <> le:27 var
+R2105:2105 Generic.wlog <> x:28 var
+R2103:2103 Generic.wlog <> y:29 var
+binder 2066:2073 <> le_total:30
+R2129:2130 Coq.Init.Logic <> ::type_scope:x_'->'_x not
+R2132:2133 Coq.Init.Logic <> ::type_scope:x_'->'_x not
+R2135:2136 Coq.Init.Logic <> ::type_scope:x_'->'_x not
+R2134:2134 Generic.wlog <> S:23 var
+R2131:2131 Generic.wlog <> S:23 var
+R2128:2128 Generic.wlog <> S:23 var
+binder 2126:2126 <> P:31
+R2185:2185 Generic.wlog <> S:23 var
+binder 2177:2177 <> x:32
+binder 2179:2179 <> y:33
+binder 2181:2181 <> z:34
+R2204:2207 Coq.Init.Logic <> ::type_scope:x_'->'_x not
+R2208:2208 Generic.wlog <> P:31 var
+R2214:2214 Generic.wlog <> z:34 var
+R2212:2212 Generic.wlog <> y:33 var
+R2210:2210 Generic.wlog <> x:32 var
+R2194:2197 Coq.Init.Datatypes <> ::bool_scope:x_'&&'_x not
+R2188:2189 Generic.wlog <> le:27 var
+R2193:2193 Generic.wlog <> y:33 var
+R2191:2191 Generic.wlog <> x:32 var
+R2198:2199 Generic.wlog <> le:27 var
+R2203:2203 Generic.wlog <> z:34 var
+R2201:2201 Generic.wlog <> y:33 var
+binder 2162:2166 <> Pwlog:35
+R2224:2224 Coq.Init.Logic <> ::type_scope:x_'->'_x not
+R2261:2271 Coq.Init.Logic <> ::type_scope:x_'->'_x not
+R2272:2272 Coq.Init.Logic <> ::type_scope:x_'->'_x not
+R2309:2319 Coq.Init.Logic <> ::type_scope:x_'->'_x not
+R2320:2320 Coq.Init.Logic <> ::type_scope:x_'->'_x not
+R2357:2367 Coq.Init.Logic <> ::type_scope:x_'->'_x not
+R2368:2368 Coq.Init.Logic <> ::type_scope:x_'->'_x not
+R2405:2415 Coq.Init.Logic <> ::type_scope:x_'->'_x not
+R2416:2416 Coq.Init.Logic <> ::type_scope:x_'->'_x not
+R2453:2463 Coq.Init.Logic <> ::type_scope:x_'->'_x not
+R2464:2464 Generic.wlog <> P:31 var
+R2470:2470 Generic.wlog <> C:26 var
+R2468:2468 Generic.wlog <> B:25 var
+R2466:2466 Generic.wlog <> A:24 var
+R2432:2432 Generic.wlog <> S:23 var
+binder 2424:2424 <> x:36
+binder 2426:2426 <> y:37
+binder 2428:2428 <> z:38
+R2442:2445 Coq.Init.Logic <> ::type_scope:x_'->'_x not
+R2446:2446 Generic.wlog <> P:31 var
+R2452:2452 Generic.wlog <> z:38 var
+R2450:2450 Generic.wlog <> y:37 var
+R2448:2448 Generic.wlog <> x:36 var
+R2435:2435 Generic.wlog <> P:31 var
+R2441:2441 Generic.wlog <> x:36 var
+R2439:2439 Generic.wlog <> y:37 var
+R2437:2437 Generic.wlog <> z:38 var
+R2384:2384 Generic.wlog <> S:23 var
+binder 2376:2376 <> x:39
+binder 2378:2378 <> y:40
+binder 2380:2380 <> z:41
+R2394:2397 Coq.Init.Logic <> ::type_scope:x_'->'_x not
+R2398:2398 Generic.wlog <> P:31 var
+R2404:2404 Generic.wlog <> z:41 var
+R2402:2402 Generic.wlog <> y:40 var
+R2400:2400 Generic.wlog <> x:39 var
+R2387:2387 Generic.wlog <> P:31 var
+R2393:2393 Generic.wlog <> y:40 var
+R2391:2391 Generic.wlog <> x:39 var
+R2389:2389 Generic.wlog <> z:41 var
+R2336:2336 Generic.wlog <> S:23 var
+binder 2328:2328 <> x:42
+binder 2330:2330 <> y:43
+binder 2332:2332 <> z:44
+R2346:2349 Coq.Init.Logic <> ::type_scope:x_'->'_x not
+R2350:2350 Generic.wlog <> P:31 var
+R2356:2356 Generic.wlog <> z:44 var
+R2354:2354 Generic.wlog <> y:43 var
+R2352:2352 Generic.wlog <> x:42 var
+R2339:2339 Generic.wlog <> P:31 var
+R2345:2345 Generic.wlog <> x:42 var
+R2343:2343 Generic.wlog <> z:44 var
+R2341:2341 Generic.wlog <> y:43 var
+R2288:2288 Generic.wlog <> S:23 var
+binder 2280:2280 <> x:45
+binder 2282:2282 <> y:46
+binder 2284:2284 <> z:47
+R2298:2301 Coq.Init.Logic <> ::type_scope:x_'->'_x not
+R2302:2302 Generic.wlog <> P:31 var
+R2308:2308 Generic.wlog <> z:47 var
+R2306:2306 Generic.wlog <> y:46 var
+R2304:2304 Generic.wlog <> x:45 var
+R2291:2291 Generic.wlog <> P:31 var
+R2297:2297 Generic.wlog <> z:47 var
+R2295:2295 Generic.wlog <> x:45 var
+R2293:2293 Generic.wlog <> y:46 var
+R2240:2240 Generic.wlog <> S:23 var
+binder 2232:2232 <> x:48
+binder 2234:2234 <> y:49
+binder 2236:2236 <> z:50
+R2250:2253 Coq.Init.Logic <> ::type_scope:x_'->'_x not
+R2254:2254 Generic.wlog <> P:31 var
+R2260:2260 Generic.wlog <> z:50 var
+R2258:2258 Generic.wlog <> y:49 var
+R2256:2256 Generic.wlog <> x:48 var
+R2243:2243 Generic.wlog <> P:31 var
+R2249:2249 Generic.wlog <> y:49 var
+R2247:2247 Generic.wlog <> z:50 var
+R2245:2245 Generic.wlog <> x:48 var
+R2562:2579 Coq.Bool.Bool <> orb_true_elim thm
+R2627:2644 Coq.Bool.Bool <> orb_true_elim thm
+R2692:2709 Coq.Bool.Bool <> orb_true_elim thm
+R2562:2579 Coq.Bool.Bool <> orb_true_elim thm
+R2627:2644 Coq.Bool.Bool <> orb_true_elim thm
+R2627:2644 Coq.Bool.Bool <> orb_true_elim thm
+R2692:2709 Coq.Bool.Bool <> orb_true_elim thm
+R2692:2709 Coq.Bool.Bool <> orb_true_elim thm
+R2692:2709 Coq.Bool.Bool <> orb_true_elim thm
+R2692:2709 Coq.Bool.Bool <> orb_true_elim thm
+binder 3859:3859 <> A:51
+binder 3861:3861 <> B:52
+binder 3863:3863 <> C:53
+R3887:3890 Coq.Init.Logic <> ::type_scope:x_'->'_x not
+R3897:3897 Generic.wlog <> C:53 var
+R3895:3895 Generic.wlog <> B:52 var
+R3893:3893 Generic.wlog <> A:51 var
+R3876:3879 Coq.Init.Datatypes <> ::bool_scope:x_'&&'_x not
+R3875:3875 Generic.wlog <> B:52 var
+R3873:3873 Generic.wlog <> A:51 var
+R3886:3886 Generic.wlog <> C:53 var
+R3884:3884 Generic.wlog <> B:52 var
+R3974:3980 Generic.wlog <> wrapABC thm

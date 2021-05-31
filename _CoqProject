@@ -14,7 +14,13 @@ generic/lemmas.v
 -Q pg32 PG32
 pg32/pg32_inductive.v
 pg32/pg32_proofs.v
-
+pg32/pg32_spreads.v
+pg32/pg32_spreads_collineations.v
 
 # ----------- pg(3,3) -----------
+# gcc -o try_pg33 try_pg33.c
+# ./try_pg33 pg33.txt pg33_inductive.v 40 130
 
+-Q pg33 PG33
+pg33/pg33_inductive.v
+pg33/pg33_proofs.v

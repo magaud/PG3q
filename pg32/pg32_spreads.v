@@ -368,6 +368,10 @@ abstract
            destruct l5;  (solve [ exact (degen_bool _ Hle) |  exact (degen_bool _ His) | exact (erefl true)])])]))]).
 Time Qed.
 
+Lemma simpler : forall l1 l2 l3 l4 l5, is_partition5 l1 l2 l3 l4 l5 -> disj_5l l1 l2 l3 l4 l5.
+Proof.
+Admitted.
+
     (*        (abstract (destruct l3; abstract (solve [exact (degen_bool _ Hle) | exact (degen_bool _ His) | destruct l4;
                                                                                                  abstract (solve [exact (degen_bool _ Hle) | exact (degen_bool _ His)
                                                                                                                   | destruct l5;

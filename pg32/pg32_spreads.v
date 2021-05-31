@@ -326,13 +326,13 @@ Lemma is_spread_descr_2 : forall l1 l2 l3 l4 l5,
 ((eqL l1 L6) &&(eqL l2 L12) && (eqL l3 L18) && (eqL l4 L26) && (eqL l5 L34)) ).
 Proof.
   intros l1 l2 l3 l4 l5 Hle Hdist His;
-    destruct l1; destruct l2;
-      first  [apply (degen_bool _ Hle) | apply (degen_bool _ Hldist) | exact (degen_bool _ His) | (*idtac].  ;*)
+    destruct l1; abstract (destruct l2;
+      solve  [apply (degen_bool _ Hle) | apply (degen_bool _ Hldist) | exact (degen_bool _ His) | (*idtac].  ;*)
       (*par:*)          (* 280 cases to deal with *)
 abstract
-          (destruct l3;  abstract (solve [exact (degen_bool _ Hle) | apply (degen_bool _ Hldist) | exact (degen_bool _ His) |
-           destruct l4;  abstract (solve [exact (degen_bool _ Hle) | apply (degen_bool _ Hldist) | exact (degen_bool _ His) |
-           destruct l5;  abstract (solve [ exact (degen_bool _ Hle) | apply (degen_bool _ Hldist) | exact (degen_bool _ His) | exact (erefl true)])])]))].
+          (destruct l3;  (solve [exact (degen_bool _ Hle) | apply (degen_bool _ Hldist) | exact (degen_bool _ His) |
+           destruct l4;  (solve [exact (degen_bool _ Hle) | apply (degen_bool _ Hldist) | exact (degen_bool _ His) |
+           destruct l5;  (solve [ exact (degen_bool _ Hle) | apply (degen_bool _ Hldist) | exact (degen_bool _ His) | exact (erefl true)])])]))]).
 Time Qed.
 
     (*        (abstract (destruct l3; abstract (solve [exact (degen_bool _ Hle) | exact (degen_bool _ His) | destruct l4;

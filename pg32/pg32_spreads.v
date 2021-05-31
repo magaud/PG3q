@@ -189,6 +189,39 @@ Lemma ab5_bool : forall a b c d e, a && b && c && d && e <-> a /\ b /\ c /\ d /\
   case a; case b; case c; case d; case e; intros ; solve [reflexivity | decompose [and] H; discriminate].
 Qed.
 
+Import ListNotations.
+
+Definition all_isomorphic (P:(list Point)->(list Point)->Prop) l :=
+  forall t1 t2: (list Point), In t1 l -> In t2 l -> P t1 t2.
+Check all_isomorphic.
+
+Definition all_iso_decomp  (P:(list Point)->(list Point)->Prop) (l:list (list Point)) :=
+  forall n:nat, (length l <> 0) -> P (nth (Nat.modulo n (length l)) l []) (nth (Nat.modulo (S n) (length l)) l []).
+Check all_iso_decomp.                                                                                              
+Lemma all_equiv P l : all_isomorphic P l <-> all_iso_decomp P l.
+Proof.
+  unfold all_isomorphic,all_iso_decomp; split.
+  intros.
+  apply H.
+  apply nth_In.
+  apply PeanoNat.Nat.mod_upper_bound; assumption.
+  apply nth_In.
+  apply PeanoNat.Nat.mod_upper_bound; assumption.
+
+  intros.
+Search In nth.
+destruct (In_nth l t1 [] H0) as[x1 [Hx1 Hx1']].
+destruct (In_nth l t2 [] H1) as[x2 [Hx2 Hx2']].
+rewrite <- Hx1'.
+rewrite <- Hx2'.
+
+admit.
+
+
+
+Admitted.
+
+
 Lemma is_spread_descr_1 :  forall l1 l2 l3 l4 l5,
     (*56 cases*)
     (((eqL l1 L0) &&(eqL l2 L19) && (eqL l3 L24) && (eqL l4 L28) && (eqL l5 L33)) || 
@@ -265,7 +298,7 @@ Check is_spread_descr_1.
 
 Lemma is_spread_descr_2 : forall l1 l2 l3 l4 l5,
     leL l1 l2 && leL l2 l3 && leL l3 l4 && leL l4 l5 ->
-    disj_5l l1 l2 l3 l4 l5 -> 
+   (* disj_5l l1 l2 l3 l4 l5 -> *)
     (is_spread5 l1 l2 l3 l4 l5 -> 
     (*56 cases*)
     ((eqL l1 L0) &&(eqL l2 L19) && (eqL l3 L24) && (eqL l4 L28) && (eqL l5 L33)) || 
@@ -325,14 +358,14 @@ Lemma is_spread_descr_2 : forall l1 l2 l3 l4 l5,
 ((eqL l1 L6) &&(eqL l2 L12) && (eqL l3 L13) && (eqL l4 L24) && (eqL l5 L33)) || 
 ((eqL l1 L6) &&(eqL l2 L12) && (eqL l3 L18) && (eqL l4 L26) && (eqL l5 L34)) ).
 Proof.
-  intros l1 l2 l3 l4 l5 Hle Hdist His;
+  intros l1 l2 l3 l4 l5 Hle (*Hdist*) His;
     destruct l1; abstract (destruct l2;
-      solve  [apply (degen_bool _ Hle) | apply (degen_bool _ Hldist) | exact (degen_bool _ His) | (*idtac].  ;*)
+      solve  [exact (degen_bool _ Hle)  | exact (degen_bool _ His) | (*idtac].  ;*)
       (*par:*)          (* 280 cases to deal with *)
 abstract
-          (destruct l3;  (solve [exact (degen_bool _ Hle) | apply (degen_bool _ Hldist) | exact (degen_bool _ His) |
-           destruct l4;  (solve [exact (degen_bool _ Hle) | apply (degen_bool _ Hldist) | exact (degen_bool _ His) |
-           destruct l5;  (solve [ exact (degen_bool _ Hle) | apply (degen_bool _ Hldist) | exact (degen_bool _ His) | exact (erefl true)])])]))]).
+          (destruct l3;  (solve [exact (degen_bool _ Hle) | exact (degen_bool _ His) |
+           destruct l4;  (solve [exact (degen_bool _ Hle) |  exact (degen_bool _ His) |
+           destruct l5;  (solve [ exact (degen_bool _ Hle) |  exact (degen_bool _ His) | exact (erefl true)])])]))]).
 Time Qed.
 
     (*        (abstract (destruct l3; abstract (solve [exact (degen_bool _ Hle) | exact (degen_bool _ His) | destruct l4;
@@ -409,8 +442,4 @@ Proof.
 Qed.
 
 
-Definition all_isomorphic P l := forall t1 t2: (list Point), In t1 l -> In t2 l -> P t1 t2.
-
-Definition all_iso_decomp P l := forall n:nat,P (nth (n%length l) l []) (nth (S n%length l) l []).
-
-forall P: spread -> spread -> Prop, forall a b, (In a l /\ In b l -> P a b) <-> forall a na, P a na
+  (*forall P: spread -> spread -> Prop, forall a b, (In a l /\ In b l -> P a b) <-> forall a na, P a na*)

@@ -14,8 +14,12 @@ generic/lemmas.v
 -Q pg32 PG32
 pg32/pg32_inductive.v
 pg32/pg32_proofs.v
-pg32/pg32_spreads.v
+pg32/pg32_spreads_packings.v
+
+pg32/pg32_spreads.v # to remove 
 pg32/pg32_spreads_collineations.v
+pg32/pg32_packings_collineations.v
+
 
 # ----------- pg(3,3) -----------
 # gcc -o try_pg33 try_pg33.c

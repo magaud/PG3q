@@ -7,6 +7,16 @@ Require Import Lists.List.
 
 Import ListNotations.
 
+Lemma Point_dec : forall p q : Point, {p=q}+{p<>q}.
+Proof.
+intros p q; case p; case q; solve [left; reflexivity | right; discriminate].
+Defined.
+
+Lemma Line_dec : forall p q : Line, {p=q}+{p<>q}.
+Proof.
+intros p q; case p; case q; solve [left; reflexivity | right; discriminate].
+Defined.
+
 Definition S0 := [ L0; L19; L24; L28; L33 ].
 Definition S1 := [ L0; L19; L26; L29; L32 ].
 Definition S2 := [ L0; L20; L23; L28; L34 ].
@@ -309,4 +319,16 @@ Definition PA239 := [ S7; S15; S21; S27; S38; S42; S48 ].
 
 Definition packings := [ PA0 ; PA1 ; PA2 ; PA3 ; PA4 ; PA5 ; PA6 ; PA7 ; PA8 ; PA9 ; PA10 ; PA11 ; PA12 ; PA13 ; PA14 ; PA15 ; PA16 ; PA17 ; PA18 ; PA19 ; PA20 ; PA21 ; PA22 ; PA23 ; PA24 ; PA25 ; PA26 ; PA27 ; PA28 ; PA29 ; PA30 ; PA31 ; PA32 ; PA33 ; PA34 ; PA35 ; PA36 ; PA37 ; PA38 ; PA39 ; PA40 ; PA41 ; PA42 ; PA43 ; PA44 ; PA45 ; PA46 ; PA47 ; PA48 ; PA49 ; PA50 ; PA51 ; PA52 ; PA53 ; PA54 ; PA55 ; PA56 ; PA57 ; PA58 ; PA59 ; PA60 ; PA61 ; PA62 ; PA63 ; PA64 ; PA65 ; PA66 ; PA67 ; PA68 ; PA69 ; PA70 ; PA71 ; PA72 ; PA73 ; PA74 ; PA75 ; PA76 ; PA77 ; PA78 ; PA79 ; PA80 ; PA81 ; PA82 ; PA83 ; PA84 ; PA85 ; PA86 ; PA87 ; PA88 ; PA89 ; PA90 ; PA91 ; PA92 ; PA93 ; PA94 ; PA95 ; PA96 ; PA97 ; PA98 ; PA99 ; PA100 ; PA101 ; PA102 ; PA103 ; PA104 ; PA105 ; PA106 ; PA107 ; PA108 ; PA109 ; PA110 ; PA111 ; PA112 ; PA113 ; PA114 ; PA115 ; PA116 ; PA117 ; PA118 ; PA119 ; PA120 ; PA121 ; PA122 ; PA123 ; PA124 ; PA125 ; PA126 ; PA127 ; PA128 ; PA129 ; PA130 ; PA131 ; PA132 ; PA133 ; PA134 ; PA135 ; PA136 ; PA137 ; PA138 ; PA139 ; PA140 ; PA141 ; PA142 ; PA143 ; PA144 ; PA145 ; PA146 ; PA147 ; PA148 ; PA149 ; PA150 ; PA151 ; PA152 ; PA153 ; PA154 ; PA155 ; PA156 ; PA157 ; PA158 ; PA159 ; PA160 ; PA161 ; PA162 ; PA163 ; PA164 ; PA165 ; PA166 ; PA167 ; PA168 ; PA169 ; PA170 ; PA171 ; PA172 ; PA173 ; PA174 ; PA175 ; PA176 ; PA177 ; PA178 ; PA179 ; PA180 ; PA181 ; PA182 ; PA183 ; PA184 ; PA185 ; PA186 ; PA187 ; PA188 ; PA189 ; PA190 ; PA191 ; PA192 ; PA193 ; PA194 ; PA195 ; PA196 ; PA197 ; PA198 ; PA199 ; PA200 ; PA201 ; PA202 ; PA203 ; PA204 ; PA205 ; PA206 ; PA207 ; PA208 ; PA209 ; PA210 ; PA211 ; PA212 ; PA213 ; PA214 ; PA215 ; PA216 ; PA217 ; PA218 ; PA219 ; PA220 ; PA221 ; PA222 ; PA223 ; PA224 ; PA225 ; PA226 ; PA227 ; PA228 ; PA229 ; PA230 ; PA231 ; PA232 ; PA233 ; PA234 ; PA235 ; PA236 ; PA237 ; PA238 ; PA239 ].
 
-Definition class0 := [].
+Definition class0 := [PA0; PA3; PA5; PA6; PA9; PA11; PA13; PA15; PA16; PA18; PA21; PA22; PA25; PA26; PA28; PA31; PA32; PA34; PA37; PA38; PA40; PA42; PA44; PA47; PA48; PA51; PA52; PA54; PA56; PA59; PA61; PA63; PA64;PA67;PA68; PA71; PA73; PA74; PA77; PA78; PA80; PA83; PA85; PA86; PA89; PA90; PA92; PA95; PA97; PA98; PA101; PA103; PA105; PA106; PA108; PA111; PA112; PA114; PA117; PA118; PA121; PA122; PA124; PA127; PA128; PA131; PA132; PA134; PA137; PA138; PA140; PA143; PA144; PA146;PA149; PA150; PA153; PA155; PA156; PA159; PA161; PA162; PA164; PA167; PA168; PA171; PA172; PA175; PA177; PA178; PA180; PA182; PA185; PA186; PA188; PA191; PA192; PA195; PA196; PA199; PA201; PA202; PA205; PA206; PA209; PA211; PA212; PA215; PA217; PA219; PA220; PA223; PA224; PA227; PA228; PA231; PA233; PA234; PA237; PA239].
+
+Eval compute in length (class0). 
+
+Fixpoint complement (l:list (list (list Line))) (ref:list (list (list Line))) : (list (list (list Line))) :=
+  match l with
+    nil => ref
+  | x::xs => complement xs (remove (list_eq_dec (list_eq_dec Line_dec)) x ref)
+  end.
+
+Definition class1 :=  complement class0 packings.
+
+Eval compute in hd [[]] class1.

@@ -7,15 +7,20 @@ Proof.
   intros; discriminate.
 Qed.
 
-Lemma ab_bool_lr : forall a b, a && b -> a /\ b.
+Lemma foo : forall a b:bool, a -> b -> a && b. 
+Proof.
+  intros a b; case a; case b; solve [reflexivity | discriminate].
+Qed.
+
+Lemma and_bool_lr : forall a b, a && b -> a /\ b.
 Proof.
   intros a b; case a; case b; intros H; inversion H; split; assumption.
 Qed.
 
-Lemma ab_bool : forall a b, a && b <-> a /\ b.
+Lemma and_bool : forall a b, a && b <-> a /\ b.
 Proof.
   intros a b; split.
-  apply ab_bool_lr.
+  apply and_bool_lr.
   case a;case b; intros (ha,hb); solve [inversion ha | inversion hb | reflexivity].
 Qed.
 

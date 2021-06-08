@@ -16,8 +16,9 @@ pg32/pg32_inductive.v
 pg32/pg32_proofs.v
 pg32/pg32_spreads_packings.v
 
-pg32/pg32_spreads.v # to remove 
+pg32/pg32_spreads.v # restructure
 pg32/pg32_spreads_collineations.v
+pg32/pg32_packings.v 
 pg32/pg32_packings_collineations.v
 
 

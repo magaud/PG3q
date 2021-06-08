@@ -507,12 +507,42 @@ void build_incidence_relation(FILE *f, char *in, int p, int l)
   
   printf("nb_packings = %d\n", nb_packings);
   // display packings !
-  FILE *h=fopen("packings_pg32.txt","w");
+  FILE *h=fopen("pg32_spreads_packings.v","w");
+  fprintf(h, "(* spreads and packings of pg32 *)\n\n");
+
+  fprintf(h, "Require Import ssreflect ssrfun ssrbool.\n");
+  fprintf(h, "Require Import Generic.lemmas Generic.wlog.\n");
+  fprintf(h, "Require Import PG32.pg32_inductive.\n");
+
+  fprintf(h, "Require Import Lists.List.\n\n");
+
+  fprintf(h, "Import ListNotations.\n\n");
+  
+  for(i=0;i<nb_spreads;i++)
+    {
+      fprintf(h, "Definition S%i := [ L%d; L%d; L%d; L%d; L%d ].\n", i,spreads[i][0],spreads[i][1],spreads[i][2],spreads[i][3],spreads[i][4]);
+    }
+  
+  fprintf(h, "\nDefinition spreads := [ ");
+  for(i=0;i<nb_spreads;i++)
+    {
+      fprintf(h, "S%d ",i);
+      if (i==nb_spreads-1) fprintf(h,"].\n\n"); else fprintf(h,"; ");
+    }
+
   for(i=0;i<nb_packings;i++)
     {
-      fprintf(h,"packing #%d : %d %d %d %d %d %d %d\n", i,packings[i][0],packings[i][1],packings[i][2],packings[i][3],packings[i][4],packings[i][5],packings[i][6]);
+      fprintf(h,"Definition PA%i := [ S%d; S%d; S%d; S%d; S%d; S%d; S%d ].\n", i,packings[i][0],packings[i][1],packings[i][2],packings[i][3],packings[i][4],packings[i][5],packings[i][6]);
+     
       printf("packing #%d : %d %d %d %d %d %d %d\n", i,packings[i][0],packings[i][1],packings[i][2],packings[i][3],packings[i][4],packings[i][5],packings[i][6]);
     }
+fprintf(h, "\nDefinition packings := [ ");
+ for(i=0;i<nb_packings;i++)
+   {
+      fprintf(h, "PA%d ",i);
+      if (i==nb_packings-1) fprintf(h,"].\n\n"); else fprintf(h,"; ");
+    }
+  
   fclose(h);
 
 }
@@ -525,7 +555,7 @@ int create_and_write_file(char *in, char *s, int p, int l)
 
   fprintf(f, "Require Import ssreflect ssrfun ssrbool.\n");
   fprintf(f, "Require Import Generic.lemmas.\n");
-  fprintf(f, "Require Import Arith.\n");
+  fprintf(f, "Require Import Arith.\n\n");
 
   fprintf(f, "(* %s: #points = %d, #lines = %d *)\n\n", s, p, l);
   fprintf(f, "Inductive Point :=\n");

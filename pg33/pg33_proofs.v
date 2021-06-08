@@ -1,5 +1,8 @@
-Require Import ords ssreflect ssrfun ssrbool pg3x_spec pg33_ind.
-Require Import wlog.
+Require Import ssreflect ssrfun ssrbool.
+Require Import Generic.lemmas Generic.wlog.
+Require Import Generic.pg3x_spec.
+
+Require Import  PG33.pg33_inductive.
 
 Module PS : ProjectiveSpace.
 
@@ -535,7 +538,7 @@ Lemma a2_conj :
 End PS.
 
 (* Local Variables: *)
-(* coq-prog-name: "/Users/magaud/.opam/4.07.0/bin/coqtop" *)
+(* coq-prog-name: "/Users/magaud/.opam/4.11.1/bin/coqtop" *)
 (* coq-load-path: (("." "Top") ) *)
 (* suffixes: .v *)
 (* End: *)

@@ -219,12 +219,12 @@ Time Qed.
     Lemma exchL: forall x y B C, ~~eqL y x && B &&C-> ~~eqL x y && B && C.
     Proof.
       intros x y b c H.
-      apply ab_bool in H.      
+      apply and_bool in H.      
       destruct H as [Hx Hy].
-      apply ab_bool in Hx.
+      apply and_bool in Hx.
       destruct Hx.
-      apply ab_bool; split.
-      apply ab_bool; split.
+      apply and_bool; split.
+      apply and_bool; split.
       rewrite eqL_sym.
       assumption.
       assumption.
@@ -235,17 +235,17 @@ Time Qed.
         ~~eqP y x && B &&C &&D &&E &&F-> ~~eqP x y && B && C && D && E &&F.
     Proof.
       intros x y b c d e f H.
-      apply ab_bool in H.
-      destruct H as [Ha Hf]; apply ab_bool in Ha;
-        destruct Ha as [Ha He]; apply ab_bool in Ha;
-          destruct Ha as [Ha Hd]; apply ab_bool in Ha;
-            destruct Ha as [Ha Hc]; apply ab_bool in Ha;
+      apply and_bool in H.
+      destruct H as [Ha Hf]; apply and_bool in Ha;
+        destruct Ha as [Ha He]; apply and_bool in Ha;
+          destruct Ha as [Ha Hd]; apply and_bool in Ha;
+            destruct Ha as [Ha Hc]; apply and_bool in Ha;
               destruct Ha as [Ha Hb].
-      apply ab_bool; split.
-      apply ab_bool; split.
-      apply ab_bool; split.
-      apply ab_bool; split.
-      apply ab_bool; split.
+      apply and_bool; split.
+      apply and_bool; split.
+      apply and_bool; split.
+      apply and_bool; split.
+      apply and_bool; split.
       rewrite eqP_sym.
       assumption.
       assumption.
@@ -264,8 +264,8 @@ Time Qed.
     wlog3 v1 v2 v3 leL leL_total idtac idtac.
 
     intros; apply a3_3_simple.
-    destruct (ab_bool_lr _ _  H) as [Ha1 Ha2]; exact Ha1.
-    destruct (ab_bool_lr _ _  H) as [Ha1 Ha2]; exact Ha2.
+    destruct (and_bool_lr _ _  H) as [Ha1 Ha2]; exact Ha1.
+    destruct (and_bool_lr _ _  H) as [Ha1 Ha2]; exact Ha2.
     assumption.
 
     intros.
@@ -349,11 +349,11 @@ Time Qed.
   Proof.
   idtac "-> proving a2_conj_specific".
      intros A B C D HleAB HleCD lAB lCD lAC lBD lAD lBC Hdist HlAB HlCD HlAC HlBD HlAD HlBC Hex;
-       destruct (ab_bool_lr _ _ Hdist) as [Hdist1 HCD]; clear Hdist;
-         destruct (ab_bool_lr _ _ Hdist1) as [Hdist2 HBD]; clear Hdist1;
-           destruct (ab_bool_lr _ _ Hdist2) as [Hdist3 HBC]; clear Hdist2;
-             destruct (ab_bool_lr _ _ Hdist3) as [Hdist4 HAD]; clear Hdist3;
-               destruct (ab_bool_lr _ _ Hdist4) as [HAB HAC]; clear Hdist4;
+       destruct (and_bool_lr _ _ Hdist) as [Hdist1 HCD]; clear Hdist;
+         destruct (and_bool_lr _ _ Hdist1) as [Hdist2 HBD]; clear Hdist1;
+           destruct (and_bool_lr _ _ Hdist2) as [Hdist3 HBC]; clear Hdist2;
+             destruct (and_bool_lr _ _ Hdist3) as [Hdist4 HAD]; clear Hdist3;
+               destruct (and_bool_lr _ _ Hdist4) as [HAB HAC]; clear Hdist4;
         revert A B HleAB HAB lAB HlAB C HBC HAC lBC HlBC lAC HlAC D HleCD HAD HBD HCD lAD HlAD lBD HlBD lCD HlCD Hex.
 
      time (intros A B; case A; case B; intros HlePAB HAB lAB HlAB). 
@@ -493,15 +493,15 @@ Lemma a2_conj :
   Proof.
     idtac "-> proving a2".
     intros A B C D lAB lCD lAC lBD Hdist HlAB HlCD HlAC HlBD Hex.
-    destruct (ab_bool_lr _ _ HlAB) as [HlAB1 HlAB2]; 
-      destruct (ab_bool_lr _ _ HlCD) as [HlCD1 HlCD2]; 
-      destruct (ab_bool_lr _ _ HlAC) as [HlAC1 HlAC2]; 
-      destruct (ab_bool_lr _ _ HlBD) as [HlBD1 HlBD2]; 
-      destruct (ab_bool_lr _ _ Hdist) as [Hdist1 HCD]; 
-      destruct (ab_bool_lr _ _ Hdist1) as [Hdist2 HBD]; 
-      destruct (ab_bool_lr _ _ Hdist2) as [Hdist3 HBC]; 
-      destruct (ab_bool_lr _ _ Hdist3) as [Hdist4 HAD]; 
-      destruct (ab_bool_lr _ _ Hdist4) as [HAB HAC].
+    destruct (and_bool_lr _ _ HlAB) as [HlAB1 HlAB2]; 
+      destruct (and_bool_lr _ _ HlCD) as [HlCD1 HlCD2]; 
+      destruct (and_bool_lr _ _ HlAC) as [HlAC1 HlAC2]; 
+      destruct (and_bool_lr _ _ HlBD) as [HlBD1 HlBD2]; 
+      destruct (and_bool_lr _ _ Hdist) as [Hdist1 HCD]; 
+      destruct (and_bool_lr _ _ Hdist1) as [Hdist2 HBD]; 
+      destruct (and_bool_lr _ _ Hdist2) as [Hdist3 HBC]; 
+      destruct (and_bool_lr _ _ Hdist3) as [Hdist4 HAD]; 
+      destruct (and_bool_lr _ _ Hdist4) as [HAB HAC].
     
     handle_eff lAB A B HlAB.
     handle_eff lCD C D HlCD.

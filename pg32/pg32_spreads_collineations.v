@@ -1,11 +1,71 @@
 Require Import ssreflect ssrfun ssrbool.
 Require Import Generic.lemmas Generic.wlog.
-Require Import PG32.pg32_inductive PG32.pg32_proofs.
-(*
-Inductive Point := | P0 | P1 | P2 | P3 | P4 | P5 | P6 | P7 | P8 | P9 | P10 | P11 | P12 | P13 | P14 .
+Require Import PG32.pg32_inductive.
 
-Inductive Line := | L0 | L1 | L2 | L3 | L4 | L5 | L6 | L7 | L8 | L9 | L10 | L11 | L12 | L13 | L14 | L15 | L16 | L17 | L18 | L19 | L20 | L21 | L22 | L23 | L24 | L25 | L26 | L27 | L28 | L29 | L30 | L31 | L32 | L33 | L34 .
- *)
+Require Import Lia.
+Require Import Lists.List.
+Import ListNotations.
+
+Definition spreads : list (list Line) := 
+  [
+ [ L0; L19; L24; L28; L33 ] ;  
+[ L0; L19; L26; L29; L32 ] ;  
+[ L0; L20; L23; L28; L34 ] ;  
+[ L0; L20; L25; L29; L31 ] ;  
+[ L0; L21; L24; L30; L31 ] ;  
+[ L0; L21; L26; L27; L34 ] ;  
+[ L0; L22; L23; L30; L32 ] ;  
+[ L0; L22; L25; L27; L33 ] ;  
+[ L1; L8; L14; L28; L33 ] ;  
+[ L1; L8; L16; L29; L31 ] ;  
+[ L1; L9; L13; L29; L32 ] ;  
+[ L1; L9; L18; L28; L34 ] ;  
+[ L1; L10; L14; L30; L32 ] ;  
+[ L1; L10; L16; L27; L34 ] ;  
+[ L1; L11; L13; L27; L33 ] ;  
+[ L1; L11; L18; L30; L31 ] ;  
+[ L2; L8; L14; L21; L26 ] ;  
+[ L2; L8; L16; L22; L23 ] ;  
+[ L2; L9; L13; L21; L24 ] ;  
+[ L2; L9; L18; L22; L25 ] ;  
+[ L2; L10; L14; L20; L25 ] ;  
+[ L2; L10; L16; L19; L24 ] ;  
+[ L2; L11; L13; L20; L23 ] ;  
+[ L2; L11; L18; L19; L26 ] ;  
+[ L3; L7; L14; L21; L30 ] ;  
+[ L3; L7; L16; L19; L29 ] ;  
+[ L3; L9; L15; L25; L29 ] ;  
+[ L3; L9; L17; L21; L34 ] ;  
+[ L3; L11; L15; L23; L30 ] ;  
+[ L3; L11; L17; L19; L33 ] ;  
+[ L3; L12; L14; L25; L33 ] ;  
+[ L3; L12; L16; L23; L34 ] ;  
+[ L4; L7; L14; L20; L28 ] ;  
+[ L4; L7; L16; L22; L27 ] ;  
+[ L4; L9; L15; L24; L28 ] ;  
+[ L4; L9; L17; L22; L32 ] ;  
+[ L4; L11; L15; L26; L27 ] ;  
+[ L4; L11; L17; L20; L31 ] ;  
+[ L4; L12; L14; L26; L32 ] ;  
+[ L4; L12; L16; L24; L31 ] ;  
+[ L5; L7; L13; L21; L27 ] ;  
+[ L5; L7; L18; L19; L28 ] ;  
+[ L5; L8; L15; L23; L28 ] ;  
+[ L5; L8; L17; L21; L31 ] ;  
+[ L5; L10; L15; L25; L27 ] ;  
+[ L5; L10; L17; L19; L32 ] ;  
+[ L5; L12; L13; L23; L32 ] ;  
+[ L5; L12; L18; L25; L31 ] ;  
+[ L6; L7; L13; L20; L29 ] ;  
+[ L6; L7; L18; L22; L30 ] ;  
+[ L6; L8; L15; L26; L29 ] ;  
+[ L6; L8; L17; L22; L33 ] ;  
+[ L6; L10; L15; L24; L30 ] ;  
+[ L6; L10; L17; L20; L34 ] ;  
+[ L6; L12; L13; L24; L33 ] ;  
+[ L6; L12; L18; L26; L34 ]
+  ].
+
 
 (* s0 : l0 : | p0 p1 p2 | l19 : | p3 p10 p14 | l24 : | p4 p8 p11 | l28 : | p5 p7 p13 | l33 : | p6 p9 p12 | -> 
    s1 : l0 : | p0 p1 p2 | l19 : | p3 p10 p14 | l26 : | p4 p7 p12 | l29 : | p5 p9 p11 | l32 : | p6 p8 p13 |  *)
@@ -286,4 +346,464 @@ Definition fl54_55 (l:Line) := match l with L0 => L0 | L1 => L1 | L2 => L2 | L3 
    s0 : l0 : | p0 p1 p2 | l19 : | p3 p10 p14 | l24 : | p4 p8 p11 | l28 : | p5 p7 p13 | l33 : | p6 p9 p12 |  *)
 Definition fp55_0 (p:Point) := match p with P0 => P0 | P1 => P3 | P2 => P4 | P3 => P14 | P4 => P13 | P5 => P10 | P6 => P9 | P7 => P7 | P8 => P8 | P9 => P11 | P10 => P12 | P11 => P6 | P12 => P5 | P13 => P2 | P14 => P1 end.
 Definition fl55_0 (l:Line) := match l with L0 => L1 | L1 => L6 | L2 => L4 | L3 => L3 | L4 => L5 | L5 => L2 | L6 => L0 | L7 => L21 | L8 => L20 | L9 => L12 | L10 => L22 | L11 => L15 | L12 => L19 | L13 => L26 | L14 => L7 | L15 => L23 | L16 => L17 | L17 => L25 | L18 => L24 | L19 => L9 | L20 => L27 | L21 => L14 | L22 => L31 | L23 => L11 | L24 => L32 | L25 => L16 | L26 => L28 | L27 => L8 | L28 => L13 | L29 => L34 | L30 => L30 | L31 => L10 | L32 => L18 | L33 => L29 | L34 => L33 end.
+
+Check fp55_0.
+
+(* tools to deal with collineations *)
+Definition inj {A:Set} {B:Set} (f:A->B) := forall x y:A, f x = f y -> x =y. 
+Definition surj {A:Set} {B:Set} (f:A->B) := forall y:B, exists x:A, y=f(x).
+Definition bij {A:Set} {B:Set} (f:A->B) := inj f /\ surj f.
+
+Definition is_collineation fp fl :=
+  bij fp /\ bij fl /\ (forall x l, incid_lp x l -> incid_lp (fp x) (fl l)).
+
+Ltac solve_surjP :=
+  solve [
+      exists P0; reflexivity |
+             exists P0; reflexivity |
+             exists P1; reflexivity |
+             exists P2; reflexivity |
+             exists P3; reflexivity |
+             exists P4; reflexivity |
+             exists P5; reflexivity |
+             exists P6; reflexivity |
+             exists P7; reflexivity |
+             exists P8; reflexivity |
+             exists P9; reflexivity |
+             exists P10; reflexivity |
+             exists P11; reflexivity |
+             exists P12; reflexivity |
+             exists P13; reflexivity |
+             exists P14; reflexivity ].
+
+Ltac solve_surjL :=
+  solve [
+      exists L0; reflexivity |
+             exists L0; reflexivity |
+             exists L1; reflexivity |
+             exists L2; reflexivity |
+             exists L3; reflexivity |
+             exists L4; reflexivity |
+             exists L5; reflexivity |
+             exists L6; reflexivity |
+             exists L7; reflexivity |
+             exists L8; reflexivity |
+             exists L9; reflexivity |
+             exists L10; reflexivity |
+             exists L11; reflexivity |
+             exists L12; reflexivity |
+             exists L13; reflexivity |
+             exists L14; reflexivity | 
+             exists L15; reflexivity |
+             exists L16; reflexivity |
+             exists L17; reflexivity |
+             exists L18; reflexivity |
+             exists L19; reflexivity |
+             exists L20; reflexivity |
+             exists L21; reflexivity |
+             exists L22; reflexivity |
+             exists L23; reflexivity |
+             exists L24; reflexivity |
+             exists L25; reflexivity |
+             exists L26; reflexivity |
+             exists L27; reflexivity |
+             exists L28; reflexivity |
+             exists L29; reflexivity |
+             exists L30; reflexivity |
+             exists L31; reflexivity |
+             exists L32; reflexivity |
+             exists L33; reflexivity |
+             exists L34; reflexivity
+    ].
+Ltac is_col := split;
+    [ split; [unfold inj; let x:= fresh in let y:=fresh in  intros x y; destruct x; destruct y; simpl; let H := fresh in intros H; solve [discriminate H | reflexivity ] |
+              unfold surj; let y:= fresh in intros y; destruct y; solve_surjP]
+    | 
+    split; [
+      split; [unfold inj; let x:= fresh in let y:=fresh in intros x y; destruct x; destruct y; simpl;  let H := fresh in intros H; solve [discriminate H | reflexivity ] |
+              unfold surj; let y:= fresh in intros y; destruct y; solve_surjL] | 
+      intros x l; destruct x; destruct l;
+      let H := fresh in intros H; solve [apply (degen_bool _ H) | apply is_true_true]]].
+
+(*
+Lemma c0_1 : is_collineation fp0_1 fl0_1.
+Proof.
+  is_col.
+Qed.
+ *)
+
+Definition all_isomorphic (A:Set) (P:(list A)->(list A)->Prop) l :=
+  forall t1 t2: (list A), In t1 l -> In t2 l -> P t1 t2.
+Check all_isomorphic.
+
+Definition all_iso_decomp  (A:Set) (P:(list A)->(list A)->Prop) (l:list (list A)) :=
+  forall n:nat, (length l <> 0) -> P (nth (Nat.modulo n (length l)) l []) (nth (Nat.modulo (S n) (length l)) l []).
+
+Section P.
+Variable A:Set.
+  Variable l:list (list A).
+  Variable P:(list A -> list A -> Prop).
+  Hypothesis length_l : length l <> 0 .
+
+  Hypothesis P_refl : forall a, P a a.
+  Hypothesis P_sym : forall a b, P a b -> P b a. 
+  Hypothesis P_trans : forall a b c, P a b -> P b c -> P a c.
+  
+
+
+Lemma induction_step_1 :  (forall n,
+P (nth (Nat.modulo n (length l)) l []) (nth (Nat.modulo (S n) (length l)) l [])) -> 
+forall m t, P (nth (Nat.modulo m (length l)) l []) (nth (Nat.modulo (t + m) (length l)) l []).
+intros.
+induction t.
+simpl.
+apply P_refl.
+apply P_trans with (nth (Nat.modulo (t + m) (length l)) l []).
+assumption.
+apply H.
+Qed.
+
+Lemma induction_step :
+  (forall n : nat, P (nth (Nat.modulo n (length l)) l []) (nth (Nat.modulo (S n) (length l)) l []))
+  <-> (forall p q :nat, P (nth (Nat.modulo p (length l)) l []) (nth (Nat.modulo q (length l)) l [])).
+Proof.                         
+intros.
+split.
+(* -> *)
+intros.
+destruct (PeanoNat.Nat.lt_ge_cases p q).
+assert (p<=q) by lia.
+destruct (PeanoNat.Nat.le_exists_sub _ _ H1) as [t [Ha Hb]].
+rewrite Ha.
+apply induction_step_1.
+apply H; assumption.
+destruct (PeanoNat.Nat.le_exists_sub _ _ H0) as [t [Ha Hb]].
+rewrite Ha.
+apply P_sym.
+apply induction_step_1.
+apply H; assumption.
+(* <- *)
+intros.
+apply H.
+Qed.
+
+Lemma all_equiv : all_isomorphic A P l <-> all_iso_decomp A P l.
+Proof.
+  unfold all_isomorphic,all_iso_decomp; split.
+  intros.
+  apply H.
+  apply nth_In.
+  apply PeanoNat.Nat.mod_upper_bound; assumption.
+  apply nth_In.
+  apply PeanoNat.Nat.mod_upper_bound; assumption.
+
+  intros.
+destruct (In_nth l t1 [] H0) as[x1 [Hx1 Hx1']].
+destruct (In_nth l t2 [] H1) as[x2 [Hx2 Hx2']].
+rewrite <- Hx1'.
+rewrite <- Hx2'.
+assert (Hx1bis:x1=Nat.modulo x1 (length l)).
+symmetry; apply PeanoNat.Nat.mod_small with(b:=length l); assumption.
+assert (Hx2bis: x2=Nat.modulo x2 (length l)).
+symmetry; apply PeanoNat.Nat.mod_small with(b:=length l); assumption.
+rewrite Hx1bis.
+rewrite Hx2bis.
+apply induction_step.
+intros; apply H; assumption.
+Qed.
+End P.
+
+Definition are_isomorphic (s1:list Line) (s2:list Line) : Prop :=
+  exists fp, exists fl, is_collineation fp fl /\ map fl s1 = s2.
+
+Lemma are_isomorphic_refl : forall s, are_isomorphic s s.
+Proof.
+  exists (fun (p:Point) => p).
+  exists (fun (l:Line) => l).
+  split.
+  simpl.
+  split.
+  split.
+  unfold inj; destruct x; destruct y; simpl; intros H; solve [discriminate H | reflexivity ].
+  unfold surj; destruct y; solve_surjP.
+  split.
+  split.
+  unfold inj; destruct x; destruct y; simpl; intros H; solve [discriminate H | reflexivity ].
+  unfold surj; destruct y; solve_surjL.
+  intros; assumption.
+  apply map_id.
+Qed.
+
+Lemma bij_inv : forall A:Set, forall f:A->A, bij f -> exists g: A->A, bij g /\ (forall x:A, g (f x)=x) /\ (forall x:A, f (g x)=x).
+Proof.
+Admitted.
+Check f_a3_3.
+Lemma are_isomorphic_sym : forall s1 s2, are_isomorphic s1 s2 -> are_isomorphic s2 s1.
+Proof.
+  intros s1 s2 Hs1s2.
+  destruct Hs1s2 as [fp [ fl [is_col is_map]]].
+  destruct is_col as [Hbijp [Hbijl Hincid]].
+  unfold are_isomorphic.
+  destruct (bij_inv Point fp Hbijp) as [fp' [Hbijfp' [Hp1' Hp2']]].
+  destruct (bij_inv Line fl Hbijl) as [fl' [Hbijfl' [Hl1' Hl2']]].
+exists fp'.
+exists fl'.
+split.
+split.
+assumption.
+split.
+assumption.
+intros.
+rewrite <- (Hp2' x) in H.
+rewrite <- (Hl2' l) in H.
+rewrite <- (Hp2' x).
+assert (forall x, (fp' (fp x))=(fp (fp' x))).
+intros.
+rewrite Hp1'.
+rewrite Hp2'.
+reflexivity.
+rewrite (H0 (fp' x)) .
+rewrite <- (Hl2' l).
+assert (H0':forall x, (fl' (fl x))=(fl (fl' x))).
+intros.
+rewrite Hl1'.
+rewrite Hl2'.
+reflexivity.
+rewrite (H0' (fl' l)) .
+apply Hincid.
+
+rewrite <- (Hl2' l).
+rewrite <- (Hp1' (fp' x)).
+
+
+admit.
+
+rewrite <- is_map.
+rewrite map_map.
+rewrite <- map_id.
+Check map_ext.
+apply map_ext.
+assumption.
+
+Admitted.
+                                                                                      
+Lemma are_isomorphic_trans :
+  forall s1 s2 s3, are_isomorphic s1 s2 -> are_isomorphic s2 s3 -> are_isomorphic s1 s3.
+Proof.
+intros s1 s2 s3 Hs1s2 Hs2s3.
+destruct Hs1s2 as [fp [ fl [is_col is_map]]].
+destruct Hs2s3 as [fp' [ fl' [is_col' is_map']]].
+destruct is_col as [[Hinjp Hsurjp] [[Hinjl Hsurjl] Hcompat]].
+destruct is_col' as [[Hinjp' Hsurjp'] [[Hinjl' Hsurjl'] Hcompat']].
+
+exists (fun (x:Point) => fp' (fp x)).
+exists (fun (x:Line) => fl' (fl x)).
+split.
+split.
+split.
+unfold inj.
+intros.
+apply Hinjp.
+apply Hinjp'.
+assumption.
+unfold surj.
+intros.
+unfold surj in *.
+destruct (Hsurjp' y).
+destruct (Hsurjp x).
+exists x0.
+rewrite H0 in H.
+assumption.
+split.
+split.
+unfold inj.
+intros.
+apply Hinjl.
+apply Hinjl'.
+assumption.
+unfold surj.
+intros.
+unfold surj in *.
+destruct (Hsurjl' y).
+destruct (Hsurjl x).
+exists x0.
+rewrite H0 in H.
+assumption.
+intros.
+apply Hcompat'.
+apply Hcompat.
+assumption.
+Search map.
+rewrite <- map_map.
+rewrite is_map.
+assumption.
+Qed.
+
+Lemma equiv :
+  forall P:nat->Prop,
+    (forall n:nat, n<56 -> P n) <->
+    (P 0 /\ P 1 /\ P 2 /\ P 3 /\ P 4 /\ P 5 /\ P 6 /\ P 7 /\ P 8 /\ P 9 /\
+     P 10 /\ P 11 /\ P 12 /\ P 13 /\ P 14 /\ P 15 /\ P 16 /\ P 17 /\ P 18 /\ P 19 /\
+     P 20 /\ P 21 /\ P 22 /\ P 23 /\ P 24 /\ P 25 /\ P 26 /\ P 27 /\ P 28 /\ P 29 /\
+     P 30 /\ P 31 /\ P 32 /\ P 33 /\ P 34 /\ P 35 /\ P 36 /\ P 37 /\ P 38 /\ P 39 /\
+     P 40 /\ P 41 /\ P 42 /\ P 43 /\ P 44 /\ P 45 /\ P 46 /\ P 47 /\ P 48 /\ P 49 /\
+     P 50 /\ P 51 /\ P 52 /\ P 53 /\ P 54 /\ P 55).
+Proof.
+intros.
+split.  
+intros.
+repeat split; apply H; lia.
+intros.
+assert (foo:forall x y : nat, x < S y -> x=y \/ x < y) by (intros; lia).
+repeat (match goal with T:?n< S ?i |- _ => let Hequal := fresh in let Hlt := fresh in destruct (foo n i T) as [Hequal | Hlt]; clear T; [subst;intuition|idtac] end).
+lia.
+Qed.
+
+Lemma n56_decomp : forall n:nat, n < 56 <->
+                        n = 0 \/ n = 1 \/ n = 2 \/ n = 3 \/ n = 4 \/ n = 5 \/ n = 6 \/ n = 7 \/ n  = 8 \/ n = 9 \/
+                        n = 10 \/ n = 11 \/ n = 12 \/ n = 13 \/ n = 14 \/ n = 15 \/ n = 16 \/ n = 17 \/ n  = 18 \/ n = 19 \/
+                        n = 20 \/ n = 21 \/ n = 22 \/ n = 23 \/ n = 24 \/ n = 25 \/ n = 26 \/ n = 27 \/ n  = 28 \/ n = 29 \/
+                        n = 30 \/ n = 31 \/ n = 32 \/ n = 33 \/ n = 34 \/ n = 35 \/ n = 36 \/ n = 37 \/ n  = 38 \/ n = 39 \/
+                        n = 40 \/ n = 41 \/ n = 42 \/ n = 43 \/ n = 44 \/ n = 45 \/ n = 46 \/ n = 47 \/ n  = 48 \/ n = 49 \/
+                        n = 50 \/ n = 51 \/ n = 52 \/ n = 53 \/ n = 54 \/ n = 55 .
+Proof.
+  split.
+  assert (foo:forall x y : nat, x < S y -> x=y \/ x < y) by (intros; lia).
+  intros.  
+  repeat (match goal with T:?n< S ?i |- _ => let Hequal := fresh in let Hlt := fresh in destruct (foo n i T) as [Hequal | Hlt]; clear T; [subst;intuition|idtac] end).
+inversion H0.
+lia.
+Qed.
+
+Lemma modulo_prop : forall n:nat, exists p:nat, p<56 /\ PeanoNat.Nat.modulo n 56 = p.
+Proof.
+  intros.
+  exists (PeanoNat.Nat.modulo n 56).
+  split.
+  apply PeanoNat.Nat.mod_bound_pos.
+  lia.
+  lia.
+  reflexivity.
+Qed.
+
+Lemma modulo_S : forall n:nat,
+    (Nat.modulo (S n) 56 = S (Nat.modulo n 56)) \/ ((Nat.modulo n 56=55)/\(Nat.modulo (S n) 56=0)).
+Admitted.
+
+
+Lemma equiv' :
+  forall P:nat->nat->Prop,
+    (forall n:nat, P (Nat.modulo n 56) (Nat.modulo (S n) 56)) <->
+    (P 0 1/\ P 1 2 /\ P 2 3/\ P 3 4/\ P 4 5/\ P 5 6/\ P 6 7/\ P 7 8/\ P 8 9/\ P 9 10/\
+     P 10 11/\ P 11 12/\ P 12 13/\ P 13 14/\ P 14 15/\ P 15 16/\ P 16 17/\ P 17 18/\ P 18 19/\ P 19 20/\
+     P 20 21/\ P 21 22/\ P 22 23/\ P 23 24/\ P 24 25/\ P 25 26/\ P 26 27/\ P 27 28/\ P 28 29/\ P 29 30/\
+     P 30 31/\ P 31 32/\ P 32 33/\ P 33 34/\ P 34 35/\ P 35 36/\ P 36 37/\ P 37 38/\ P 38 39/\ P 39 40/\
+     P 40 41/\ P 41 42/\ P 42 43/\ P 43 44/\ P 44 45/\ P 45 46 /\ P 46 47/\ P 47 48/\ P 48 49/\ P 49 50/\
+     P 50 51/\ P 51 52/\ P 52 53/\ P 53 54/\ P 54 55/\ P 55 0).
+Proof.
+intros.
+split.  
+intros.
+Search Nat.modulo.
+Check PeanoNat.Nat.mod_small.
+(*rewrite <- PeanoNat.Nat.mod_small with (b:  =   56) by lia.*)
+Check PeanoNat.Nat.mod_small.
+repeat split;match goal with |- P ?X ?Y   => rewrite <- PeanoNat.Nat.mod_small with (a:=X) (b:=56) by lia end; apply H.
+(*assert (foo:forall x y : nat, x < S y -> x  =   y \/ x < y) by (intros; lia).
+induction n.
+intuition.
+*)
+intros.
+destruct (modulo_prop n) as [p [Hp Hp']].
+destruct (modulo_prop (S n)) as [q [Hq Hq']].
+destruct (modulo_S n) as [HA | HB].
+rewrite Hp' Hq' in HA.
+rewrite Hp' Hq'.
+apply u in Hp.
+apply u in Hq.
+clear Hp' Hq'.
+rewrite HA in Hq.
+rewrite HA.
+clear n.
+intuition; match goal with H:p=?i, H':S p=?j |- _ => rewrite H in H'; try solve [ discriminate | rewrite H; assumption] end.
+destruct HB as [HB1 HB2].
+rewrite HB1.
+rewrite HB2. 
+intuition.
+Qed.
+
+Lemma all_isomorphic_lemma :  forall t1 t2 : list Line, In t1 spreads -> In t2 spreads -> are_isomorphic t1 t2. 
+Proof.
+  apply all_equiv.
+  simpl; lia.
+  apply are_isomorphic_refl.
+  apply are_isomorphic_sym.
+  apply are_isomorphic_trans.
+  unfold all_iso_decomp.
+  intros n.
+  apply equiv'.
+  repeat split.
+  intros.
+  exists fp0_1; exists fl0_1; split; [is_col |reflexivity].
+  exists fp1_2; exists fl1_2; split; [is_col |reflexivity].
+  exists fp2_3; exists fl2_3; split; [is_col |reflexivity].
+  exists fp3_4; exists fl3_4; split; [is_col |reflexivity].
+  exists fp4_5; exists fl4_5; split; [is_col |reflexivity].
+  exists fp5_6; exists fl5_6; split; [is_col |reflexivity].
+  exists fp6_7; exists fl6_7; split; [is_col |reflexivity].
+  exists fp7_8; exists fl7_8; split; [is_col |reflexivity].
+  exists fp8_9; exists fl8_9; split; [is_col |reflexivity].
+  exists fp9_10; exists fl9_10; split; [is_col |reflexivity].
+  
+  exists fp10_11; exists fl10_11; split; [is_col |reflexivity].
+  exists fp11_12; exists fl11_12; split; [is_col |reflexivity].
+  exists fp12_13; exists fl12_13; split; [is_col |reflexivity].
+  exists fp13_14; exists fl13_14; split; [is_col |reflexivity].
+  exists fp14_15; exists fl14_15; split; [is_col |reflexivity].
+  exists fp15_16; exists fl15_16; split; [is_col |reflexivity].
+  exists fp16_17; exists fl16_17; split; [is_col |reflexivity].
+  exists fp17_18; exists fl17_18; split; [is_col |reflexivity].
+  exists fp18_19; exists fl18_19; split; [is_col |reflexivity].
+  exists fp19_20; exists fl19_20; split; [is_col |reflexivity].
+  
+  exists fp20_21; exists fl20_21; split; [is_col |reflexivity].
+  exists fp21_22; exists fl21_22; split; [is_col |reflexivity].
+  exists fp22_23; exists fl22_23; split; [is_col |reflexivity].
+  exists fp23_24; exists fl23_24; split; [is_col |reflexivity].
+  exists fp24_25; exists fl24_25; split; [is_col |reflexivity].
+  exists fp25_26; exists fl25_26; split; [is_col |reflexivity].
+  exists fp26_27; exists fl26_27; split; [is_col |reflexivity].
+  exists fp27_28; exists fl27_28; split; [is_col |reflexivity].
+  exists fp28_29; exists fl28_29; split; [is_col |reflexivity].
+  exists fp29_30; exists fl29_30; split; [is_col |reflexivity].
+  
+  exists fp30_31; exists fl30_31; split; [is_col |reflexivity].
+  exists fp31_32; exists fl31_32; split; [is_col |reflexivity].
+  exists fp32_33; exists fl32_33; split; [is_col |reflexivity].
+  exists fp33_34; exists fl33_34; split; [is_col |reflexivity].
+  exists fp34_35; exists fl34_35; split; [is_col |reflexivity].
+  exists fp35_36; exists fl35_36; split; [is_col |reflexivity].
+  exists fp36_37; exists fl36_37; split; [is_col |reflexivity].
+  exists fp37_38; exists fl37_38; split; [is_col |reflexivity].
+  exists fp38_39; exists fl38_39; split; [is_col |reflexivity].
+  exists fp39_40; exists fl39_40; split; [is_col |reflexivity].
+  
+  exists fp40_41; exists fl40_41; split; [is_col |reflexivity].
+  exists fp41_42; exists fl41_42; split; [is_col |reflexivity].
+  exists fp42_43; exists fl42_43; split; [is_col |reflexivity].
+  exists fp43_44; exists fl43_44; split; [is_col |reflexivity].
+  exists fp44_45; exists fl44_45; split; [is_col |reflexivity].
+  exists fp45_46; exists fl45_46; split; [is_col |reflexivity].
+  exists fp46_47; exists fl46_47; split; [is_col |reflexivity].
+  exists fp47_48; exists fl47_48; split; [is_col |reflexivity].
+  exists fp48_49; exists fl48_49; split; [is_col |reflexivity].
+  exists fp49_50; exists fl49_50; split; [is_col |reflexivity].
+  
+  exists fp50_51; exists fl50_51; split; [is_col |reflexivity].
+  exists fp51_52; exists fl51_52; split; [is_col |reflexivity].
+  exists fp52_53; exists fl52_53; split; [is_col |reflexivity].
+  exists fp53_54; exists fl53_54; split; [is_col |reflexivity].
+  exists fp54_55; exists fl54_55; split; [is_col |reflexivity].
+  exists fp55_0; exists fl55_0; split; [is_col |reflexivity].
+Qed. 
 

@@ -1,71 +1,12 @@
 Require Import ssreflect ssrfun ssrbool.
 Require Import Generic.lemmas Generic.wlog.
-Require Import PG32.pg32_inductive.
+Require Import PG32.pg32_inductive PG32.pg32_spreads_packings.
 
 Require Import Lia.
 Require Import Lists.List.
 Import ListNotations.
 
-Definition spreads : list (list Line) := 
-  [
- [ L0; L19; L24; L28; L33 ] ;  
-[ L0; L19; L26; L29; L32 ] ;  
-[ L0; L20; L23; L28; L34 ] ;  
-[ L0; L20; L25; L29; L31 ] ;  
-[ L0; L21; L24; L30; L31 ] ;  
-[ L0; L21; L26; L27; L34 ] ;  
-[ L0; L22; L23; L30; L32 ] ;  
-[ L0; L22; L25; L27; L33 ] ;  
-[ L1; L8; L14; L28; L33 ] ;  
-[ L1; L8; L16; L29; L31 ] ;  
-[ L1; L9; L13; L29; L32 ] ;  
-[ L1; L9; L18; L28; L34 ] ;  
-[ L1; L10; L14; L30; L32 ] ;  
-[ L1; L10; L16; L27; L34 ] ;  
-[ L1; L11; L13; L27; L33 ] ;  
-[ L1; L11; L18; L30; L31 ] ;  
-[ L2; L8; L14; L21; L26 ] ;  
-[ L2; L8; L16; L22; L23 ] ;  
-[ L2; L9; L13; L21; L24 ] ;  
-[ L2; L9; L18; L22; L25 ] ;  
-[ L2; L10; L14; L20; L25 ] ;  
-[ L2; L10; L16; L19; L24 ] ;  
-[ L2; L11; L13; L20; L23 ] ;  
-[ L2; L11; L18; L19; L26 ] ;  
-[ L3; L7; L14; L21; L30 ] ;  
-[ L3; L7; L16; L19; L29 ] ;  
-[ L3; L9; L15; L25; L29 ] ;  
-[ L3; L9; L17; L21; L34 ] ;  
-[ L3; L11; L15; L23; L30 ] ;  
-[ L3; L11; L17; L19; L33 ] ;  
-[ L3; L12; L14; L25; L33 ] ;  
-[ L3; L12; L16; L23; L34 ] ;  
-[ L4; L7; L14; L20; L28 ] ;  
-[ L4; L7; L16; L22; L27 ] ;  
-[ L4; L9; L15; L24; L28 ] ;  
-[ L4; L9; L17; L22; L32 ] ;  
-[ L4; L11; L15; L26; L27 ] ;  
-[ L4; L11; L17; L20; L31 ] ;  
-[ L4; L12; L14; L26; L32 ] ;  
-[ L4; L12; L16; L24; L31 ] ;  
-[ L5; L7; L13; L21; L27 ] ;  
-[ L5; L7; L18; L19; L28 ] ;  
-[ L5; L8; L15; L23; L28 ] ;  
-[ L5; L8; L17; L21; L31 ] ;  
-[ L5; L10; L15; L25; L27 ] ;  
-[ L5; L10; L17; L19; L32 ] ;  
-[ L5; L12; L13; L23; L32 ] ;  
-[ L5; L12; L18; L25; L31 ] ;  
-[ L6; L7; L13; L20; L29 ] ;  
-[ L6; L7; L18; L22; L30 ] ;  
-[ L6; L8; L15; L26; L29 ] ;  
-[ L6; L8; L17; L22; L33 ] ;  
-[ L6; L10; L15; L24; L30 ] ;  
-[ L6; L10; L17; L20; L34 ] ;  
-[ L6; L12; L13; L24; L33 ] ;  
-[ L6; L12; L18; L26; L34 ]
-  ].
-
+(* all collineations from the n^th to (n+1)^th element of the list of spreads *)
 
 (* s0 : l0 : | p0 p1 p2 | l19 : | p3 p10 p14 | l24 : | p4 p8 p11 | l28 : | p5 p7 p13 | l33 : | p6 p9 p12 | -> 
    s1 : l0 : | p0 p1 p2 | l19 : | p3 p10 p14 | l26 : | p4 p7 p12 | l29 : | p5 p9 p11 | l32 : | p6 p8 p13 |  *)
@@ -347,9 +288,9 @@ Definition fl54_55 (l:Line) := match l with L0 => L0 | L1 => L1 | L2 => L2 | L3 
 Definition fp55_0 (p:Point) := match p with P0 => P0 | P1 => P3 | P2 => P4 | P3 => P14 | P4 => P13 | P5 => P10 | P6 => P9 | P7 => P7 | P8 => P8 | P9 => P11 | P10 => P12 | P11 => P6 | P12 => P5 | P13 => P2 | P14 => P1 end.
 Definition fl55_0 (l:Line) := match l with L0 => L1 | L1 => L6 | L2 => L4 | L3 => L3 | L4 => L5 | L5 => L2 | L6 => L0 | L7 => L21 | L8 => L20 | L9 => L12 | L10 => L22 | L11 => L15 | L12 => L19 | L13 => L26 | L14 => L7 | L15 => L23 | L16 => L17 | L17 => L25 | L18 => L24 | L19 => L9 | L20 => L27 | L21 => L14 | L22 => L31 | L23 => L11 | L24 => L32 | L25 => L16 | L26 => L28 | L27 => L8 | L28 => L13 | L29 => L34 | L30 => L30 | L31 => L10 | L32 => L18 | L33 => L29 | L34 => L33 end.
 
-Check fp55_0.
 
 (* tools to deal with collineations *)
+
 Definition inj {A:Set} {B:Set} (f:A->B) := forall x y:A, f x = f y -> x =y. 
 Definition surj {A:Set} {B:Set} (f:A->B) := forall y:B, exists x:A, y=f(x).
 Definition bij {A:Set} {B:Set} (f:A->B) := inj f /\ surj f.
@@ -434,13 +375,12 @@ Qed.
 
 Definition all_isomorphic (A:Set) (P:(list A)->(list A)->Prop) l :=
   forall t1 t2: (list A), In t1 l -> In t2 l -> P t1 t2.
-Check all_isomorphic.
 
 Definition all_iso_decomp  (A:Set) (P:(list A)->(list A)->Prop) (l:list (list A)) :=
   forall n:nat, (length l <> 0) -> P (nth (Nat.modulo n (length l)) l []) (nth (Nat.modulo (S n) (length l)) l []).
 
 Section P.
-Variable A:Set.
+  Variable A:Set.
   Variable l:list (list A).
   Variable P:(list A -> list A -> Prop).
   Hypothesis length_l : length l <> 0 .
@@ -449,68 +389,66 @@ Variable A:Set.
   Hypothesis P_sym : forall a b, P a b -> P b a. 
   Hypothesis P_trans : forall a b c, P a b -> P b c -> P a c.
   
-
-
-Lemma induction_step_1 :  (forall n,
-P (nth (Nat.modulo n (length l)) l []) (nth (Nat.modulo (S n) (length l)) l [])) -> 
-forall m t, P (nth (Nat.modulo m (length l)) l []) (nth (Nat.modulo (t + m) (length l)) l []).
-intros.
-induction t.
-simpl.
-apply P_refl.
-apply P_trans with (nth (Nat.modulo (t + m) (length l)) l []).
-assumption.
-apply H.
-Qed.
-
-Lemma induction_step :
-  (forall n : nat, P (nth (Nat.modulo n (length l)) l []) (nth (Nat.modulo (S n) (length l)) l []))
-  <-> (forall p q :nat, P (nth (Nat.modulo p (length l)) l []) (nth (Nat.modulo q (length l)) l [])).
-Proof.                         
-intros.
-split.
-(* -> *)
-intros.
-destruct (PeanoNat.Nat.lt_ge_cases p q).
-assert (p<=q) by lia.
-destruct (PeanoNat.Nat.le_exists_sub _ _ H1) as [t [Ha Hb]].
-rewrite Ha.
-apply induction_step_1.
-apply H; assumption.
-destruct (PeanoNat.Nat.le_exists_sub _ _ H0) as [t [Ha Hb]].
-rewrite Ha.
-apply P_sym.
-apply induction_step_1.
-apply H; assumption.
-(* <- *)
-intros.
-apply H.
-Qed.
-
-Lemma all_equiv : all_isomorphic A P l <-> all_iso_decomp A P l.
-Proof.
-  unfold all_isomorphic,all_iso_decomp; split.
-  intros.
-  apply H.
-  apply nth_In.
-  apply PeanoNat.Nat.mod_upper_bound; assumption.
-  apply nth_In.
-  apply PeanoNat.Nat.mod_upper_bound; assumption.
-
-  intros.
-destruct (In_nth l t1 [] H0) as[x1 [Hx1 Hx1']].
-destruct (In_nth l t2 [] H1) as[x2 [Hx2 Hx2']].
-rewrite <- Hx1'.
-rewrite <- Hx2'.
-assert (Hx1bis:x1=Nat.modulo x1 (length l)).
-symmetry; apply PeanoNat.Nat.mod_small with(b:=length l); assumption.
-assert (Hx2bis: x2=Nat.modulo x2 (length l)).
-symmetry; apply PeanoNat.Nat.mod_small with(b:=length l); assumption.
-rewrite Hx1bis.
-rewrite Hx2bis.
-apply induction_step.
-intros; apply H; assumption.
-Qed.
+  Lemma induction_step_1 :  (forall n,
+                                P (nth (Nat.modulo n (length l)) l []) (nth (Nat.modulo (S n) (length l)) l [])) -> 
+                            forall m t, P (nth (Nat.modulo m (length l)) l []) (nth (Nat.modulo (t + m) (length l)) l []).
+    intros.
+    induction t.
+    simpl.
+    apply P_refl.
+    apply P_trans with (nth (Nat.modulo (t + m) (length l)) l []).
+    assumption.
+    apply H.
+  Qed.
+  
+  Lemma induction_step :
+    (forall n : nat, P (nth (Nat.modulo n (length l)) l []) (nth (Nat.modulo (S n) (length l)) l []))
+    <-> (forall p q :nat, P (nth (Nat.modulo p (length l)) l []) (nth (Nat.modulo q (length l)) l [])).
+  Proof.                         
+    intros.
+    split.
+    (* -> *)
+    intros.
+    destruct (PeanoNat.Nat.lt_ge_cases p q).
+    assert (p<=q) by lia.
+    destruct (PeanoNat.Nat.le_exists_sub _ _ H1) as [t [Ha Hb]].
+    rewrite Ha.
+    apply induction_step_1.
+    apply H; assumption.
+    destruct (PeanoNat.Nat.le_exists_sub _ _ H0) as [t [Ha Hb]].
+    rewrite Ha.
+    apply P_sym.
+    apply induction_step_1.
+    apply H; assumption.
+    (* <- *)
+    intros.
+    apply H.
+  Qed.
+  
+  Lemma all_equiv : all_isomorphic A P l <-> all_iso_decomp A P l.
+  Proof.
+    unfold all_isomorphic,all_iso_decomp; split.
+    intros.
+    apply H.
+    apply nth_In.
+    apply PeanoNat.Nat.mod_upper_bound; assumption.
+    apply nth_In.
+    apply PeanoNat.Nat.mod_upper_bound; assumption.
+    
+    intros.
+    destruct (In_nth l t1 [] H0) as[x1 [Hx1 Hx1']].
+    destruct (In_nth l t2 [] H1) as[x2 [Hx2 Hx2']].
+    rewrite <- Hx1'.
+    rewrite <- Hx2'.
+    assert (Hx1bis:x1=Nat.modulo x1 (length l)).
+    symmetry; apply PeanoNat.Nat.mod_small with(b:=length l); assumption.
+    assert (Hx2bis: x2=Nat.modulo x2 (length l)).
+    symmetry; apply PeanoNat.Nat.mod_small with(b:=length l); assumption.
+    rewrite Hx1bis.
+    rewrite Hx2bis.
+    apply induction_step.
+    intros; apply H; assumption.
+  Qed.
 End P.
 
 Definition are_isomorphic (s1:list Line) (s2:list Line) : Prop :=
@@ -537,7 +475,7 @@ Qed.
 Lemma bij_inv : forall A:Set, forall f:A->A, bij f -> exists g: A->A, bij g /\ (forall x:A, g (f x)=x) /\ (forall x:A, f (g x)=x).
 Proof.
 Admitted.
-Check f_a3_3.
+
 Lemma are_isomorphic_sym : forall s1 s2, are_isomorphic s1 s2 -> are_isomorphic s2 s1.
 Proof.
   intros s1 s2 Hs1s2.
@@ -633,7 +571,6 @@ intros.
 apply Hcompat'.
 apply Hcompat.
 assumption.
-Search map.
 rewrite <- map_map.
 rewrite is_map.
 assumption.
@@ -690,7 +627,6 @@ Lemma modulo_S : forall n:nat,
     (Nat.modulo (S n) 56 = S (Nat.modulo n 56)) \/ ((Nat.modulo n 56=55)/\(Nat.modulo (S n) 56=0)).
 Admitted.
 
-
 Lemma equiv' :
   forall P:nat->nat->Prop,
     (forall n:nat, P (Nat.modulo n 56) (Nat.modulo (S n) 56)) <->
@@ -704,23 +640,15 @@ Proof.
 intros.
 split.  
 intros.
-Search Nat.modulo.
-Check PeanoNat.Nat.mod_small.
-(*rewrite <- PeanoNat.Nat.mod_small with (b:  =   56) by lia.*)
-Check PeanoNat.Nat.mod_small.
 repeat split;match goal with |- P ?X ?Y   => rewrite <- PeanoNat.Nat.mod_small with (a:=X) (b:=56) by lia end; apply H.
-(*assert (foo:forall x y : nat, x < S y -> x  =   y \/ x < y) by (intros; lia).
-induction n.
-intuition.
-*)
 intros.
 destruct (modulo_prop n) as [p [Hp Hp']].
 destruct (modulo_prop (S n)) as [q [Hq Hq']].
 destruct (modulo_S n) as [HA | HB].
 rewrite Hp' Hq' in HA.
 rewrite Hp' Hq'.
-apply u in Hp.
-apply u in Hq.
+apply n56_decomp in Hp.
+apply n56_decomp in Hq.
 clear Hp' Hq'.
 rewrite HA in Hq.
 rewrite HA.

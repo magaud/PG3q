@@ -1,4 +1,5 @@
 Require Import ssreflect ssrfun ssrbool.
+Require Import Setoid.
 
 (** some simple lemmas about bool *)
 
@@ -7,6 +8,7 @@ Proof.
   intros; discriminate.
 Qed.
 
+(* AND *)
 Lemma foo : forall a b:bool, a -> b -> a && b. 
 Proof.
   intros a b; case a; case b; solve [reflexivity | discriminate].
@@ -22,6 +24,12 @@ Proof.
   intros a b; split.
   apply and_bool_lr.
   case a;case b; intros (ha,hb); solve [inversion ha | inversion hb | reflexivity].
+Qed.
+
+Lemma ab5_bool : forall a b c d e, a && b && c && d && e <-> a /\ b /\ c /\ d /\ e. 
+  intros a b c d e; split.
+  repeat rewrite -> and_bool; intros; tauto.
+  case a; case b; case c; case d; case e; intros ; solve [reflexivity | decompose [and] H; discriminate].
 Qed.
 
 Lemma circ2 : forall a b, a&&b -> b&&a.
@@ -55,4 +63,10 @@ Lemma comm12P: forall A B C D E F :bool,
 Proof.
   intros a b c d e f; case a; case b; case c; case d; case e; case f; intros; assumption.
 Qed.
- 
+
+(* OR *)
+Lemma or_bool : forall a b : bool, a || b <-> a \/ b.
+Proof.
+  intros a b; destruct a; destruct b; split; intuition.
+Qed.  
+

@@ -59,7 +59,6 @@ rewrite filter_In; rewrite existsb_exists; split.
   destruct n; trivial.
 Qed.
 
-
 Definition disjointL (l1 l2:list Line) : bool :=
   match intersection l1 l2 with
   | [] => true
@@ -71,8 +70,8 @@ Definition disj_7s (A B C D E F G:list Line) : bool :=
   && (disjointL B C) && (disjointL B D) && (disjointL B E) && (disjointL B F) && (disjointL B G)
   && (disjointL C D) && (disjointL C E) && (disjointL C F) && (disjointL C G)
   && (disjointL D E) &&  (disjointL D F) && (disjointL D G)
-  && (disjointL E F) && (disjointL E G) &&
-  (disjointL F G).
+  && (disjointL E F) && (disjointL E G)
+  && (disjointL F G).
 
 Definition is_packing7 (s1 s2 s3 s4 s5 s6 s7:list Line) : bool :=
   disj_7s s1 s2 s3 s4 s5 s6 s7 &&

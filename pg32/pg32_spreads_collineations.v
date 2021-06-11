@@ -626,7 +626,7 @@ Qed.
 Lemma modulo_S : forall n:nat,
     (Nat.modulo (S n) 56 = S (Nat.modulo n 56)) \/ ((Nat.modulo n 56=55)/\(Nat.modulo (S n) 56=0)).
 Proof.
-  intros;apply modulo_S56.
+  intros; apply or_comm;apply modulo_S56.
 Qed.
 
 Lemma equiv' :

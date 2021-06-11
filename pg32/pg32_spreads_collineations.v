@@ -1,5 +1,5 @@
 Require Import ssreflect ssrfun ssrbool.
-Require Import Generic.lemmas Generic.wlog.
+Require Import Generic.lemmas Generic.wlog Generic.modulo56.
 Require Import PG32.pg32_inductive PG32.pg32_spreads_packings.
 
 Require Import Lia.
@@ -625,7 +625,9 @@ Qed.
 
 Lemma modulo_S : forall n:nat,
     (Nat.modulo (S n) 56 = S (Nat.modulo n 56)) \/ ((Nat.modulo n 56=55)/\(Nat.modulo (S n) 56=0)).
-Admitted.
+Proof.
+  intros;apply modulo_S56.
+Qed.
 
 Lemma equiv' :
   forall P:nat->nat->Prop,

@@ -2,6 +2,8 @@ Require Import ssreflect ssrfun ssrbool.
 Require Import Generic.lemmas Generic.wlog.
 Require Import PG32.pg32_inductive PG32.pg32_spreads_packings PG32.pg32_spreads_collineations.
 
+Require Import Lia.
+
 (* ~~~~~~~~~~ CLASS 0 ~~~~~~~~~~ *)
 (* P0 : S0 S9 S19 S24 S36 S46 S53 -> 
    P3 : S0 S9 S20 S28 S35 S40 S55  *)
@@ -1224,17 +1226,16 @@ Proof.
                           first [elim (in_nil H) | inversion_clear H; [solve [subst; simpl; intuition] | idtac]] end).
 Qed.
 
-Require Import Lia.
+
 
 Lemma all_isomorphic_lemma :  forall t1 t2 : (list (list Line)), In t1 class0 -> In t2 class0 -> are_isomorphic t1 t2.
 Proof.
   apply (all_equiv (list Line)).
   simpl; lia.
   admit. (* apply are_isomorphic_refl.*)
-admit. (*  apply are_isomorphic_sym.*)
-admit. (*  apply are_isomorphic_trans.*)
+  admit. (*  apply are_isomorphic_trans.*)
   unfold all_iso_decomp.
-  intros n.
+  intros n H.
   apply equiv'.
   repeat split.
   intros.

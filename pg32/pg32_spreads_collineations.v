@@ -418,26 +418,13 @@ Section P.
     apply H; assumption.
     destruct (PeanoNat.Nat.le_exists_sub _ _ H0) as [t [Ha Hb]].
     rewrite Ha.
-    Search Nat.modulo Nat.mul.
     replace  (Nat.modulo q (length l)) with (Nat.modulo ((((S(Nat.div t (length l)))*(length l)) -t)+(t+q)) (length l)).
-    Check PeanoNat.Nat.mod_add.
-    
     apply induction_step_1.
     assumption.
-    Search Nat.sub Nat.add.
-    Check PeanoNat.Nat.add_sub_assoc.
-    
     rewrite <-    PeanoNat.Nat.add_sub_swap.
-    
     replace (S(Nat.div t (length l)) * length l + (t + q) - t) with (q + ((S(Nat.div t (length l)) * length l))) by lia.
-    Search Nat.modulo mult.
     rewrite PeanoNat.Nat.mod_add; try lia. 
-    Search le lt.
-    
     apply PeanoNat.Nat.lt_le_incl.
-    Search ((gt _ _)->(lt _ _)).
-    
-    Search ((_*_)=(_*_)).
     rewrite PeanoNat.Nat.mul_comm.
     apply PeanoNat.Nat.mul_succ_div_gt.
     lia.

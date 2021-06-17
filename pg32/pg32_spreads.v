@@ -121,7 +121,7 @@ destruct l3; destruct l4; destruct l5; try solve [exact (degen_bool _ HA) | exac
  (* simpl in H1.
 
 ; destruct l3; destruct l4; destruct l5.*)
-Admitted.
+
 
            (abstract (destruct l3; abstract (solve [exact (degen_bool _ Hle) | exact (degen_bool _ His) | destruct l4;
                                                                                                  abstract (solve [exact (degen_bool _ Hle) | exact (degen_bool _ His)

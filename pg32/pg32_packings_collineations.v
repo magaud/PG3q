@@ -1,6 +1,6 @@
 Require Import ssreflect ssrfun ssrbool.
 Require Import Generic.lemmas Generic.wlog.
-Require Import PG32.pg32_inductive PG32.pg32_spreads_packings.
+Require Import PG32.pg32_inductive PG32.pg32_spreads_packings PG32.pg32_spreads_collineations.
 
 (* ~~~~~~~~~~ CLASS 0 ~~~~~~~~~~ *)
 (* P0 : S0 S9 S19 S24 S36 S46 S53 -> 
@@ -1204,3 +1204,37 @@ Definition fl236_238 (l:Line) := match l with L0 => L25 | L1 => L11 | L2 => L32 
 Definition fp238_1 (p:Point) := match p with P0 => P0 | P1 => P1 | P2 => P2 | P3 => P3 | P4 => P4 | P5 => P5 | P6 => P6 | P7 => P14 | P8 => P13 | P9 => P12 | P10 => P11 | P11 => P10 | P12 => P9 | P13 => P8 | P14 => P7 end.
 Definition fl238_1 (l:Line) := match l with L0 => L0 | L1 => L1 | L2 => L2 | L3 => L6 | L4 => L5 | L5 => L4 | L6 => L3 | L7 => L7 | L8 => L11 | L9 => L10 | L10 => L9 | L11 => L8 | L12 => L12 | L13 => L14 | L14 => L13 | L15 => L15 | L16 => L18 | L17 => L17 | L18 => L16 | L19 => L22 | L20 => L21 | L21 => L20 | L22 => L19 | L23 => L26 | L24 => L25 | L25 => L24 | L26 => L23 | L27 => L28 | L28 => L27 | L29 => L30 | L30 => L29 | L31 => L31 | L32 => L32 | L33 => L33 | L34 => L34 end.
 
+
+Require Import List.
+Check (map fl238_1).
+Definition are_isomorphic (p1:list (list Line)) (p2:list (list Line)) : Prop :=
+  exists fp, exists fl,
+      is_collineation fp fl /\
+      forall s:(list Line) (* spread *), In s p1 -> In (map fl s) p2.
+      (* map (map fl) p1 = p2. too strong property *)
+
+Lemma are_iso_P238_P1 : are_isomorphic PA238 PA1.
+Proof.
+  exists fp238_1.
+  exists fl238_1.
+  split.  
+  is_col.
+  intros.
+  repeat (match goal with H:In _ _ |- _ =>
+                          first [elim (in_nil H) | inversion_clear H; [solve [subst; simpl; intuition] | idtac]] end).
+Qed.
+
+Require Import Lia.
+
+Lemma all_isomorphic_lemma :  forall t1 t2 : (list (list Line)), In t1 class0 -> In t2 class0 -> are_isomorphic t1 t2.
+Proof.
+  apply (all_equiv (list Line)).
+  simpl; lia.
+  admit. (* apply are_isomorphic_refl.*)
+admit. (*  apply are_isomorphic_sym.*)
+admit. (*  apply are_isomorphic_trans.*)
+  unfold all_iso_decomp.
+  intros n.
+  apply equiv'.
+  repeat split.
+  intros.

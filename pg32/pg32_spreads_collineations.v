@@ -291,12 +291,13 @@ Definition fl55_0 (l:Line) := match l with L0 => L1 | L1 => L6 | L2 => L4 | L3 =
 
 (* tools to deal with collineations *)
 
-Definition inj {A:Set} {B:Set} (f:A->B) := forall x y:A, f x = f y -> x =y. 
-Definition surj {A:Set} {B:Set} (f:A->B) := forall y:B, exists x:A, y=f(x).
-Definition bij {A:Set} {B:Set} (f:A->B) := inj f /\ surj f.
+Definition inj {A:Set} {B:Set} (f:A->B) : Prop := forall x y:A, f x = f y -> x = y. 
+Definition surj {A:Set} {B:Set} (f:A->B) : Prop := forall y:B, exists x:A, y=f(x).
+
+Definition bij {A:Set} {B:Set} (f:A->B) : Prop  := (inj f) /\ (surj f).
 
 Definition is_collineation fp fl :=
-  bij fp /\ bij fl /\ (forall x l, incid_lp x l -> incid_lp (fp x) (fl l)).
+  ((bij fp) /\ ((bij fl) /\ (forall x l, incid_lp x l -> incid_lp (fp x) (fl l))))%type.
 
 Ltac solve_surjP :=
   solve [
@@ -356,6 +357,7 @@ Ltac solve_surjL :=
              exists L33; reflexivity |
              exists L34; reflexivity
     ].
+
 Ltac is_col := split;
     [ split; [unfold inj; let x:= fresh in let y:=fresh in  intros x y; destruct x; destruct y; simpl; let H := fresh in intros H; solve [discriminate H | reflexivity ] |
               unfold surj; let y:= fresh in intros y; destruct y; solve_surjP]
@@ -366,12 +368,11 @@ Ltac is_col := split;
       intros x l; destruct x; destruct l;
       let H := fresh in intros H; solve [apply (degen_bool _ H) | apply is_true_true]]].
 
-(*
+(* test of the tactic is_col *)
 Lemma c0_1 : is_collineation fp0_1 fl0_1.
 Proof.
   is_col.
 Qed.
- *)
 
 Definition all_isomorphic (A:Set) (P:(list A)->(list A)->Prop) l :=
   forall t1 t2: (list A), In t1 l -> In t2 l -> P t1 t2.
@@ -386,7 +387,7 @@ Section P.
   Hypothesis length_l : length l <> 0 .
 
   Hypothesis P_refl : forall a, P a a.
-  Hypothesis P_sym : forall a b, P a b -> P b a. 
+(*  Hypothesis P_sym : forall a b, P a b -> P b a.*)
   Hypothesis P_trans : forall a b c, P a b -> P b c -> P a c.
   
   Lemma induction_step_1 :  (forall n,
@@ -417,9 +418,29 @@ Section P.
     apply H; assumption.
     destruct (PeanoNat.Nat.le_exists_sub _ _ H0) as [t [Ha Hb]].
     rewrite Ha.
-    apply P_sym.
+    Search Nat.modulo Nat.mul.
+    replace  (Nat.modulo q (length l)) with (Nat.modulo ((((S(Nat.div t (length l)))*(length l)) -t)+(t+q)) (length l)).
+    Check PeanoNat.Nat.mod_add.
+    
     apply induction_step_1.
-    apply H; assumption.
+    assumption.
+    Search Nat.sub Nat.add.
+    Check PeanoNat.Nat.add_sub_assoc.
+    
+    rewrite <-    PeanoNat.Nat.add_sub_swap.
+    
+    replace (S(Nat.div t (length l)) * length l + (t + q) - t) with (q + ((S(Nat.div t (length l)) * length l))) by lia.
+    Search Nat.modulo mult.
+    rewrite PeanoNat.Nat.mod_add; try lia. 
+    Search le lt.
+    
+    apply PeanoNat.Nat.lt_le_incl.
+    Search ((gt _ _)->(lt _ _)).
+    
+    Search ((_*_)=(_*_)).
+    rewrite PeanoNat.Nat.mul_comm.
+    apply PeanoNat.Nat.mul_succ_div_gt.
+    lia.
     (* <- *)
     intros.
     apply H.
@@ -452,7 +473,7 @@ Section P.
 End P.
 
 Definition are_isomorphic (s1:list Line) (s2:list Line) : Prop :=
-  exists fp, exists fl, is_collineation fp fl /\ map fl s1 = s2.
+  exists fp, exists fl, ((is_collineation fp fl) /\ (map fl s1 = s2)).
 
 Lemma are_isomorphic_refl : forall s, are_isomorphic s s.
 Proof.
@@ -471,60 +492,7 @@ Proof.
   intros; assumption.
   apply map_id.
 Qed.
-
-Lemma bij_inv : forall A:Set, forall f:A->A, bij f -> exists g: A->A, bij g /\ (forall x:A, g (f x)=x) /\ (forall x:A, f (g x)=x).
-Proof.
-Admitted.
-
-Lemma are_isomorphic_sym : forall s1 s2, are_isomorphic s1 s2 -> are_isomorphic s2 s1.
-Proof.
-  intros s1 s2 Hs1s2.
-  destruct Hs1s2 as [fp [ fl [is_col is_map]]].
-  destruct is_col as [Hbijp [Hbijl Hincid]].
-  unfold are_isomorphic.
-  destruct (bij_inv Point fp Hbijp) as [fp' [Hbijfp' [Hp1' Hp2']]].
-  destruct (bij_inv Line fl Hbijl) as [fl' [Hbijfl' [Hl1' Hl2']]].
-exists fp'.
-exists fl'.
-split.
-split.
-assumption.
-split.
-assumption.
-intros.
-rewrite <- (Hp2' x) in H.
-rewrite <- (Hl2' l) in H.
-rewrite <- (Hp2' x).
-assert (forall x, (fp' (fp x))=(fp (fp' x))).
-intros.
-rewrite Hp1'.
-rewrite Hp2'.
-reflexivity.
-rewrite (H0 (fp' x)) .
-rewrite <- (Hl2' l).
-assert (H0':forall x, (fl' (fl x))=(fl (fl' x))).
-intros.
-rewrite Hl1'.
-rewrite Hl2'.
-reflexivity.
-rewrite (H0' (fl' l)) .
-apply Hincid.
-
-rewrite <- (Hl2' l).
-rewrite <- (Hp1' (fp' x)).
-
-
-admit.
-
-rewrite <- is_map.
-rewrite map_map.
-rewrite <- map_id.
-Check map_ext.
-apply map_ext.
-assumption.
-
-Admitted.
-                                                                                      
+                                                                      
 Lemma are_isomorphic_trans :
   forall s1 s2 s3, are_isomorphic s1 s2 -> are_isomorphic s2 s3 -> are_isomorphic s1 s3.
 Proof.
@@ -667,7 +635,6 @@ Proof.
   apply all_equiv.
   simpl; lia.
   apply are_isomorphic_refl.
-  apply are_isomorphic_sym.
   apply are_isomorphic_trans.
   unfold all_iso_decomp.
   intros n.

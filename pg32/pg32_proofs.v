@@ -4,19 +4,9 @@ Require Import Generic.pg3x_spec.
 
 Require Import  PG32.pg32_inductive.
 
-Module PS : ProjectiveSpace.
-
-  Definition Point := pg32_inductive.Point.
-  Definition Line := pg32_inductive.Line.
-
-  Definition incid_lp := incid_lp. 
-  Definition eqP := eqP.
-  Definition eqL := eqL.
 
   (** a1_exists : existence of a line generated from 2 points *)
 
-  Check l_from_points.
-  
   Ltac prove_a1_exists :=
     let A:=fresh in
     let B:=fresh in
@@ -528,9 +518,63 @@ Lemma a2_conj :
   Time Qed.
   Check a2.
   
-End PS.
+Module PS : ProjectiveSpace.
 
-(* Local Variables: *)
-(* coq-prog-name: "/Users/magaud/.opam/4.11.1/bin/coqtop" *)
-(* suffixes: .v *)
-(* End: *)
+  Definition Point := pg32_inductive.Point.
+  Definition Line := pg32_inductive.Line.
+
+  Definition incid_lp := incid_lp. 
+  Definition eqP := eqP.
+  Definition eqL := eqL.
+
+  Lemma a1_exists : forall A B : Point,
+      {l : Line | incid_lp A l && incid_lp B l}.
+  Proof.
+    exact a1_exists.  
+  Qed.
+
+  Lemma uniqueness : forall (A B :Point)(l1 l2:Line),
+      incid_lp A l1 -> incid_lp B l1  -> incid_lp A l2 -> incid_lp B l2 -> A = B \/ l1 = l2.
+  Proof.
+    exact uniqueness.
+  Qed.
+
+  Definition dist_4p := dist_4p.
+
+    Lemma a2 : forall A B C D:Point, forall lAB lCD lAC lBD :Line,
+        dist_4p A B C D -> 
+        incid_lp A lAB && incid_lp B lAB ->
+        incid_lp C lCD && incid_lp D lCD ->
+        incid_lp A lAC && incid_lp C lAC ->
+        incid_lp B lBD && incid_lp D lBD ->
+        (exists I:Point, incid_lp I lAB && incid_lp I lCD) ->
+        exists J:Point, incid_lp J lAC && incid_lp J lBD.
+    Proof.
+      exact a2.
+    Qed.
+
+    Definition dist_3p := dist_3p.
+
+    Lemma a3_1 : forall l:Line,
+        {A:Point &{B:Point &{ C:Point| 
+                              dist_3p A B C && (incid_lp A l && incid_lp B l && incid_lp C l)}}}.
+    Proof.
+      exact a3_1.
+    Qed.
+
+    Lemma a3_2 : exists l1:Line, exists l2:Line, forall p:Point, ~(incid_lp p l1 && incid_lp p l2). 
+    Proof.
+      exact a3_2.
+    Qed.
+
+    Definition Intersect_In := Intersect_In.
+    Definition dist_3l := dist_3l.
+
+    Lemma a3_3 : forall v1 v2 v3:Line,
+      dist_3l v1 v2 v3 -> exists v4 :Line,  exists T1:Point, exists T2:Point, exists T3:Point,
+             (Intersect_In v1 v4 T1) && (Intersect_In v2 v4 T2) && (Intersect_In v3 v4 T3).
+  Proof.
+    exact a3_3.
+  Qed.
+
+End PS.

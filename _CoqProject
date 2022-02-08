@@ -1,5 +1,8 @@
 # coq_makefile -f _CoqProject -o CoqMakefile
 
+-arg "-async-proofs-tac-j 8"
+#-arg "-native-compiler yes"
+
 # generic
 
 -Q generic Generic
@@ -7,6 +10,7 @@ generic/pg3x_spec.v
 generic/wlog.v
 generic/lemmas.v
 generic/modulo56.v
+generic/modulo120.v
 
 # ----------- pg(3,2) -----------
 # gcc -o try_pg32 try_pg32.c
@@ -17,16 +21,86 @@ pg32/pg32_inductive.v
 pg32/pg32_proofs.v
 pg32/pg32_spreads_packings.v
 
-pg32/pg32_spreads.v # restructure
+pg32/pg32_spreads.v 
+#pg32/pg32_spreads_regular.v 
 pg32/pg32_spreads_collineations.v
+
 pg32/pg32_packings.v 
+pg32/pg32_packings_part1.v
+pg32/pg32_packings_part2.v
+pg32/pg32_packings_part3.v
+pg32/pg32_packings_part4.v
+pg32/pg32_packings_part5.v
+pg32/pg32_packings_part6.v
+pg32/pg32_packings_conclusion.v
+
 pg32/pg32_packings_collineations.v
 
+pg32/pg32_automorphisms.v
+pg32/pg32_automorphisms_inv.v
+
+pg32/pg32_collineations_tactics.v
+pg32/pg32_collineations0.v
+pg32/pg32_collineations1.v
+pg32/pg32_collineations2.v
+pg32/pg32_collineations3.v
+pg32/pg32_collineations4.v
+pg32/pg32_collineations5.v
+pg32/pg32_collineations6.v
+pg32/pg32_collineations7.v
+pg32/pg32_collineations8.v
+pg32/pg32_collineations9.v
+pg32/pg32_collineations10.v
+pg32/pg32_collineations11.v
+pg32/pg32_collineations12.v
+pg32/pg32_collineations13.v
+pg32/pg32_collineations14.v
+pg32/pg32_collineations.v
+
+pg32/pg32_decomp_prelude.v
+pg32/pg32_decomp0.v
+pg32/pg32_decomp1.v
+pg32/pg32_decomp2.v
+pg32/pg32_decomp3.v
+pg32/pg32_decomp4.v
+pg32/pg32_decomp5.v
+pg32/pg32_decomp6.v
+pg32/pg32_decomp7.v
+pg32/pg32_decomp8.v
+pg32/pg32_decomp9.v
+pg32/pg32_decomp10.v
+pg32/pg32_decomp11.v
+pg32/pg32_decomp12.v
+pg32/pg32_decomp13.v
+pg32/pg32_decomp14.v
+pg32/pg32_decomp.v
+
+pg32/pg32_all_collineations_theorem.v
+
+pg32/pg32_packings_two_distinct_classes.v
+
+
+# pg32/pg32_planes.v
 
 # ----------- pg(3,3) -----------
 # gcc -o try_pg33 try_pg33.c
 # ./try_pg33 pg33.txt pg33_inductive.v 40 130
 
-#-Q pg33 PG33
-#pg33/pg33_inductive.v
-#pg33/pg33_proofs.v
+-Q pg33 PG33
+pg33/pg33_inductive.v
+pg33/pg33_proofs.v
+
+# ----------- pg(3,x) -----------
+# automatically generated PG(3,x) for some x
+
+#-Q pg3x PG3X
+#pg3x/PG3_2_ind.v     # objects
+#pg3x/PG3_2_rel.v     # incidence relation
+#pg3x/PG3_2_proof.v   # proofs ?
+#pg3x/PG3_2_spec_ok.v
+
+#pg3x/Field3.v        # field for PG(3,3)
+#pg3x/PG3_3.v         # # objects
+#pg3x/PG3_3_rel.v     # incidence relation
+#pg3x/PG3_3_proof.v   # proofs ?
+#pg3x/PG3_3_spec_ok.v

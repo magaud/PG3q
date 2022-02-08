@@ -21,7 +21,7 @@ Definition eqL (p q : Line) : bool :=
 
 Definition add_points_list (l:Line) (acc:list Point) :=
   match (points_from_line l) with
-  (p,q,r) =>(* p::q::r::acc*)
+  (p,q,r) => (* p::q::r::acc*)
   if (in_dec Point_dec r acc)
   then
     if (in_dec Point_dec q acc)
@@ -147,6 +147,444 @@ Proof.
 inversion HIn_S.
 Qed.
 
+(* 35 auxiliary lemmas when l1=L0, l1=L1, etc. *)
+
+Ltac solve_In := solve [apply in_eq | apply in_cons; solve_In].
+
+Lemma aux_L0 : forall l2 l3 l4 l5 : Line,
+  leL L0 l2 && leL l2 l3 && leL l3 l4 && leL l4 l5 -> is_spread5 L0 l2 l3 l4 l5 -> In [L0; l2; l3; l4; l5] spreads.
+Proof.
+  intros l2 l3 l4 l5 Hle His;
+    destruct l2; (solve [exact (degen_bool _ Hle) | exact (degen_bool _ His) |
+     destruct l3; (solve [exact (degen_bool _ Hle) | exact (degen_bool _ His) | 
+     destruct l4; (solve [exact (degen_bool _ Hle) | exact (degen_bool _ His) | 
+     destruct l5; (solve [exact (degen_bool _ Hle) | exact (degen_bool _ His) |
+                    solve [unfold spreads;solve_In]])])])]).
+Qed.
+
+Lemma aux_L1 : forall l2 l3 l4 l5 : Line,
+  leL L1 l2 && leL l2 l3 && leL l3 l4 && leL l4 l5 -> is_spread5 L1 l2 l3 l4 l5 -> In [L1; l2; l3; l4; l5] spreads.
+Proof.
+  intros l2 l3 l4 l5 Hle His;
+    destruct l2; (solve [exact (degen_bool _ Hle) | exact (degen_bool _ His) |
+     destruct l3; (solve [exact (degen_bool _ Hle) | exact (degen_bool _ His) | 
+     destruct l4; (solve [exact (degen_bool _ Hle) | exact (degen_bool _ His) | 
+     destruct l5; (solve [exact (degen_bool _ Hle) | exact (degen_bool _ His) |
+                    solve [unfold spreads;solve_In]])])])]).
+Qed.
+
+Lemma aux_L2 : forall l2 l3 l4 l5 : Line,
+  leL L2 l2 && leL l2 l3 && leL l3 l4 && leL l4 l5 -> is_spread5 L2 l2 l3 l4 l5 -> In [L2; l2; l3; l4; l5] spreads.
+Proof.
+  intros l2 l3 l4 l5 Hle His;
+    destruct l2; (solve [exact (degen_bool _ Hle) | exact (degen_bool _ His) |
+     destruct l3; (solve [exact (degen_bool _ Hle) | exact (degen_bool _ His) | 
+     destruct l4; (solve [exact (degen_bool _ Hle) | exact (degen_bool _ His) | 
+     destruct l5; (solve [exact (degen_bool _ Hle) | exact (degen_bool _ His) |
+                    solve [unfold spreads;solve_In]])])])]).
+Qed.
+
+Lemma aux_L3 : forall l2 l3 l4 l5 : Line,
+  leL L3 l2 && leL l2 l3 && leL l3 l4 && leL l4 l5 -> is_spread5 L3 l2 l3 l4 l5 -> In [L3; l2; l3; l4; l5] spreads.
+Proof.
+  intros l2 l3 l4 l5 Hle His;
+    destruct l2; (solve [exact (degen_bool _ Hle) | exact (degen_bool _ His) |
+     destruct l3; (solve [exact (degen_bool _ Hle) | exact (degen_bool _ His) | 
+     destruct l4; (solve [exact (degen_bool _ Hle) | exact (degen_bool _ His) | 
+     destruct l5; (solve [exact (degen_bool _ Hle) | exact (degen_bool _ His) |
+                    solve [unfold spreads;solve_In]])])])]).
+Qed.
+
+Lemma aux_L4 : forall l2 l3 l4 l5 : Line,
+  leL L4 l2 && leL l2 l3 && leL l3 l4 && leL l4 l5 -> is_spread5 L4 l2 l3 l4 l5 -> In [L4; l2; l3; l4; l5] spreads.
+Proof.
+  intros l2 l3 l4 l5 Hle His;
+    destruct l2; (solve [exact (degen_bool _ Hle) | exact (degen_bool _ His) |
+     destruct l3; (solve [exact (degen_bool _ Hle) | exact (degen_bool _ His) | 
+     destruct l4; (solve [exact (degen_bool _ Hle) | exact (degen_bool _ His) | 
+     destruct l5; (solve [exact (degen_bool _ Hle) | exact (degen_bool _ His) |
+                    solve [unfold spreads;solve_In]])])])]).
+Qed.
+
+Lemma aux_L5 : forall l2 l3 l4 l5 : Line,
+  leL L5 l2 && leL l2 l3 && leL l3 l4 && leL l4 l5 -> is_spread5 L5 l2 l3 l4 l5 -> In [L5; l2; l3; l4; l5] spreads.
+Proof.
+  intros l2 l3 l4 l5 Hle His;
+    destruct l2; (solve [exact (degen_bool _ Hle) | exact (degen_bool _ His) |
+     destruct l3; (solve [exact (degen_bool _ Hle) | exact (degen_bool _ His) | 
+     destruct l4; (solve [exact (degen_bool _ Hle) | exact (degen_bool _ His) | 
+     destruct l5; (solve [exact (degen_bool _ Hle) | exact (degen_bool _ His) |
+                    solve [unfold spreads;solve_In]])])])]).
+Qed.
+
+Lemma aux_L6 : forall l2 l3 l4 l5 : Line,
+  leL L6 l2 && leL l2 l3 && leL l3 l4 && leL l4 l5 -> is_spread5 L6 l2 l3 l4 l5 -> In [L6; l2; l3; l4; l5] spreads.
+Proof.
+  intros l2 l3 l4 l5 Hle His;
+    destruct l2; (solve [exact (degen_bool _ Hle) | exact (degen_bool _ His) |
+     destruct l3; (solve [exact (degen_bool _ Hle) | exact (degen_bool _ His) | 
+     destruct l4; (solve [exact (degen_bool _ Hle) | exact (degen_bool _ His) | 
+     destruct l5; (solve [exact (degen_bool _ Hle) | exact (degen_bool _ His) |
+                    solve [unfold spreads;solve_In]])])])]).
+Qed.
+
+Lemma aux_L7 : forall l2 l3 l4 l5 : Line,
+  leL L7 l2 && leL l2 l3 && leL l3 l4 && leL l4 l5 -> is_spread5 L7 l2 l3 l4 l5 -> In [L7; l2; l3; l4; l5] spreads.
+Proof.
+  intros l2 l3 l4 l5 Hle His;
+    destruct l2; (solve [exact (degen_bool _ Hle) | exact (degen_bool _ His) |
+     destruct l3; (solve [exact (degen_bool _ Hle) | exact (degen_bool _ His) | 
+     destruct l4; (solve [exact (degen_bool _ Hle) | exact (degen_bool _ His) | 
+     destruct l5; (solve [exact (degen_bool _ Hle) | exact (degen_bool _ His) |
+                    solve [unfold spreads;solve_In]])])])]).
+Qed.
+
+Lemma aux_L8 : forall l2 l3 l4 l5 : Line,
+  leL L8 l2 && leL l2 l3 && leL l3 l4 && leL l4 l5 -> is_spread5 L8 l2 l3 l4 l5 -> In [L8; l2; l3; l4; l5] spreads.
+Proof.
+  intros l2 l3 l4 l5 Hle His;
+    destruct l2; (solve [exact (degen_bool _ Hle) | exact (degen_bool _ His) |
+     destruct l3; (solve [exact (degen_bool _ Hle) | exact (degen_bool _ His) | 
+     destruct l4; (solve [exact (degen_bool _ Hle) | exact (degen_bool _ His) | 
+     destruct l5; (solve [exact (degen_bool _ Hle) | exact (degen_bool _ His) |
+                    solve [unfold spreads;solve_In]])])])]).
+Qed.
+
+Lemma aux_L9 : forall l2 l3 l4 l5 : Line,
+  leL L9 l2 && leL l2 l3 && leL l3 l4 && leL l4 l5 -> is_spread5 L9 l2 l3 l4 l5 -> In [L9; l2; l3; l4; l5] spreads.
+Proof.
+  intros l2 l3 l4 l5 Hle His;
+    destruct l2; (solve [exact (degen_bool _ Hle) | exact (degen_bool _ His) |
+     destruct l3; (solve [exact (degen_bool _ Hle) | exact (degen_bool _ His) | 
+     destruct l4; (solve [exact (degen_bool _ Hle) | exact (degen_bool _ His) | 
+     destruct l5; (solve [exact (degen_bool _ Hle) | exact (degen_bool _ His) |
+                    solve [unfold spreads;solve_In]])])])]).
+Qed.
+Lemma aux_L10 : forall l2 l3 l4 l5 : Line,
+  leL L10 l2 && leL l2 l3 && leL l3 l4 && leL l4 l5 -> is_spread5 L10 l2 l3 l4 l5 -> In [L10; l2; l3; l4; l5] spreads.
+Proof.
+  intros l2 l3 l4 l5 Hle His;
+    destruct l2; (solve [exact (degen_bool _ Hle) | exact (degen_bool _ His) |
+     destruct l3; (solve [exact (degen_bool _ Hle) | exact (degen_bool _ His) | 
+     destruct l4; (solve [exact (degen_bool _ Hle) | exact (degen_bool _ His) | 
+     destruct l5; (solve [exact (degen_bool _ Hle) | exact (degen_bool _ His) |
+                    solve [unfold spreads;solve_In]])])])]).
+Qed.
+
+Lemma aux_L11 : forall l2 l3 l4 l5 : Line,
+  leL L11 l2 && leL l2 l3 && leL l3 l4 && leL l4 l5 -> is_spread5 L11 l2 l3 l4 l5 -> In [L11; l2; l3; l4; l5] spreads.
+Proof.
+  intros l2 l3 l4 l5 Hle His;
+    destruct l2; (solve [exact (degen_bool _ Hle) | exact (degen_bool _ His) |
+     destruct l3; (solve [exact (degen_bool _ Hle) | exact (degen_bool _ His) | 
+     destruct l4; (solve [exact (degen_bool _ Hle) | exact (degen_bool _ His) | 
+     destruct l5; (solve [exact (degen_bool _ Hle) | exact (degen_bool _ His) |
+                    solve [unfold spreads;solve_In]])])])]).
+Qed.
+
+Lemma aux_L12 : forall l2 l3 l4 l5 : Line,
+  leL L12 l2 && leL l2 l3 && leL l3 l4 && leL l4 l5 -> is_spread5 L12 l2 l3 l4 l5 -> In [L12; l2; l3; l4; l5] spreads.
+Proof.
+  intros l2 l3 l4 l5 Hle His;
+    destruct l2; (solve [exact (degen_bool _ Hle) | exact (degen_bool _ His) |
+     destruct l3; (solve [exact (degen_bool _ Hle) | exact (degen_bool _ His) | 
+     destruct l4; (solve [exact (degen_bool _ Hle) | exact (degen_bool _ His) | 
+     destruct l5; (solve [exact (degen_bool _ Hle) | exact (degen_bool _ His) |
+                    solve [unfold spreads;solve_In]])])])]).
+Qed.
+
+Lemma aux_L13 : forall l2 l3 l4 l5 : Line,
+  leL L13 l2 && leL l2 l3 && leL l3 l4 && leL l4 l5 -> is_spread5 L13 l2 l3 l4 l5 -> In [L13; l2; l3; l4; l5] spreads.
+Proof.
+  intros l2 l3 l4 l5 Hle His;
+    destruct l2; (solve [exact (degen_bool _ Hle) | exact (degen_bool _ His) |
+     destruct l3; (solve [exact (degen_bool _ Hle) | exact (degen_bool _ His) | 
+     destruct l4; (solve [exact (degen_bool _ Hle) | exact (degen_bool _ His) | 
+     destruct l5; (solve [exact (degen_bool _ Hle) | exact (degen_bool _ His) |
+                    solve [unfold spreads;solve_In]])])])]).
+Qed.
+
+Lemma aux_L14 : forall l2 l3 l4 l5 : Line,
+  leL L14 l2 && leL l2 l3 && leL l3 l4 && leL l4 l5 -> is_spread5 L14 l2 l3 l4 l5 -> In [L14; l2; l3; l4; l5] spreads.
+Proof.
+  intros l2 l3 l4 l5 Hle His;
+    destruct l2; (solve [exact (degen_bool _ Hle) | exact (degen_bool _ His) |
+     destruct l3; (solve [exact (degen_bool _ Hle) | exact (degen_bool _ His) | 
+     destruct l4; (solve [exact (degen_bool _ Hle) | exact (degen_bool _ His) | 
+     destruct l5; (solve [exact (degen_bool _ Hle) | exact (degen_bool _ His) |
+                    solve [unfold spreads;solve_In]])])])]).
+Qed.
+
+Lemma aux_L15 : forall l2 l3 l4 l5 : Line,
+  leL L15 l2 && leL l2 l3 && leL l3 l4 && leL l4 l5 -> is_spread5 L15 l2 l3 l4 l5 -> In [L15; l2; l3; l4; l5] spreads.
+Proof.
+  intros l2 l3 l4 l5 Hle His;
+    destruct l2; (solve [exact (degen_bool _ Hle) | exact (degen_bool _ His) |
+     destruct l3; (solve [exact (degen_bool _ Hle) | exact (degen_bool _ His) | 
+     destruct l4; (solve [exact (degen_bool _ Hle) | exact (degen_bool _ His) | 
+     destruct l5; (solve [exact (degen_bool _ Hle) | exact (degen_bool _ His) |
+                    solve [unfold spreads;solve_In]])])])]).
+Qed.
+
+Lemma aux_L16 : forall l2 l3 l4 l5 : Line,
+  leL L16 l2 && leL l2 l3 && leL l3 l4 && leL l4 l5 -> is_spread5 L16 l2 l3 l4 l5 -> In [L16; l2; l3; l4; l5] spreads.
+Proof.
+  intros l2 l3 l4 l5 Hle His;
+    destruct l2; (solve [exact (degen_bool _ Hle) | exact (degen_bool _ His) |
+     destruct l3; (solve [exact (degen_bool _ Hle) | exact (degen_bool _ His) | 
+     destruct l4; (solve [exact (degen_bool _ Hle) | exact (degen_bool _ His) | 
+     destruct l5; (solve [exact (degen_bool _ Hle) | exact (degen_bool _ His) |
+                    solve [unfold spreads;solve_In]])])])]).
+Qed.
+
+Lemma aux_L17 : forall l2 l3 l4 l5 : Line,
+  leL L17 l2 && leL l2 l3 && leL l3 l4 && leL l4 l5 -> is_spread5 L17 l2 l3 l4 l5 -> In [L17; l2; l3; l4; l5] spreads.
+Proof.
+  intros l2 l3 l4 l5 Hle His;
+    destruct l2; (solve [exact (degen_bool _ Hle) | exact (degen_bool _ His) |
+     destruct l3; (solve [exact (degen_bool _ Hle) | exact (degen_bool _ His) | 
+     destruct l4; (solve [exact (degen_bool _ Hle) | exact (degen_bool _ His) | 
+     destruct l5; (solve [exact (degen_bool _ Hle) | exact (degen_bool _ His) |
+                    solve [unfold spreads;solve_In]])])])]).
+Qed.
+
+Lemma aux_L18 : forall l2 l3 l4 l5 : Line,
+  leL L18 l2 && leL l2 l3 && leL l3 l4 && leL l4 l5 -> is_spread5 L18 l2 l3 l4 l5 -> In [L18; l2; l3; l4; l5] spreads.
+Proof.
+  intros l2 l3 l4 l5 Hle His;
+    destruct l2; (solve [exact (degen_bool _ Hle) | exact (degen_bool _ His) |
+     destruct l3; (solve [exact (degen_bool _ Hle) | exact (degen_bool _ His) | 
+     destruct l4; (solve [exact (degen_bool _ Hle) | exact (degen_bool _ His) | 
+     destruct l5; (solve [exact (degen_bool _ Hle) | exact (degen_bool _ His) |
+                    solve [unfold spreads;solve_In]])])])]).
+Qed.
+Lemma aux_L19 : forall l2 l3 l4 l5 : Line,
+  leL L19 l2 && leL l2 l3 && leL l3 l4 && leL l4 l5 -> is_spread5 L19 l2 l3 l4 l5 -> In [L19; l2; l3; l4; l5] spreads.
+Proof.
+  intros l2 l3 l4 l5 Hle His;
+    destruct l2; (solve [exact (degen_bool _ Hle) | exact (degen_bool _ His) |
+     destruct l3; (solve [exact (degen_bool _ Hle) | exact (degen_bool _ His) | 
+     destruct l4; (solve [exact (degen_bool _ Hle) | exact (degen_bool _ His) | 
+     destruct l5; (solve [exact (degen_bool _ Hle) | exact (degen_bool _ His) |
+                    solve [unfold spreads;solve_In]])])])]).
+Qed.
+Lemma aux_L20 : forall l2 l3 l4 l5 : Line,
+  leL L20 l2 && leL l2 l3 && leL l3 l4 && leL l4 l5 -> is_spread5 L20 l2 l3 l4 l5 -> In [L20; l2; l3; l4; l5] spreads.
+Proof.
+  intros l2 l3 l4 l5 Hle His;
+    destruct l2; (solve [exact (degen_bool _ Hle) | exact (degen_bool _ His) |
+     destruct l3; (solve [exact (degen_bool _ Hle) | exact (degen_bool _ His) | 
+     destruct l4; (solve [exact (degen_bool _ Hle) | exact (degen_bool _ His) | 
+     destruct l5; (solve [exact (degen_bool _ Hle) | exact (degen_bool _ His) |
+                    solve [unfold spreads;solve_In]])])])]).
+Qed.
+
+Lemma aux_L21 : forall l2 l3 l4 l5 : Line,
+  leL L21 l2 && leL l2 l3 && leL l3 l4 && leL l4 l5 -> is_spread5 L21 l2 l3 l4 l5 -> In [L21; l2; l3; l4; l5] spreads.
+Proof.
+  intros l2 l3 l4 l5 Hle His;
+    destruct l2; (solve [exact (degen_bool _ Hle) | exact (degen_bool _ His) |
+     destruct l3; (solve [exact (degen_bool _ Hle) | exact (degen_bool _ His) | 
+     destruct l4; (solve [exact (degen_bool _ Hle) | exact (degen_bool _ His) | 
+     destruct l5; (solve [exact (degen_bool _ Hle) | exact (degen_bool _ His) |
+                    solve [unfold spreads;solve_In]])])])]).
+Qed.
+
+Lemma aux_L22 : forall l2 l3 l4 l5 : Line,
+  leL L22 l2 && leL l2 l3 && leL l3 l4 && leL l4 l5 -> is_spread5 L22 l2 l3 l4 l5 -> In [L22; l2; l3; l4; l5] spreads.
+Proof.
+  intros l2 l3 l4 l5 Hle His;
+    destruct l2; (solve [exact (degen_bool _ Hle) | exact (degen_bool _ His) |
+     destruct l3; (solve [exact (degen_bool _ Hle) | exact (degen_bool _ His) | 
+     destruct l4; (solve [exact (degen_bool _ Hle) | exact (degen_bool _ His) | 
+     destruct l5; (solve [exact (degen_bool _ Hle) | exact (degen_bool _ His) |
+                    solve [unfold spreads;solve_In]])])])]).
+Qed.
+
+Lemma aux_L23 : forall l2 l3 l4 l5 : Line,
+  leL L23 l2 && leL l2 l3 && leL l3 l4 && leL l4 l5 -> is_spread5 L23 l2 l3 l4 l5 -> In [L23; l2; l3; l4; l5] spreads.
+Proof.
+  intros l2 l3 l4 l5 Hle His;
+    destruct l2; (solve [exact (degen_bool _ Hle) | exact (degen_bool _ His) |
+     destruct l3; (solve [exact (degen_bool _ Hle) | exact (degen_bool _ His) | 
+     destruct l4; (solve [exact (degen_bool _ Hle) | exact (degen_bool _ His) | 
+     destruct l5; (solve [exact (degen_bool _ Hle) | exact (degen_bool _ His) |
+                    solve [unfold spreads;solve_In]])])])]).
+Qed.
+
+Lemma aux_L24 : forall l2 l3 l4 l5 : Line,
+  leL L24 l2 && leL l2 l3 && leL l3 l4 && leL l4 l5 -> is_spread5 L24 l2 l3 l4 l5 -> In [L24; l2; l3; l4; l5] spreads.
+Proof.
+  intros l2 l3 l4 l5 Hle His;
+    destruct l2; (solve [exact (degen_bool _ Hle) | exact (degen_bool _ His) |
+     destruct l3; (solve [exact (degen_bool _ Hle) | exact (degen_bool _ His) | 
+     destruct l4; (solve [exact (degen_bool _ Hle) | exact (degen_bool _ His) | 
+     destruct l5; (solve [exact (degen_bool _ Hle) | exact (degen_bool _ His) |
+                    solve [unfold spreads;solve_In]])])])]).
+Qed.
+
+Lemma aux_L25 : forall l2 l3 l4 l5 : Line,
+  leL L25 l2 && leL l2 l3 && leL l3 l4 && leL l4 l5 -> is_spread5 L25 l2 l3 l4 l5 -> In [L25; l2; l3; l4; l5] spreads.
+Proof.
+  intros l2 l3 l4 l5 Hle His;
+    destruct l2; (solve [exact (degen_bool _ Hle) | exact (degen_bool _ His) |
+     destruct l3; (solve [exact (degen_bool _ Hle) | exact (degen_bool _ His) | 
+     destruct l4; (solve [exact (degen_bool _ Hle) | exact (degen_bool _ His) | 
+     destruct l5; (solve [exact (degen_bool _ Hle) | exact (degen_bool _ His) |
+                    solve [unfold spreads;solve_In]])])])]).
+Qed.
+
+Lemma aux_L26 : forall l2 l3 l4 l5 : Line,
+  leL L26 l2 && leL l2 l3 && leL l3 l4 && leL l4 l5 -> is_spread5 L26 l2 l3 l4 l5 -> In [L26; l2; l3; l4; l5] spreads.
+Proof.
+  intros l2 l3 l4 l5 Hle His;
+    destruct l2; (solve [exact (degen_bool _ Hle) | exact (degen_bool _ His) |
+     destruct l3; (solve [exact (degen_bool _ Hle) | exact (degen_bool _ His) | 
+     destruct l4; (solve [exact (degen_bool _ Hle) | exact (degen_bool _ His) | 
+     destruct l5; (solve [exact (degen_bool _ Hle) | exact (degen_bool _ His) |
+                    solve [unfold spreads;solve_In]])])])]).
+Qed.
+
+Lemma aux_L27 : forall l2 l3 l4 l5 : Line,
+  leL L27 l2 && leL l2 l3 && leL l3 l4 && leL l4 l5 -> is_spread5 L27 l2 l3 l4 l5 -> In [L27; l2; l3; l4; l5] spreads.
+Proof.
+  intros l2 l3 l4 l5 Hle His;
+    destruct l2; (solve [exact (degen_bool _ Hle) | exact (degen_bool _ His) |
+     destruct l3; (solve [exact (degen_bool _ Hle) | exact (degen_bool _ His) | 
+     destruct l4; (solve [exact (degen_bool _ Hle) | exact (degen_bool _ His) | 
+     destruct l5; (solve [exact (degen_bool _ Hle) | exact (degen_bool _ His) |
+                    solve [unfold spreads;solve_In]])])])]).
+Qed.
+
+Lemma aux_L28 : forall l2 l3 l4 l5 : Line,
+  leL L28 l2 && leL l2 l3 && leL l3 l4 && leL l4 l5 -> is_spread5 L28 l2 l3 l4 l5 -> In [L28; l2; l3; l4; l5] spreads.
+Proof.
+  intros l2 l3 l4 l5 Hle His;
+    destruct l2; (solve [exact (degen_bool _ Hle) | exact (degen_bool _ His) |
+     destruct l3; (solve [exact (degen_bool _ Hle) | exact (degen_bool _ His) | 
+     destruct l4; (solve [exact (degen_bool _ Hle) | exact (degen_bool _ His) | 
+     destruct l5; (solve [exact (degen_bool _ Hle) | exact (degen_bool _ His) |
+                    solve [unfold spreads;solve_In]])])])]).
+Qed.
+
+Lemma aux_L29 : forall l2 l3 l4 l5 : Line,
+  leL L29 l2 && leL l2 l3 && leL l3 l4 && leL l4 l5 -> is_spread5 L29 l2 l3 l4 l5 -> In [L29; l2; l3; l4; l5] spreads.
+Proof.
+  intros l2 l3 l4 l5 Hle His;
+    destruct l2; (solve [exact (degen_bool _ Hle) | exact (degen_bool _ His) |
+     destruct l3; (solve [exact (degen_bool _ Hle) | exact (degen_bool _ His) | 
+     destruct l4; (solve [exact (degen_bool _ Hle) | exact (degen_bool _ His) | 
+     destruct l5; (solve [exact (degen_bool _ Hle) | exact (degen_bool _ His) |
+                    solve [unfold spreads;solve_In]])])])]).
+Qed.
+
+Lemma aux_L30 : forall l2 l3 l4 l5 : Line,
+  leL L30 l2 && leL l2 l3 && leL l3 l4 && leL l4 l5 -> is_spread5 L30 l2 l3 l4 l5 -> In [L30; l2; l3; l4; l5] spreads.
+Proof.
+  intros l2 l3 l4 l5 Hle His;
+    destruct l2; (solve [exact (degen_bool _ Hle) | exact (degen_bool _ His) |
+     destruct l3; (solve [exact (degen_bool _ Hle) | exact (degen_bool _ His) | 
+     destruct l4; (solve [exact (degen_bool _ Hle) | exact (degen_bool _ His) | 
+     destruct l5; (solve [exact (degen_bool _ Hle) | exact (degen_bool _ His) |
+                    solve [unfold spreads;solve_In]])])])]).
+Qed.
+
+Lemma aux_L31 : forall l2 l3 l4 l5 : Line,
+  leL L31 l2 && leL l2 l3 && leL l3 l4 && leL l4 l5 -> is_spread5 L31 l2 l3 l4 l5 -> In [L31; l2; l3; l4; l5] spreads.
+Proof.
+  intros l2 l3 l4 l5 Hle His;
+    destruct l2; (solve [exact (degen_bool _ Hle) | exact (degen_bool _ His) |
+     destruct l3; (solve [exact (degen_bool _ Hle) | exact (degen_bool _ His) | 
+     destruct l4; (solve [exact (degen_bool _ Hle) | exact (degen_bool _ His) | 
+     destruct l5; (solve [exact (degen_bool _ Hle) | exact (degen_bool _ His) |
+                    solve [unfold spreads;solve_In]])])])]).
+Qed.
+
+Lemma aux_L32 : forall l2 l3 l4 l5 : Line,
+  leL L32 l2 && leL l2 l3 && leL l3 l4 && leL l4 l5 -> is_spread5 L32 l2 l3 l4 l5 -> In [L32; l2; l3; l4; l5] spreads.
+Proof.
+  intros l2 l3 l4 l5 Hle His;
+    destruct l2; (solve [exact (degen_bool _ Hle) | exact (degen_bool _ His) |
+     destruct l3; (solve [exact (degen_bool _ Hle) | exact (degen_bool _ His) | 
+     destruct l4; (solve [exact (degen_bool _ Hle) | exact (degen_bool _ His) | 
+     destruct l5; (solve [exact (degen_bool _ Hle) | exact (degen_bool _ His) |
+                    solve [unfold spreads;solve_In]])])])]).
+Qed.
+
+Lemma aux_L33 : forall l2 l3 l4 l5 : Line,
+  leL L33 l2 && leL l2 l3 && leL l3 l4 && leL l4 l5 -> is_spread5 L33 l2 l3 l4 l5 -> In [L33; l2; l3; l4; l5] spreads.
+Proof.
+  intros l2 l3 l4 l5 Hle His;
+    destruct l2; (solve [exact (degen_bool _ Hle) | exact (degen_bool _ His) |
+     destruct l3; (solve [exact (degen_bool _ Hle) | exact (degen_bool _ His) | 
+     destruct l4; (solve [exact (degen_bool _ Hle) | exact (degen_bool _ His) | 
+     destruct l5; (solve [exact (degen_bool _ Hle) | exact (degen_bool _ His) |
+                    solve [unfold spreads;solve_In]])])])]).
+Qed.
+
+Lemma aux_L34 : forall l2 l3 l4 l5 : Line,
+  leL L34 l2 && leL l2 l3 && leL l3 l4 && leL l4 l5 -> is_spread5 L34 l2 l3 l4 l5 -> In [L34; l2; l3; l4; l5] spreads.
+Proof.
+  intros l2 l3 l4 l5 Hle His;
+    destruct l2; (solve [exact (degen_bool _ Hle) | exact (degen_bool _ His) |
+     destruct l3; (solve [exact (degen_bool _ Hle) | exact (degen_bool _ His) | 
+     destruct l4; (solve [exact (degen_bool _ Hle) | exact (degen_bool _ His) | 
+     destruct l5; (solve [exact (degen_bool _ Hle) | exact (degen_bool _ His) |
+                    solve [unfold spreads;solve_In]])])])]).
+Qed.
+
+Lemma is_spread_descr_B :
+  forall l1 l2 l3 l4 l5 : Line,
+    leL l1 l2 && leL l2 l3 && leL l3 l4 && leL l4 l5 ->
+    (is_spread5 l1 l2 l3 l4 l5) -> In [l1;l2;l3;l4;l5] spreads.
+Proof.
+  intros l1 l2 l3 l4 l5 Hle His; destruct l1.
+  apply aux_L0; assumption.
+  apply aux_L1; assumption.
+  apply aux_L2; assumption.
+  apply aux_L3; assumption.
+  apply aux_L4; assumption.
+  apply aux_L5; assumption.
+  apply aux_L6; assumption.
+  apply aux_L7; assumption.
+  apply aux_L8; assumption.
+  apply aux_L9; assumption.
+  apply aux_L10; assumption.
+  apply aux_L11; assumption.
+  apply aux_L12; assumption.
+  apply aux_L13; assumption.
+  apply aux_L14; assumption.
+  apply aux_L15; assumption.
+  apply aux_L16; assumption.
+  apply aux_L17; assumption.
+  apply aux_L18; assumption.
+  apply aux_L19; assumption.
+  apply aux_L20; assumption.
+  apply aux_L21; assumption.
+  apply aux_L22; assumption.
+  apply aux_L23; assumption.
+  apply aux_L24; assumption.
+  apply aux_L25; assumption.
+  apply aux_L26; assumption.
+  apply aux_L27; assumption.
+  apply aux_L28; assumption.
+  apply aux_L29; assumption.
+  apply aux_L30; assumption.
+  apply aux_L31; assumption.
+  apply aux_L32; assumption.
+  apply aux_L33; assumption.
+  apply aux_L34; assumption.
+Qed.
+
+(* main theorem *)
+Lemma is_spread_descr : forall l1 l2 l3 l4 l5,
+    leL l1 l2 && leL l2 l3 && leL l3 l4 && leL l4 l5 ->
+    (is_spread5 l1 l2 l3 l4 l5 <-> In [l1;l2;l3;l4;l5] spreads).
+Proof.
+  intros; split; [apply is_spread_descr_B ; assumption| apply is_spread_descr_A].
+Qed.
+
+(* corollary: making the lines explicit (56 equalities) *)
 Lemma equiv_spreads_def : forall l1 l2 l3 l4 l5:Line,
     In [l1;l2;l3;l4;l5] spreads <->
     (((eqL l1 L0) &&(eqL l2 L19) && (eqL l3 L24) && (eqL l4 L28) && (eqL l5 L33)) || 
@@ -219,151 +657,4 @@ Proof.
     rewrite (eqL_eq _  _ Hand3);
     rewrite (eqL_eq _  _ Hand4);
     rewrite (eqL_eq _  _ Hand5); solve [repeat apply in_eq || apply in_cons].
-Qed.
-
-Lemma is_spread_descr_1 :  forall l1 l2 l3 l4 l5,
-    (*56 cases*)
-    (((eqL l1 L0) &&(eqL l2 L19) && (eqL l3 L24) && (eqL l4 L28) && (eqL l5 L33)) || 
-((eqL l1 L0) &&(eqL l2 L19) && (eqL l3 L26) && (eqL l4 L29) && (eqL l5 L32)) || 
-((eqL l1 L0) &&(eqL l2 L20) && (eqL l3 L23) && (eqL l4 L28) && (eqL l5 L34)) || 
-((eqL l1 L0) &&(eqL l2 L20) && (eqL l3 L25) && (eqL l4 L29) && (eqL l5 L31)) || 
-((eqL l1 L0) &&(eqL l2 L21) && (eqL l3 L24) && (eqL l4 L30) && (eqL l5 L31)) || 
-((eqL l1 L0) &&(eqL l2 L21) && (eqL l3 L26) && (eqL l4 L27) && (eqL l5 L34)) || 
-((eqL l1 L0) &&(eqL l2 L22) && (eqL l3 L23) && (eqL l4 L30) && (eqL l5 L32)) || 
-((eqL l1 L0) &&(eqL l2 L22) && (eqL l3 L25) && (eqL l4 L27) && (eqL l5 L33)) || 
-((eqL l1 L1) &&(eqL l2 L8) && (eqL l3 L14) && (eqL l4 L28) && (eqL l5 L33)) || 
-((eqL l1 L1) &&(eqL l2 L8) && (eqL l3 L16) && (eqL l4 L29) && (eqL l5 L31)) || 
-((eqL l1 L1) &&(eqL l2 L9) && (eqL l3 L13) && (eqL l4 L29) && (eqL l5 L32)) || 
-((eqL l1 L1) &&(eqL l2 L9) && (eqL l3 L18) && (eqL l4 L28) && (eqL l5 L34)) || 
-((eqL l1 L1) &&(eqL l2 L10) && (eqL l3 L14) && (eqL l4 L30) && (eqL l5 L32)) || 
-((eqL l1 L1) &&(eqL l2 L10) && (eqL l3 L16) && (eqL l4 L27) && (eqL l5 L34)) || 
-((eqL l1 L1) &&(eqL l2 L11) && (eqL l3 L13) && (eqL l4 L27) && (eqL l5 L33)) || 
-((eqL l1 L1) &&(eqL l2 L11) && (eqL l3 L18) && (eqL l4 L30) && (eqL l5 L31)) || 
-((eqL l1 L2) &&(eqL l2 L8) && (eqL l3 L14) && (eqL l4 L21) && (eqL l5 L26)) || 
-((eqL l1 L2) &&(eqL l2 L8) && (eqL l3 L16) && (eqL l4 L22) && (eqL l5 L23)) || 
-((eqL l1 L2) &&(eqL l2 L9) && (eqL l3 L13) && (eqL l4 L21) && (eqL l5 L24)) || 
-((eqL l1 L2) &&(eqL l2 L9) && (eqL l3 L18) && (eqL l4 L22) && (eqL l5 L25)) || 
-((eqL l1 L2) &&(eqL l2 L10) && (eqL l3 L14) && (eqL l4 L20) && (eqL l5 L25)) || 
-((eqL l1 L2) &&(eqL l2 L10) && (eqL l3 L16) && (eqL l4 L19) && (eqL l5 L24)) || 
-((eqL l1 L2) &&(eqL l2 L11) && (eqL l3 L13) && (eqL l4 L20) && (eqL l5 L23)) || 
-((eqL l1 L2) &&(eqL l2 L11) && (eqL l3 L18) && (eqL l4 L19) && (eqL l5 L26)) || 
-((eqL l1 L3) &&(eqL l2 L7) && (eqL l3 L14) && (eqL l4 L21) && (eqL l5 L30)) || 
-((eqL l1 L3) &&(eqL l2 L7) && (eqL l3 L16) && (eqL l4 L19) && (eqL l5 L29)) || 
-((eqL l1 L3) &&(eqL l2 L9) && (eqL l3 L15) && (eqL l4 L25) && (eqL l5 L29)) || 
-((eqL l1 L3) &&(eqL l2 L9) && (eqL l3 L17) && (eqL l4 L21) && (eqL l5 L34)) || 
-((eqL l1 L3) &&(eqL l2 L11) && (eqL l3 L15) && (eqL l4 L23) && (eqL l5 L30)) || 
-((eqL l1 L3) &&(eqL l2 L11) && (eqL l3 L17) && (eqL l4 L19) && (eqL l5 L33)) || 
-((eqL l1 L3) &&(eqL l2 L12) && (eqL l3 L14) && (eqL l4 L25) && (eqL l5 L33)) || 
-((eqL l1 L3) &&(eqL l2 L12) && (eqL l3 L16) && (eqL l4 L23) && (eqL l5 L34)) || 
-((eqL l1 L4) &&(eqL l2 L7) && (eqL l3 L14) && (eqL l4 L20) && (eqL l5 L28)) || 
-((eqL l1 L4) &&(eqL l2 L7) && (eqL l3 L16) && (eqL l4 L22) && (eqL l5 L27)) || 
-((eqL l1 L4) &&(eqL l2 L9) && (eqL l3 L15) && (eqL l4 L24) && (eqL l5 L28)) || 
-((eqL l1 L4) &&(eqL l2 L9) && (eqL l3 L17) && (eqL l4 L22) && (eqL l5 L32)) || 
-((eqL l1 L4) &&(eqL l2 L11) && (eqL l3 L15) && (eqL l4 L26) && (eqL l5 L27)) || 
-((eqL l1 L4) &&(eqL l2 L11) && (eqL l3 L17) && (eqL l4 L20) && (eqL l5 L31)) || 
-((eqL l1 L4) &&(eqL l2 L12) && (eqL l3 L14) && (eqL l4 L26) && (eqL l5 L32)) || 
-((eqL l1 L4) &&(eqL l2 L12) && (eqL l3 L16) && (eqL l4 L24) && (eqL l5 L31)) || 
-((eqL l1 L5) &&(eqL l2 L7) && (eqL l3 L13) && (eqL l4 L21) && (eqL l5 L27)) || 
-((eqL l1 L5) &&(eqL l2 L7) && (eqL l3 L18) && (eqL l4 L19) && (eqL l5 L28)) || 
-((eqL l1 L5) &&(eqL l2 L8) && (eqL l3 L15) && (eqL l4 L23) && (eqL l5 L28)) || 
-((eqL l1 L5) &&(eqL l2 L8) && (eqL l3 L17) && (eqL l4 L21) && (eqL l5 L31)) || 
-((eqL l1 L5) &&(eqL l2 L10) && (eqL l3 L15) && (eqL l4 L25) && (eqL l5 L27)) || 
-((eqL l1 L5) &&(eqL l2 L10) && (eqL l3 L17) && (eqL l4 L19) && (eqL l5 L32)) || 
-((eqL l1 L5) &&(eqL l2 L12) && (eqL l3 L13) && (eqL l4 L23) && (eqL l5 L32)) || 
-((eqL l1 L5) &&(eqL l2 L12) && (eqL l3 L18) && (eqL l4 L25) && (eqL l5 L31)) || 
-((eqL l1 L6) &&(eqL l2 L7) && (eqL l3 L13) && (eqL l4 L20) && (eqL l5 L29)) || 
-((eqL l1 L6) &&(eqL l2 L7) && (eqL l3 L18) && (eqL l4 L22) && (eqL l5 L30)) || 
-((eqL l1 L6) &&(eqL l2 L8) && (eqL l3 L15) && (eqL l4 L26) && (eqL l5 L29)) || 
-((eqL l1 L6) &&(eqL l2 L8) && (eqL l3 L17) && (eqL l4 L22) && (eqL l5 L33)) || 
-((eqL l1 L6) &&(eqL l2 L10) && (eqL l3 L15) && (eqL l4 L24) && (eqL l5 L30)) || 
-((eqL l1 L6) &&(eqL l2 L10) && (eqL l3 L17) && (eqL l4 L20) && (eqL l5 L34)) || 
-((eqL l1 L6) &&(eqL l2 L12) && (eqL l3 L13) && (eqL l4 L24) && (eqL l5 L33)) || 
-((eqL l1 L6) &&(eqL l2 L12) && (eqL l3 L18) && (eqL l4 L26) && (eqL l5 L34)) )
- -> (is_spread5 l1 l2 l3 l4 l5).
-Proof.
-  intros l1 l2 l3 l4 l5; rewrite <- equiv_spreads_def; apply is_spread_descr_A.
-Qed.  
-
-Lemma is_spread_descr_2 : forall l1 l2 l3 l4 l5,
-    leL l1 l2 && leL l2 l3 && leL l3 l4 && leL l4 l5 ->
-   (* disj_5l l1 l2 l3 l4 l5 -> *)
-    (is_spread5 l1 l2 l3 l4 l5 -> 
-    (*56 cases*)
-    ((eqL l1 L0) &&(eqL l2 L19) && (eqL l3 L24) && (eqL l4 L28) && (eqL l5 L33)) || 
-((eqL l1 L0) &&(eqL l2 L19) && (eqL l3 L26) && (eqL l4 L29) && (eqL l5 L32)) || 
-((eqL l1 L0) &&(eqL l2 L20) && (eqL l3 L23) && (eqL l4 L28) && (eqL l5 L34)) || 
-((eqL l1 L0) &&(eqL l2 L20) && (eqL l3 L25) && (eqL l4 L29) && (eqL l5 L31)) || 
-((eqL l1 L0) &&(eqL l2 L21) && (eqL l3 L24) && (eqL l4 L30) && (eqL l5 L31)) || 
-((eqL l1 L0) &&(eqL l2 L21) && (eqL l3 L26) && (eqL l4 L27) && (eqL l5 L34)) || 
-((eqL l1 L0) &&(eqL l2 L22) && (eqL l3 L23) && (eqL l4 L30) && (eqL l5 L32)) || 
-((eqL l1 L0) &&(eqL l2 L22) && (eqL l3 L25) && (eqL l4 L27) && (eqL l5 L33)) || 
-((eqL l1 L1) &&(eqL l2 L8) && (eqL l3 L14) && (eqL l4 L28) && (eqL l5 L33)) || 
-((eqL l1 L1) &&(eqL l2 L8) && (eqL l3 L16) && (eqL l4 L29) && (eqL l5 L31)) || 
-((eqL l1 L1) &&(eqL l2 L9) && (eqL l3 L13) && (eqL l4 L29) && (eqL l5 L32)) || 
-((eqL l1 L1) &&(eqL l2 L9) && (eqL l3 L18) && (eqL l4 L28) && (eqL l5 L34)) || 
-((eqL l1 L1) &&(eqL l2 L10) && (eqL l3 L14) && (eqL l4 L30) && (eqL l5 L32)) || 
-((eqL l1 L1) &&(eqL l2 L10) && (eqL l3 L16) && (eqL l4 L27) && (eqL l5 L34)) || 
-((eqL l1 L1) &&(eqL l2 L11) && (eqL l3 L13) && (eqL l4 L27) && (eqL l5 L33)) || 
-((eqL l1 L1) &&(eqL l2 L11) && (eqL l3 L18) && (eqL l4 L30) && (eqL l5 L31)) || 
-((eqL l1 L2) &&(eqL l2 L8) && (eqL l3 L14) && (eqL l4 L21) && (eqL l5 L26)) || 
-((eqL l1 L2) &&(eqL l2 L8) && (eqL l3 L16) && (eqL l4 L22) && (eqL l5 L23)) || 
-((eqL l1 L2) &&(eqL l2 L9) && (eqL l3 L13) && (eqL l4 L21) && (eqL l5 L24)) || 
-((eqL l1 L2) &&(eqL l2 L9) && (eqL l3 L18) && (eqL l4 L22) && (eqL l5 L25)) || 
-((eqL l1 L2) &&(eqL l2 L10) && (eqL l3 L14) && (eqL l4 L20) && (eqL l5 L25)) || 
-((eqL l1 L2) &&(eqL l2 L10) && (eqL l3 L16) && (eqL l4 L19) && (eqL l5 L24)) || 
-((eqL l1 L2) &&(eqL l2 L11) && (eqL l3 L13) && (eqL l4 L20) && (eqL l5 L23)) || 
-((eqL l1 L2) &&(eqL l2 L11) && (eqL l3 L18) && (eqL l4 L19) && (eqL l5 L26)) || 
-((eqL l1 L3) &&(eqL l2 L7) && (eqL l3 L14) && (eqL l4 L21) && (eqL l5 L30)) || 
-((eqL l1 L3) &&(eqL l2 L7) && (eqL l3 L16) && (eqL l4 L19) && (eqL l5 L29)) || 
-((eqL l1 L3) &&(eqL l2 L9) && (eqL l3 L15) && (eqL l4 L25) && (eqL l5 L29)) || 
-((eqL l1 L3) &&(eqL l2 L9) && (eqL l3 L17) && (eqL l4 L21) && (eqL l5 L34)) || 
-((eqL l1 L3) &&(eqL l2 L11) && (eqL l3 L15) && (eqL l4 L23) && (eqL l5 L30)) || 
-((eqL l1 L3) &&(eqL l2 L11) && (eqL l3 L17) && (eqL l4 L19) && (eqL l5 L33)) || 
-((eqL l1 L3) &&(eqL l2 L12) && (eqL l3 L14) && (eqL l4 L25) && (eqL l5 L33)) || 
-((eqL l1 L3) &&(eqL l2 L12) && (eqL l3 L16) && (eqL l4 L23) && (eqL l5 L34)) || 
-((eqL l1 L4) &&(eqL l2 L7) && (eqL l3 L14) && (eqL l4 L20) && (eqL l5 L28)) || 
-((eqL l1 L4) &&(eqL l2 L7) && (eqL l3 L16) && (eqL l4 L22) && (eqL l5 L27)) || 
-((eqL l1 L4) &&(eqL l2 L9) && (eqL l3 L15) && (eqL l4 L24) && (eqL l5 L28)) || 
-((eqL l1 L4) &&(eqL l2 L9) && (eqL l3 L17) && (eqL l4 L22) && (eqL l5 L32)) || 
-((eqL l1 L4) &&(eqL l2 L11) && (eqL l3 L15) && (eqL l4 L26) && (eqL l5 L27)) || 
-((eqL l1 L4) &&(eqL l2 L11) && (eqL l3 L17) && (eqL l4 L20) && (eqL l5 L31)) || 
-((eqL l1 L4) &&(eqL l2 L12) && (eqL l3 L14) && (eqL l4 L26) && (eqL l5 L32)) || 
-((eqL l1 L4) &&(eqL l2 L12) && (eqL l3 L16) && (eqL l4 L24) && (eqL l5 L31)) || 
-((eqL l1 L5) &&(eqL l2 L7) && (eqL l3 L13) && (eqL l4 L21) && (eqL l5 L27)) || 
-((eqL l1 L5) &&(eqL l2 L7) && (eqL l3 L18) && (eqL l4 L19) && (eqL l5 L28)) || 
-((eqL l1 L5) &&(eqL l2 L8) && (eqL l3 L15) && (eqL l4 L23) && (eqL l5 L28)) || 
-((eqL l1 L5) &&(eqL l2 L8) && (eqL l3 L17) && (eqL l4 L21) && (eqL l5 L31)) || 
-((eqL l1 L5) &&(eqL l2 L10) && (eqL l3 L15) && (eqL l4 L25) && (eqL l5 L27)) || 
-((eqL l1 L5) &&(eqL l2 L10) && (eqL l3 L17) && (eqL l4 L19) && (eqL l5 L32)) || 
-((eqL l1 L5) &&(eqL l2 L12) && (eqL l3 L13) && (eqL l4 L23) && (eqL l5 L32)) || 
-((eqL l1 L5) &&(eqL l2 L12) && (eqL l3 L18) && (eqL l4 L25) && (eqL l5 L31)) || 
-((eqL l1 L6) &&(eqL l2 L7) && (eqL l3 L13) && (eqL l4 L20) && (eqL l5 L29)) || 
-((eqL l1 L6) &&(eqL l2 L7) && (eqL l3 L18) && (eqL l4 L22) && (eqL l5 L30)) || 
-((eqL l1 L6) &&(eqL l2 L8) && (eqL l3 L15) && (eqL l4 L26) && (eqL l5 L29)) || 
-((eqL l1 L6) &&(eqL l2 L8) && (eqL l3 L17) && (eqL l4 L22) && (eqL l5 L33)) || 
-((eqL l1 L6) &&(eqL l2 L10) && (eqL l3 L15) && (eqL l4 L24) && (eqL l5 L30)) || 
-((eqL l1 L6) &&(eqL l2 L10) && (eqL l3 L17) && (eqL l4 L20) && (eqL l5 L34)) || 
-((eqL l1 L6) &&(eqL l2 L12) && (eqL l3 L13) && (eqL l4 L24) && (eqL l5 L33)) || 
-((eqL l1 L6) &&(eqL l2 L12) && (eqL l3 L18) && (eqL l4 L26) && (eqL l5 L34)) ).
-Proof.
-  intros l1 l2 l3 l4 l5 Hle (*Hdist*) His;
-    destruct l1; (destruct l2;
-      solve  [exact (degen_bool _ Hle)  | exact (degen_bool _ His) | (*idtac].  ;*)
-      (*par:*)          (* 280 cases to deal with *)
-abstract
-          (destruct l3;  (solve [exact (degen_bool _ Hle) | exact (degen_bool _ His) |
-           destruct l4;  (solve [exact (degen_bool _ Hle) |  exact (degen_bool _ His) |
-           destruct l5;  (solve [ exact (degen_bool _ Hle) |  exact (degen_bool _ His) | exact (erefl true)])])]))]).
-Optimize Heap.
-Optimize Proof.
-Admitted. (* Qed fails *)
-
-
-(* main theorem *)
-Lemma is_spread_descr : forall l1 l2 l3 l4 l5,
-    leL l1 l2 && leL l2 l3 && leL l3 l4 && leL l4 l5 ->
-    (is_spread5 l1 l2 l3 l4 l5 <-> In [l1;l2;l3;l4;l5] spreads).
-Proof.
-  intros; rewrite equiv_spreads_def.  
-  intros; split; [apply is_spread_descr_2 ; assumption| apply is_spread_descr_1].
 Qed.

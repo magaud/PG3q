@@ -301,7 +301,6 @@ Definition is_collineation fp fl :=
 
 Ltac solve_surjP :=
   solve [
-      exists P0; reflexivity |
              exists P0; reflexivity |
              exists P1; reflexivity |
              exists P2; reflexivity |
@@ -320,7 +319,6 @@ Ltac solve_surjP :=
 
 Ltac solve_surjL :=
   solve [
-      exists L0; reflexivity |
              exists L0; reflexivity |
              exists L1; reflexivity |
              exists L2; reflexivity |
@@ -359,11 +357,11 @@ Ltac solve_surjL :=
     ].
 
 Ltac is_col := split;
-    [ split; [unfold inj; let x:= fresh in let y:=fresh in  intros x y; destruct x; destruct y; simpl; let H := fresh in intros H; solve [discriminate H | reflexivity ] |
+    [ split; [unfold inj; let x:= fresh in let y:=fresh in  intros x y; destruct x; destruct y; simpl; let H := fresh in intros H; solve [assumption | reflexivity | discriminate H] |
               unfold surj; let y:= fresh in intros y; destruct y; solve_surjP]
     | 
     split; [
-      split; [unfold inj; let x:= fresh in let y:=fresh in intros x y; destruct x; destruct y; simpl;  let H := fresh in intros H; solve [discriminate H | reflexivity ] |
+      split; [unfold inj; let x:= fresh in let y:=fresh in intros x y; destruct x; destruct y; simpl;  let H := fresh in intros H; solve [assumption | reflexivity | discriminate H] |
               unfold surj; let y:= fresh in intros y; destruct y; solve_surjL] | 
       intros x l; destruct x; destruct l;
       let H := fresh in intros H; solve [apply (degen_bool _ H) | apply is_true_true]]].
@@ -529,26 +527,6 @@ assumption.
 rewrite <- map_map.
 rewrite is_map.
 assumption.
-Qed.
-
-Lemma equiv :
-  forall P:nat->Prop,
-    (forall n:nat, n<56 -> P n) <->
-    (P 0 /\ P 1 /\ P 2 /\ P 3 /\ P 4 /\ P 5 /\ P 6 /\ P 7 /\ P 8 /\ P 9 /\
-     P 10 /\ P 11 /\ P 12 /\ P 13 /\ P 14 /\ P 15 /\ P 16 /\ P 17 /\ P 18 /\ P 19 /\
-     P 20 /\ P 21 /\ P 22 /\ P 23 /\ P 24 /\ P 25 /\ P 26 /\ P 27 /\ P 28 /\ P 29 /\
-     P 30 /\ P 31 /\ P 32 /\ P 33 /\ P 34 /\ P 35 /\ P 36 /\ P 37 /\ P 38 /\ P 39 /\
-     P 40 /\ P 41 /\ P 42 /\ P 43 /\ P 44 /\ P 45 /\ P 46 /\ P 47 /\ P 48 /\ P 49 /\
-     P 50 /\ P 51 /\ P 52 /\ P 53 /\ P 54 /\ P 55).
-Proof.
-intros.
-split.  
-intros.
-repeat split; apply H; lia.
-intros.
-assert (foo:forall x y : nat, x < S y -> x=y \/ x < y) by (intros; lia).
-repeat (match goal with T:?n< S ?i |- _ => let Hequal := fresh in let Hlt := fresh in destruct (foo n i T) as [Hequal | Hlt]; clear T; [subst;intuition|idtac] end).
-lia.
 Qed.
 
 Lemma n56_decomp : forall n:nat, n < 56 <->

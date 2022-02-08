@@ -1,7 +1,8 @@
 Require Import ssreflect ssrfun ssrbool.
-Require Import Generic.lemmas Generic.wlog.
+Require Import Generic.lemmas Generic.wlog Generic.modulo120.
 Require Import PG32.pg32_inductive PG32.pg32_spreads_packings PG32.pg32_spreads_collineations.
-
+Require Import List.
+Require Import FunInd.
 Require Import Lia.
 
 (* ~~~~~~~~~~ CLASS 0 ~~~~~~~~~~ *)
@@ -1206,36 +1207,759 @@ Definition fl236_238 (l:Line) := match l with L0 => L25 | L1 => L11 | L2 => L32 
 Definition fp238_1 (p:Point) := match p with P0 => P0 | P1 => P1 | P2 => P2 | P3 => P3 | P4 => P4 | P5 => P5 | P6 => P6 | P7 => P14 | P8 => P13 | P9 => P12 | P10 => P11 | P11 => P10 | P12 => P9 | P13 => P8 | P14 => P7 end.
 Definition fl238_1 (l:Line) := match l with L0 => L0 | L1 => L1 | L2 => L2 | L3 => L6 | L4 => L5 | L5 => L4 | L6 => L3 | L7 => L7 | L8 => L11 | L9 => L10 | L10 => L9 | L11 => L8 | L12 => L12 | L13 => L14 | L14 => L13 | L15 => L15 | L16 => L18 | L17 => L17 | L18 => L16 | L19 => L22 | L20 => L21 | L21 => L20 | L22 => L19 | L23 => L26 | L24 => L25 | L25 => L24 | L26 => L23 | L27 => L28 | L28 => L27 | L29 => L30 | L30 => L29 | L31 => L31 | L32 => L32 | L33 => L33 | L34 => L34 end.
 
+(*Check (map fl238_1).*)
 
-Require Import List.
-Check (map fl238_1).
+Import ListNotations.
+
+Fixpoint insert t s :=
+  match s with
+  | [] => [t]
+  | x::xs => if leL t x then t::(x::xs) else x::(insert t xs)
+  end.
+
+Functional Scheme insert_ind := Induction for insert Sort Prop.
+
+Fixpoint sort s :=
+  match s with
+  | [] => []
+  | x::xs => insert x (sort xs)
+  end.
+Functional Scheme sort_ind := Induction for sort Sort Prop.
+
+(* Eval compute in sort [L5;L1;L8;L2]. *)
+
+Fixpoint sorted s :=
+  match s with
+  | [] => true
+  | x::[] => true
+  | x::(y::xs) as z => leL x y && (sorted (z))
+  end.
+
+Functional Scheme sorted_ind := Induction for sorted Sort Prop.
+
+Lemma leL_flip : forall x y, leL x y = false -> leL y x = true.
+Proof.
+  unfold leL; 
+  destruct x; destruct y; simpl; try solve [intros; discriminate | reflexivity].
+Qed.
+
+Lemma leL_eq : forall x y, leL x y -> leL y x -> x=y.
+Proof.
+  intros x y; destruct x; destruct y; solve [reflexivity | discriminate].
+Qed.
+
+Lemma leL_insert : forall x y xs, leL y x = false -> insert x (y :: xs)= x::y::xs.
+Proof.
+  intros.
+  assert (leL x y) by (apply leL_flip; assumption).
+  revert x y H H0.
+  induction xs.
+  simpl.
+  intros.
+  case_eq (leL x y).
+  trivial.
+  rewrite H0.
+  intros; discriminate.
+  intros.
+  unfold insert.
+  case_eq (leL x y).
+  trivial.
+  rewrite H0.
+  intros; discriminate.
+Qed. 
+
+Lemma sorted_sort : forall s, sorted s -> sort s = s.
+Proof.
+  intros; functional induction (sorted s) using sorted_ind.
+  simpl; reflexivity.
+  simpl; reflexivity.
+  replace (sort (x::y::_x)) with (insert x (sort (y::_x))) by reflexivity.
+  revert H; rewrite and_bool; intros H.
+  destruct H as [HA HB].
+  rewrite IHb.
+  assumption.
+  unfold insert.
+  case_eq (leL x y).
+  reflexivity.
+  rewrite HA.
+  intros; discriminate.
+Qed.    
+
+Lemma sorted_insert : forall x l, sorted l -> sorted (insert x l).
+Proof.
+  intros; functional induction (sorted l) using sorted_ind.
+  reflexivity.
+  simpl; case_eq (leL x x0); intros.
+  simpl.
+  apply and_bool; split; solve [assumption|reflexivity].
+  simpl.
+  apply and_bool; split.
+  apply leL_flip; assumption.
+  reflexivity.
+
+  simpl.
+  case_eq (leL x x0); intros.
+  simpl sorted.
+  apply and_bool.
+  split; assumption.
+  case_eq (leL x y); intros.
+  simpl.
+  apply and_bool.
+  split.
+  apply leL_flip; assumption.
+  apply and_bool.
+  split.
+  assumption.
+  apply and_bool_lr in H.
+  tauto.
+
+  apply and_bool_lr in H.
+  destruct H as [Ha Hb].
+  generalize (IHb Hb); intros Hs.
+  
+  replace  (x0 :: y :: insert x _x) with (x0 ::(insert x (y::_x))).
+
+  simpl insert.
+  rewrite H1.
+  simpl in Hs.
+  rewrite H1 in Hs.
+  change (leL x0 y && sorted (y::insert x _x)).
+  apply and_bool.
+  split.
+  assumption.
+  assumption.
+  simpl; rewrite H1; reflexivity.
+Qed.
+
+Lemma sorted_sort_2 : forall l, sorted (sort l).
+Proof.
+intros; functional induction (sort l) using sort_ind.
+trivial.
+apply sorted_insert.
+assumption.
+Qed.
+
+Lemma insert_x_y_l : forall l x y, sorted l -> insert x (insert y l) = insert y (insert x l).
+Proof.
+  intros l; induction l.
+  intros; simpl.
+  case_eq (leL x y); intros H1.
+  case_eq (leL y x); intros H2.
+  assert (Heq:x=y) by (apply leL_eq; assumption). 
+  subst; reflexivity.  
+  reflexivity.
+  case_eq (leL y x); intros H2.
+  reflexivity.
+  specialize (leL_flip _ _ H1) as H1'.
+  specialize (leL_flip _ _ H2) as H2'.
+  assert (Heq:x=y) by (apply leL_eq; assumption). 
+  subst; reflexivity.  
+  intros.
+  assert (Hs:(sorted l)).
+  inversion H.
+  destruct l.
+  trivial.
+  generalize (and_bool_lr _ _ H1); solve [intuition].
+  simpl (insert y (a :: l)).
+  case_eq (leL y a); intros Hya.
+  simpl ((insert x (a :: l))).
+  
+  case_eq (leL x a); intros Hxa.
+  simpl.
+  rewrite Hya Hxa.
+  case_eq (leL x y); case_eq (leL y x); intros.
+  assert (Hxy:x=y) by (apply leL_eq; assumption). 
+  rewrite Hxy; reflexivity.
+  reflexivity.
+  reflexivity.
+  assert (Hxy:x=y) by (destruct x; destruct y; solve [reflexivity | discriminate]).
+  rewrite Hxy; reflexivity.
+
+  simpl.
+  rewrite Hya Hxa.
+  case_eq (leL x y); intros.
+  assert (Hf:False).
+  apply PeanoNat.Nat.leb_le in Hya; apply PeanoNat.Nat.leb_nle in Hxa; apply PeanoNat.Nat.leb_le in H0; lia.
+  destruct Hf.
+  reflexivity.
+  
+  simpl.
+  case_eq (leL x a); intros Hxa.
+  simpl.
+  rewrite Hya.
+  case_eq (leL y x); intros.
+  assert (Hf:False).
+  apply PeanoNat.Nat.leb_le in Hxa; apply PeanoNat.Nat.leb_nle in Hya; apply PeanoNat.Nat.leb_le in H0; lia.
+  destruct Hf.
+  reflexivity.
+  
+  rewrite IHl.
+  assumption.
+  simpl.
+  rewrite Hya.
+  reflexivity.
+Qed.
+
+Lemma sort_insert_comm : forall x l, sort (insert x l) = insert x (sort l).
+Proof.
+  intros x l; revert x; induction l.
+  simpl; reflexivity.  
+  intros x; simpl.
+  case_eq (leL x a); intros.
+  rewrite <- IHl.
+  simpl.
+  rewrite IHl.
+  reflexivity.
+  rewrite <- IHl.
+  simpl.
+  rewrite IHl.
+  rewrite IHl.
+  rewrite insert_x_y_l.
+  apply sorted_sort_2.
+  reflexivity.
+Qed.
+
+Lemma sort_map : forall f a x, sorted x -> sort (map f (insert a x)) = insert (f a) (sort (map f x)).
+Proof.
+  intros f a x; revert f a.
+  induction x.
+  simpl;reflexivity.
+  intros.
+  simpl.
+  rewrite <- IHx.
+  rewrite <- (sort_insert_comm (f a0)).
+  case_eq (leL a0 a); intros.
+  simpl.
+  rewrite (sort_insert_comm (f a0)).
+  rewrite <- IHx.
+  reflexivity.
+  inversion H.
+  destruct x.
+  assumption.
+  apply and_bool_lr in H2; tauto.
+
+  simpl.
+  rewrite sort_insert_comm.
+  rewrite  IHx.
+  inversion H.
+  destruct x.
+  assumption.
+  apply and_bool_lr in H2; tauto.
+  rewrite IHx.
+  inversion H.
+  destruct x.
+  assumption.
+  apply and_bool_lr in H2; tauto.
+  rewrite insert_x_y_l.
+  apply sorted_sort_2.
+  reflexivity.
+  inversion H.
+  destruct x.
+  assumption.
+  apply and_bool_lr in H1; tauto.
+Qed.
+
+Lemma sort_sort_map : forall f x,  (sort (sort (map f x))) = (sort (map f (sort x))).
+Proof.
+  intros.
+  induction x.
+  simpl; reflexivity.
+  simpl.  
+  rewrite sort_insert_comm.
+  rewrite IHx.
+  rewrite sort_map.
+  apply sorted_sort_2.
+  reflexivity.
+Qed.
+
+Lemma sort_insert_sort : forall x a f, sort (map f (insert a (sort x))) = sort (insert (f a) (map f (sort x))).
+Proof.
+  intros.
+  rewrite sort_insert_comm.
+  rewrite sort_map.
+  apply sorted_sort_2.
+  reflexivity.
+Qed.
+
+Lemma sort_map_sort : forall x (f :Line->Line), (sort (map f (sort x))=sort (map f x)). 
+Proof.
+  induction x.
+  simpl;reflexivity.
+  intros.  
+  rewrite sort_insert_sort.  
+  simpl map.
+  rewrite sort_insert_comm.
+  simpl.
+  rewrite IHx.
+  reflexivity.
+Qed.
+
+Lemma sorted_spreads : forall s:(list Line), In s spreads -> sorted s.
+Proof.
+intros s H.
+repeat match goal with K:In _ _ |- _ => inversion_clear K;  [subst; reflexivity| idtac] end.
+destruct (in_nil H).
+Qed.
+  
+Lemma sorted_spreads' : forall s:(list Line), In s spreads -> sort s=s.
+Proof.
+intros s H.
+repeat match goal with K:In _ _ |- _ => inversion_clear K;  [subst; reflexivity| idtac] end.
+destruct (in_nil H).
+Qed.
+
 Definition are_isomorphic (p1:list (list Line)) (p2:list (list Line)) : Prop :=
   exists fp, exists fl,
       is_collineation fp fl /\
-      forall s:(list Line) (* spread *), In s p1 -> In (map fl s) p2.
-      (* map (map fl) p1 = p2. too strong property *)
+      forall s:(list Line) (* spread *), In s spreads -> In s p1 -> In (sort (map fl s)) spreads /\ In (sort (map fl s)) p2.
+
+Ltac is_col2 :=
+  intros;
+  repeat (match goal with H:In _ _ |- _ =>
+                          first [elim (in_nil H) | inversion_clear H; [solve [subst; simpl; intuition] | idtac]] end).
+
+Lemma are_iso_P0_P3 : are_isomorphic PA0 PA3.
+Proof.
+  exists fp0_3.
+  exists fl0_3.
+  split; [is_col | is_col2].
+Qed.
 
 Lemma are_iso_P238_P1 : are_isomorphic PA238 PA1.
 Proof.
   exists fp238_1.
   exists fl238_1.
-  split.  
-  is_col.
-  intros.
-  repeat (match goal with H:In _ _ |- _ =>
-                          first [elim (in_nil H) | inversion_clear H; [solve [subst; simpl; intuition] | idtac]] end).
+  split; [is_col | is_col2]. 
 Qed.
 
+Lemma n120_decomp : forall n:nat, n < 120 <->
+                        n = 0 \/ n = 1 \/ n = 2 \/ n = 3 \/ n = 4 \/ n = 5 \/ n = 6 \/ n = 7 \/ n  = 8 \/ n = 9 \/
+                        n = 10 \/ n = 11 \/ n = 12 \/ n = 13 \/ n = 14 \/ n = 15 \/ n = 16 \/ n = 17 \/ n  = 18 \/ n = 19 \/
+                        n = 20 \/ n = 21 \/ n = 22 \/ n = 23 \/ n = 24 \/ n = 25 \/ n = 26 \/ n = 27 \/ n  = 28 \/ n = 29 \/
+                        n = 30 \/ n = 31 \/ n = 32 \/ n = 33 \/ n = 34 \/ n = 35 \/ n = 36 \/ n = 37 \/ n  = 38 \/ n = 39 \/
+                        n = 40 \/ n = 41 \/ n = 42 \/ n = 43 \/ n = 44 \/ n = 45 \/ n = 46 \/ n = 47 \/ n  = 48 \/ n = 49 \/
+                        n = 50 \/ n = 51 \/ n = 52 \/ n = 53 \/ n = 54 \/ n = 55 \/ n = 56 \/ n = 57 \/ n  = 58 \/ n = 59 \/
+                        n = 60 \/ n = 61 \/ n = 62 \/ n = 63 \/ n = 64 \/ n = 65 \/ n = 66 \/ n = 67 \/ n  = 68 \/ n = 69 \/
+                        n = 70 \/ n = 71 \/ n = 72 \/ n = 73 \/ n = 74 \/ n = 75 \/ n = 76 \/ n = 77 \/ n  = 78 \/ n = 79 \/
+                        n = 80 \/ n = 81 \/ n = 82 \/ n = 83 \/ n = 84 \/ n = 85 \/ n = 86 \/ n = 87 \/ n  = 88 \/ n = 89 \/
+                        n = 90 \/ n = 91 \/ n = 92 \/ n = 93 \/ n = 94 \/ n = 95 \/ n = 96 \/ n = 97 \/ n  = 98 \/ n = 99 \/
+                        n = 100 \/ n = 101 \/ n = 102 \/ n = 103 \/ n = 104 \/ n = 105 \/ n = 106 \/ n = 107 \/ n  = 108 \/ n = 109 \/
+                        n = 110 \/ n = 111 \/ n = 112 \/ n = 113 \/ n = 114 \/ n = 115 \/ n = 116 \/ n = 117 \/ n  = 118 \/ n = 119.
+Proof.
+  split.
+  assert (foo:forall x y : nat, x < S y -> x=y \/ x < y) by (intros; lia).
+  intros.
+  repeat (match goal with T:?n< S ?i |- _ => let Hequal := fresh in let Hlt := fresh in destruct (foo n i T) as [Hequal | Hlt]; clear T; [tauto|idtac] end).
+inversion H0.
+lia.
+Qed.
 
+Lemma modulo_prop : forall n:nat, exists p:nat, p<120 /\ PeanoNat.Nat.modulo n 120 = p.
+Proof.
+  intros.
+  exists (PeanoNat.Nat.modulo n 120).
+  split.
+  apply PeanoNat.Nat.mod_bound_pos.
+  lia.
+  lia.
+  reflexivity.
+Qed.
 
-Lemma all_isomorphic_lemma :  forall t1 t2 : (list (list Line)), In t1 class0 -> In t2 class0 -> are_isomorphic t1 t2.
+Lemma modulo_S : forall n:nat,
+    (Nat.modulo (S n) 120 = S (Nat.modulo n 120)) \/ ((Nat.modulo n 120 = 119)/\(Nat.modulo (S n) 120=0)).
+Proof.
+  intros; apply or_comm;apply modulo_S120.
+Qed.
+
+Lemma equiv_bis120 :
+  forall P:nat->nat->Prop,
+(forall n:nat, P (Nat.modulo n 120) (Nat.modulo (S n) 120)) <->
+    (P 0 1/\ P 1 2 /\ P 2 3/\ P 3 4/\ P 4 5/\ P 5 6/\ P 6 7/\ P 7 8/\ P 8 9/\ P 9 10/\
+     P 10 11/\ P 11 12/\ P 12 13/\ P 13 14/\ P 14 15/\ P 15 16/\ P 16 17/\ P 17 18/\ P 18 19/\ P 19 20/\
+     P 20 21/\ P 21 22/\ P 22 23/\ P 23 24/\ P 24 25/\ P 25 26/\ P 26 27/\ P 27 28/\ P 28 29/\ P 29 30/\
+     P 30 31/\ P 31 32/\ P 32 33/\ P 33 34/\ P 34 35/\ P 35 36/\ P 36 37/\ P 37 38/\ P 38 39/\ P 39 40/\
+     P 40 41/\ P 41 42/\ P 42 43/\ P 43 44/\ P 44 45/\ P 45 46 /\ P 46 47/\ P 47 48/\ P 48 49/\ P 49 50/\
+     P 50 51/\ P 51 52/\ P 52 53/\ P 53 54/\ P 54 55/\ P 55 56 /\ P 56 57/\ P 57 58/\ P 58 59/\ P 59 60/\
+     P 60 61/\ P 61 62/\ P 62 63/\ P 63 64/\ P 64 65/\ P 65 66/\ P 66 67/\ P 67 68/\ P 68 69/\ P 69 70/\
+     P 70 71/\ P 71 72/\ P 72 73/\ P 73 74/\ P 74 75/\ P 75 76/\ P 76 77/\ P 77 78/\ P 78 79/\ P 79 80/\
+     P 80 81/\ P 81 82/\ P 82 83/\ P 83 84/\ P 84 85/\ P 85 86/\ P 86 87/\ P 87 88/\ P 88 89/\ P 89 90/\
+     P 90 91/\ P 91 92/\ P 92 93/\ P 93 94/\ P 94 95/\ P 95 96/\ P 96 97/\ P 97 98/\ P 98 99/\ P 99 100/\
+     P 100 101/\ P 101 102/\ P 102 103/\ P 103 104/\ P 104 105/\ P 105 106 /\ P 106 107/\ P 107 108/\ P 108 109/\ P 109 110/\
+     P 110 111/\ P 111 112/\ P 112 113/\ P 113 114/\ P 114 115/\ P 115 116 /\ P 116 117/\ P 117 118/\ P 118 119/\ P 119 0).
+Proof.
+intros.
+split.  
+intros.
+repeat split;match goal with |- P ?X ?Y   => rewrite <- PeanoNat.Nat.mod_small with (a:=X) (b:=120) by lia end; apply H.
+intros.
+destruct (modulo_prop n) as [p [Hp Hp']].
+destruct (modulo_prop (S n)) as [q [Hq Hq']].
+destruct (modulo_S n) as [HA | HB].
+rewrite Hp' Hq' in HA.
+rewrite Hp' Hq'.
+apply n120_decomp in Hp.
+apply n120_decomp in Hq.
+clear Hp' Hq'.
+rewrite HA in Hq.
+rewrite HA.
+clear n q HA.
+decompose [and] H; clear H.
+decompose [or] Hp; clear Hp; subst p; try assumption.
+decompose [or] Hq; try discriminate.
+destruct HB as [HB1 HB2].
+rewrite HB1.
+rewrite HB2. 
+intuition.
+Qed.
+
+Lemma are_isomorphic_refl : forall s, are_isomorphic s s.
+Proof.
+  exists (fun (p:Point) => p).
+  exists (fun (l:Line) => l).
+  split.
+  simpl.
+  split.
+  split.
+  unfold inj; destruct x; destruct y; simpl; intros H; solve [discriminate H | reflexivity ].
+  unfold surj; destruct y; solve_surjP.
+  split.
+  split.
+  unfold inj; destruct x; destruct y; simpl; intros H; solve [discriminate H | reflexivity ].
+  unfold surj; destruct y; solve_surjL.
+  intros; assumption.
+  intros.
+  rewrite map_id.
+  rewrite sorted_spreads'.
+  assumption.
+  split; assumption.
+Qed.
+  
+Lemma are_isomorphic_trans :
+  forall s1 s2 s3, are_isomorphic s1 s2 -> are_isomorphic s2 s3 -> are_isomorphic s1 s3.
+Proof.
+intros s1 s2 s3 Hs1s2 Hs2s3.
+destruct Hs1s2 as [fp [ fl [is_col is_map]]].
+destruct Hs2s3 as [fp' [ fl' [is_col' is_map']]].
+destruct is_col as [[Hinjp Hsurjp] [[Hinjl Hsurjl] Hcompat]].
+destruct is_col' as [[Hinjp' Hsurjp'] [[Hinjl' Hsurjl'] Hcompat']].
+
+exists (fun (x:Point) => fp' (fp x)).
+exists (fun (x:Line) => fl' (fl x)).
+split.
+split.
+split.
+unfold inj.
+intros.
+apply Hinjp.
+apply Hinjp'.
+assumption.
+unfold surj.
+intros.
+unfold surj in *.
+destruct (Hsurjp' y).
+destruct (Hsurjp x).
+exists x0.
+rewrite H0 in H.
+assumption.
+split.
+split.
+unfold inj.
+intros.
+apply Hinjl.
+apply Hinjl'.
+assumption.
+unfold surj.
+intros.
+unfold surj in *.
+destruct (Hsurjl' y).
+destruct (Hsurjl x).
+exists x0.
+rewrite H0 in H.
+assumption.
+intros.
+apply Hcompat'.
+apply Hcompat.
+assumption.
+
+intros.
+generalize (is_map s H H0).
+intros.
+destruct H1.
+
+rewrite <- map_map.
+generalize (is_map' _   H1 H2).
+intros.
+destruct H3.
+split.
+rewrite sort_map_sort in H3.
+assumption.
+rewrite sort_map_sort in H4.
+assumption.
+Qed.
+
+Lemma all_isomorphic_lemma0 :  forall t1 t2 : (list (list Line)), In t1 class0 -> In t2 class0 -> are_isomorphic t1 t2.
 Proof.
   apply (all_equiv (list Line)).
   simpl; lia.
-  admit. (* apply are_isomorphic_refl.*)
-  admit. (*  apply are_isomorphic_trans.*)
+  unfold are_isomorphic.
+  apply are_isomorphic_refl.
+  apply are_isomorphic_trans.
   unfold all_iso_decomp.
   intros n H.
-  apply equiv'.
+  apply equiv_bis120.
   repeat split.
-  intros.
+  exists fp0_3; exists fl0_3; split; [is_col |is_col2].
+  exists fp3_5; exists fl3_5; split; [is_col |is_col2].
+  exists fp5_6; exists fl5_6; split; [is_col |is_col2].
+  exists fp6_9; exists fl6_9; split; [is_col |is_col2].
+  exists fp9_11; exists  fl9_11; split; [is_col |is_col2].
+  exists fp11_13; exists fl11_13; split; [is_col |is_col2].
+  exists fp13_15; exists fl13_15; split; [is_col |is_col2].
+  exists fp15_16; exists fl15_16; split; [is_col |is_col2].
+  exists fp16_18; exists fl16_18; split; [is_col |is_col2].
+  exists fp18_21; exists fl18_21; split; [is_col |is_col2].
+  exists fp21_22; exists fl21_22; split; [is_col |is_col2].
+  exists fp22_25; exists fl22_25; split; [is_col |is_col2].
+  exists fp25_26; exists fl25_26; split; [is_col |is_col2].
+  exists fp26_28; exists fl26_28; split; [is_col |is_col2].
+  exists fp28_31; exists fl28_31; split; [is_col |is_col2].
+  exists fp31_32; exists fl31_32; split; [is_col |is_col2].
+  exists fp32_34; exists fl32_34; split; [is_col |is_col2].
+  exists fp34_37; exists fl34_37; split; [is_col |is_col2].
+  exists fp37_38; exists fl37_38; split; [is_col |is_col2].
+  exists fp38_40; exists fl38_40; split; [is_col |is_col2].
+  exists fp40_42; exists fl40_42; split; [is_col |is_col2].
+  exists fp42_44; exists fl42_44; split; [is_col |is_col2].
+  exists fp44_47; exists fl44_47; split; [is_col |is_col2].
+  exists fp47_48; exists fl47_48; split; [is_col |is_col2].
+  exists fp48_51; exists fl48_51; split; [is_col |is_col2].
+  exists fp51_52; exists fl51_52; split; [is_col |is_col2].
+  exists fp52_54; exists fl52_54; split; [is_col |is_col2].
+  exists fp54_56; exists fl54_56; split; [is_col |is_col2].
+  exists fp56_59; exists fl56_59; split; [is_col |is_col2].
+  exists fp59_61; exists fl59_61; split; [is_col |is_col2].
+  exists fp61_63; exists fl61_63; split; [is_col |is_col2].
+  exists fp63_64; exists fl63_64; split; [is_col |is_col2].
+  exists fp64_67; exists fl64_67; split; [is_col |is_col2].
+  exists fp67_68; exists fl67_68; split; [is_col |is_col2].
+  exists fp68_71; exists fl68_71; split; [is_col |is_col2].
+  exists fp71_73; exists fl71_73; split; [is_col |is_col2].
+  exists fp73_74; exists fl73_74; split; [is_col |is_col2].
+  exists fp74_77; exists fl74_77; split; [is_col |is_col2].
+  exists fp77_78; exists fl77_78; split; [is_col |is_col2].
+  exists fp78_80; exists fl78_80; split; [is_col |is_col2].
+  exists fp80_83; exists fl80_83; split; [is_col |is_col2].
+  exists fp83_85; exists fl83_85; split; [is_col |is_col2].
+  exists fp85_86; exists fl85_86; split; [is_col |is_col2].
+  exists fp86_89; exists fl86_89; split; [is_col |is_col2]. 
+  exists fp89_90; exists fl89_90; split; [is_col |is_col2].
+  exists fp90_92; exists fl90_92; split; [is_col |is_col2].
+  exists fp92_95; exists fl92_95; split; [is_col |is_col2].
+  exists fp95_97; exists fl95_97; split; [is_col |is_col2].
+  exists fp97_98; exists fl97_98; split; [is_col |is_col2]. 
+  exists fp98_101; exists fl98_101; split; [is_col |is_col2].
+  exists fp101_103; exists fl101_103; split; [is_col |is_col2].
+  exists fp103_105; exists fl103_105; split; [is_col |is_col2].
+  exists fp105_106; exists fl105_106; split; [is_col |is_col2].
+  exists fp106_108; exists fl106_108; split; [is_col |is_col2].
+  exists fp108_111; exists fl108_111; split; [is_col |is_col2].
+  exists fp111_112; exists fl111_112; split; [is_col |is_col2].
+  exists fp112_114; exists fl112_114; split; [is_col |is_col2].
+  exists fp114_117; exists fl114_117; split; [is_col |is_col2].
+  exists fp117_118; exists fl117_118; split; [is_col |is_col2].
+  exists fp118_121; exists fl118_121; split; [is_col |is_col2].
+  exists fp121_122; exists fl121_122; split; [is_col |is_col2].
+  exists fp122_124; exists fl122_124; split; [is_col |is_col2].
+  exists fp124_127; exists fl124_127; split; [is_col |is_col2].
+  exists fp127_128; exists fl127_128; split; [is_col |is_col2].
+  exists fp128_131; exists fl128_131; split; [is_col |is_col2].
+  exists fp131_132; exists fl131_132; split; [is_col |is_col2].
+  exists fp132_134; exists fl132_134; split; [is_col |is_col2].
+  exists fp134_137; exists fl134_137; split; [is_col |is_col2].
+  exists fp137_138; exists fl137_138; split; [is_col |is_col2].
+  exists fp138_140; exists fl138_140; split; [is_col |is_col2].
+  exists fp140_143; exists fl140_143; split; [is_col |is_col2].
+  exists fp143_144; exists fl143_144; split; [is_col |is_col2].
+  exists fp144_146; exists fl144_146; split; [is_col |is_col2].
+  exists fp146_149; exists fl146_149; split; [is_col |is_col2].
+  exists fp149_150; exists fl149_150; split; [is_col |is_col2].
+  exists fp150_153; exists fl150_153; split; [is_col |is_col2].
+  exists fp153_155; exists fl153_155; split; [is_col |is_col2].
+  exists fp155_156; exists fl155_156; split; [is_col |is_col2].
+  exists fp156_159; exists fl156_159; split; [is_col |is_col2].
+  exists fp159_161; exists fl159_161; split; [is_col |is_col2].
+  exists fp161_162; exists fl161_162; split; [is_col |is_col2].
+  exists fp162_164; exists fl162_164; split; [is_col |is_col2].
+  exists fp164_167; exists fl164_167; split; [is_col |is_col2].
+  exists fp167_168; exists fl167_168; split; [is_col |is_col2].
+  exists fp168_171; exists fl168_171; split; [is_col |is_col2].
+  exists fp171_172; exists fl171_172; split; [is_col |is_col2].
+  exists fp172_175; exists fl172_175; split; [is_col |is_col2].
+  exists fp175_177; exists fl175_177; split; [is_col |is_col2].
+  exists fp177_178; exists fl177_178; split; [is_col |is_col2].
+  exists fp178_180; exists fl178_180; split; [is_col |is_col2].
+  exists fp180_182; exists fl180_182; split; [is_col |is_col2].
+  exists fp182_185; exists fl182_185; split; [is_col |is_col2].
+  exists fp185_186; exists fl185_186; split; [is_col |is_col2].
+  exists fp186_188; exists fl186_188; split; [is_col |is_col2].
+  exists fp188_191; exists fl188_191; split; [is_col |is_col2].
+  exists fp191_192; exists fl191_192; split; [is_col |is_col2].
+  exists fp192_195; exists fl192_195; split; [is_col |is_col2].
+  exists fp195_196; exists fl195_196; split; [is_col |is_col2].
+  exists fp196_199; exists fl196_199; split; [is_col |is_col2].
+  exists fp199_201; exists fl199_201; split; [is_col |is_col2].
+  exists fp201_202; exists fl201_202; split; [is_col |is_col2].
+  exists fp202_205; exists fl202_205; split; [is_col |is_col2].
+  exists fp205_206; exists fl205_206; split; [is_col |is_col2].
+  exists fp206_209; exists fl206_209; split; [is_col |is_col2].
+  exists fp209_211; exists fl209_211; split; [is_col |is_col2].
+  exists fp211_212; exists fl211_212; split; [is_col |is_col2].
+  exists fp212_215; exists fl212_215; split; [is_col |is_col2].
+  exists fp215_217; exists fl215_217; split; [is_col |is_col2].
+  exists fp217_219; exists fl217_219; split; [is_col |is_col2].
+  exists fp219_220; exists fl219_220; split; [is_col |is_col2].
+  exists fp220_223; exists fl220_223; split; [is_col |is_col2].
+  exists fp223_224; exists fl223_224; split; [is_col |is_col2].
+  exists fp224_227; exists fl224_227; split; [is_col |is_col2].
+  exists fp227_228; exists fl227_228; split; [is_col |is_col2].
+  exists fp228_231; exists fl228_231; split; [is_col |is_col2].
+  exists fp231_233; exists fl231_233; split; [is_col |is_col2].
+  exists fp233_234; exists fl233_234; split; [is_col |is_col2].
+  exists fp234_237; exists fl234_237; split; [is_col |is_col2].
+  exists fp237_239; exists fl237_239; split; [is_col |is_col2].
+  exists fp239_0; exists fl239_0; split; [is_col |is_col2].
+Qed.
+
+Lemma all_isomorphic_lemma1 :  forall t1 t2 : (list (list Line)), In t1 class1 -> In t2 class1 -> are_isomorphic t1 t2.
+Proof.
+  pattern class1; unfold class1; simpl complement.  
+  apply (all_equiv (list Line)).
+  simpl; lia.
+  unfold are_isomorphic.
+  apply are_isomorphic_refl.
+  apply are_isomorphic_trans.
+  unfold all_iso_decomp.
+  intros n H.
+  apply equiv_bis120.
+  repeat split.
+  exists fp1_2; exists fl1_2; split; [is_col |is_col2].
+  exists fp2_4; exists fl2_4; split; [is_col |is_col2].
+  exists fp4_7; exists fl4_7; split; [is_col |is_col2].
+  exists fp7_8; exists fl7_8; split; [is_col |is_col2].
+  exists fp8_10; exists  fl8_10; split; [is_col |is_col2].
+  exists fp10_12; exists fl10_12; split; [is_col |is_col2].
+  exists fp12_14; exists fl12_14; split; [is_col |is_col2].
+  exists fp14_17; exists fl14_17; split; [is_col |is_col2].
+  exists fp17_19; exists fl17_19; split; [is_col |is_col2].
+  exists fp19_20; exists fl19_20; split; [is_col |is_col2].
+  exists fp20_23; exists fl20_23; split; [is_col |is_col2].
+  exists fp23_24; exists fl23_24; split; [is_col |is_col2].
+  exists fp24_27; exists fl24_27; split; [is_col |is_col2].
+  exists fp27_29; exists fl27_29; split; [is_col |is_col2].
+  exists fp29_30; exists fl29_30; split; [is_col |is_col2].
+  exists fp30_33; exists fl30_33; split; [is_col |is_col2].
+  exists fp33_35; exists fl33_35; split; [is_col |is_col2].
+  exists fp35_36; exists fl35_36; split; [is_col |is_col2].
+  exists fp36_39; exists fl36_39; split; [is_col |is_col2].
+  exists fp39_41; exists fl39_41; split; [is_col |is_col2].
+  exists fp41_43; exists fl41_43; split; [is_col |is_col2].
+  exists fp43_45; exists fl43_45; split; [is_col |is_col2].
+  exists fp45_46; exists fl45_46; split; [is_col |is_col2].
+  exists fp46_49; exists fl46_49; split; [is_col |is_col2].
+  exists fp49_50; exists fl49_50; split; [is_col |is_col2].
+  exists fp50_53; exists fl50_53; split; [is_col |is_col2].
+  exists fp53_55; exists fl53_55; split; [is_col |is_col2].
+  exists fp55_57; exists fl55_57; split; [is_col |is_col2].
+  exists fp57_58; exists fl57_58; split; [is_col |is_col2].
+  exists fp58_60; exists fl58_60; split; [is_col |is_col2].
+  exists fp60_62; exists fl60_62; split; [is_col |is_col2].
+  exists fp62_65; exists fl62_65; split; [is_col |is_col2].
+  exists fp65_66; exists fl65_66; split; [is_col |is_col2].
+  exists fp66_69; exists fl66_69; split; [is_col |is_col2].
+  exists fp69_70; exists fl69_70; split; [is_col |is_col2].
+  exists fp70_72; exists fl70_72; split; [is_col |is_col2].
+  exists fp72_75; exists fl72_75; split; [is_col |is_col2].
+  exists fp75_76; exists fl75_76; split; [is_col |is_col2].
+  exists fp76_79; exists fl76_79; split; [is_col |is_col2].
+  exists fp79_81; exists fl79_81; split; [is_col |is_col2].
+  exists fp81_82; exists fl81_82; split; [is_col |is_col2].
+  exists fp82_84; exists fl82_84; split; [is_col |is_col2].
+  exists fp84_87; exists fl84_87; split; [is_col |is_col2].
+  exists fp87_88; exists fl87_88; split; [is_col |is_col2]. 
+  exists fp88_91; exists fl88_91; split; [is_col |is_col2].
+  exists fp91_93; exists fl91_93; split; [is_col |is_col2].
+  exists fp93_94; exists fl93_94; split; [is_col |is_col2].
+  exists fp94_96; exists fl94_96; split; [is_col |is_col2].
+  exists fp96_99; exists fl96_99; split; [is_col |is_col2]. 
+  exists fp99_100; exists fl99_100; split; [is_col |is_col2].
+  exists fp100_102; exists fl100_102; split; [is_col |is_col2].
+  exists fp102_104; exists fl102_104; split; [is_col |is_col2].
+  exists fp104_107; exists fl104_107; split; [is_col |is_col2].
+  exists fp107_109; exists fl107_109; split; [is_col |is_col2].
+  exists fp109_110; exists fl109_110; split; [is_col |is_col2].
+  exists fp110_113; exists fl110_113; split; [is_col |is_col2].
+  exists fp113_115; exists fl113_115; split; [is_col |is_col2].
+  exists fp115_116; exists fl115_116; split; [is_col |is_col2].
+  exists fp116_119; exists fl116_119; split; [is_col |is_col2].
+  exists fp119_120; exists fl119_120; split; [is_col |is_col2].
+  exists fp120_123; exists fl120_123; split; [is_col |is_col2].
+  exists fp123_125; exists fl123_125; split; [is_col |is_col2].
+  exists fp125_126; exists fl125_126; split; [is_col |is_col2].
+  exists fp126_129; exists fl126_129; split; [is_col |is_col2].
+  exists fp129_130; exists fl129_130; split; [is_col |is_col2].
+  exists fp130_133; exists fl130_133; split; [is_col |is_col2].
+  exists fp133_135; exists fl133_135; split; [is_col |is_col2].
+  exists fp135_136; exists fl135_136; split; [is_col |is_col2].
+  exists fp136_139; exists fl136_139; split; [is_col |is_col2].
+  exists fp139_141; exists fl139_141; split; [is_col |is_col2].
+  exists fp141_142; exists fl141_142; split; [is_col |is_col2].
+  exists fp142_145; exists fl142_145; split; [is_col |is_col2].
+  exists fp145_147; exists fl145_147; split; [is_col |is_col2].
+  exists fp147_148; exists fl147_148; split; [is_col |is_col2].
+  exists fp148_151; exists fl148_151; split; [is_col |is_col2].
+  exists fp151_152; exists fl151_152; split; [is_col |is_col2].
+  exists fp152_154; exists fl152_154; split; [is_col |is_col2].
+  exists fp154_157; exists fl154_157; split; [is_col |is_col2].
+  exists fp157_158; exists fl157_158; split; [is_col |is_col2].
+  exists fp158_160; exists fl158_160; split; [is_col |is_col2].
+  exists fp160_163; exists fl160_163; split; [is_col |is_col2].
+  exists fp163_165; exists fl163_165; split; [is_col |is_col2].
+  exists fp165_166; exists fl165_166; split; [is_col |is_col2].
+  exists fp166_169; exists fl166_169; split; [is_col |is_col2].
+  exists fp169_170; exists fl169_170; split; [is_col |is_col2].
+  exists fp170_173; exists fl170_173; split; [is_col |is_col2].
+  exists fp173_174; exists fl173_174; split; [is_col |is_col2].
+  exists fp174_176; exists fl174_176; split; [is_col |is_col2].
+  exists fp176_179; exists fl176_179; split; [is_col |is_col2].
+  exists fp179_181; exists fl179_181; split; [is_col |is_col2].
+  exists fp181_183; exists fl181_183; split; [is_col |is_col2].
+  exists fp183_184; exists fl183_184; split; [is_col |is_col2].
+  exists fp184_187; exists fl184_187; split; [is_col |is_col2].
+  exists fp187_189; exists fl187_189; split; [is_col |is_col2].
+  exists fp189_190; exists fl189_190; split; [is_col |is_col2].
+  exists fp190_193; exists fl190_193; split; [is_col |is_col2].
+  exists fp193_194; exists fl193_194; split; [is_col |is_col2].
+  exists fp194_197; exists fl194_197; split; [is_col |is_col2].
+  exists fp197_198; exists fl197_198; split; [is_col |is_col2].
+  exists fp198_200; exists fl198_200; split; [is_col |is_col2].
+  exists fp200_203; exists fl200_203; split; [is_col |is_col2].
+  exists fp203_204; exists fl203_204; split; [is_col |is_col2].
+  exists fp204_207; exists fl204_207; split; [is_col |is_col2].
+  exists fp207_208; exists fl207_208; split; [is_col |is_col2].
+  exists fp208_210; exists fl208_210; split; [is_col |is_col2].
+  exists fp210_213; exists fl210_213; split; [is_col |is_col2].
+  exists fp213_214; exists fl213_214; split; [is_col |is_col2].
+  exists fp214_216; exists fl214_216; split; [is_col |is_col2].
+  exists fp216_218; exists fl216_218; split; [is_col |is_col2].
+  exists fp218_221; exists fl218_221; split; [is_col |is_col2].
+  exists fp221_222; exists fl221_222; split; [is_col |is_col2].
+  exists fp222_225; exists fl222_225; split; [is_col |is_col2].
+  exists fp225_226; exists fl225_226; split; [is_col |is_col2].
+  exists fp226_229; exists fl226_229; split; [is_col |is_col2].
+  exists fp229_230; exists fl229_230; split; [is_col |is_col2].
+  exists fp230_232; exists fl230_232; split; [is_col |is_col2].
+  exists fp232_235; exists fl232_235; split; [is_col |is_col2].
+  exists fp235_236; exists fl235_236; split; [is_col |is_col2].
+  exists fp236_238; exists fl236_238; split; [is_col |is_col2].
+  exists fp238_1; exists fl238_1; split; [is_col |is_col2].
+Qed.
